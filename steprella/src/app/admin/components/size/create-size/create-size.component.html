@@ -1,0 +1,13 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Ayakkabı Numarası</mat-label>
+    <input matInput [(ngModel)]="createSize.sizeValue" name="sizeValue" #sizeValue="ngModel" >
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Stok Sayısı</mat-label>
+    <input matInput [(ngModel)]="createSize.stockQuantity" name="stockQuantity" #sizeValue="ngModel">
+  </mat-form-field>
+
+  <button type="submit" mat-stroked-button>Oluştur</button>
+
+</form>

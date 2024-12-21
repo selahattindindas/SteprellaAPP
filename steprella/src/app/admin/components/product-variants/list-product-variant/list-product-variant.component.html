@@ -1,0 +1,11 @@
+@for(variant of listProductVarian$ | async; track variant){
+<div class="example-element-diagram">
+  <p class="text-lg text-gray-700 font-medium w-40">{{variant.colorName}} Renk</p>
+  <button mat-icon-button [ngClass]="{'text-red-500': !variant.active, 'text-green-500': variant.active}">
+    <mat-icon>{{ variant.active ? 'check_circle' : 'cancel' }}</mat-icon>
+  </button>
+  <button mat-icon-button class="text-blue-500 hover:text-blue-700" (click)="navigateAndCloseDialog(variant.id)">
+    <mat-icon>edit</mat-icon>
+  </button>
+</div>
+}
