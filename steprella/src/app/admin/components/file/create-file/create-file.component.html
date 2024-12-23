@@ -1,0 +1,34 @@
+<form #fileForm="ngForm" (ngSubmit)="onUpload()">
+    <input type="file" accept="image/*" #name="ngModel" name="name" [(ngModel)]="selectedFiles"
+            (change)="onFileSelected($event)" id="fileInput" multiple>
+    <button type="submit">Ekle</button>
+</form>
+
+<div class="image-files">
+    @if(selectedFiles.length > 0){
+    <table class="table">
+            <thead>
+                    <tr>
+                            <th>Ad</th>
+                            <th>Boyut</th>
+                            <th>İşlem</th>
+                    </tr>
+            </thead>
+            <tbody>
+                    @for(file of selectedFiles; track file; let i = $index;){
+                    <tr>
+                            <td>{{ file.name | titlecase }}</td>
+                            <td>{{ file.size/1024/1024 | number:'.2' }} MB</td>
+                            <td>
+                                    <button type="button" class="btn btn-dark btn-xs" (click)="removePhoto(i)">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                            Kaldır
+                                    </button>
+                            </td>
+                    </tr>
+                    }
+            </tbody>
+    </table>
+    }
+
+</div>

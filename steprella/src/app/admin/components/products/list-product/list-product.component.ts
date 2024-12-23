@@ -32,8 +32,8 @@ import { UpdateProductComponent } from '../update-product/update-product.compone
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListProductComponent implements OnInit, AfterViewInit {
-  private productService = inject(ProductService);
-  private dialogService = inject(DialogService);
+  private readonly productService = inject(ProductService);
+  private readonly dialogService = inject(DialogService);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

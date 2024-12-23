@@ -1,6 +1,5 @@
 export interface UpdateSize{
     id:number | null;
-    productVariantId: number;
-    sizeValue: number;
-    stockQuantity: number;
+    productVariantId: number | null;
+    stockQuantity: number | null;
 }

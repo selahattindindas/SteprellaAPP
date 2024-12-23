@@ -5,6 +5,7 @@ import { BaseResponse } from '../../models/base-responses/base-response';
 import { ListProductVariant } from '../../models/product-variants/list-product-variant';
 import { CreateProductVariant } from '../../models/product-variants/create-product-variant';
 import { response } from 'express';
+import { UpdateProductVariant } from '../../models/product-variants/update-product-variant';
 
 @Injectable({
   providedIn: 'root'
@@ -81,6 +82,19 @@ export class ProductVariantService {
     return this.httpClientService.post<CreateProductVariant>({
       controller: "product-variants",
       action: "create-product-variant"
+    }, body).pipe(
+      tap(() => successCallBack()),
+      catchError(error => {
+        errorCallBack(error.message);
+        return throwError(() => new Error(error.message));
+      })
+    );
+  }
+
+  update(body: UpdateProductVariant, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<UpdateProductVariant> {
+    return this.httpClientService.put<UpdateProductVariant>({
+      controller: "product-variants",
+      action: "update-product-variant"
     }, body).pipe(
       tap(() => successCallBack()),
       catchError(error => {

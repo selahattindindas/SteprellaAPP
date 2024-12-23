@@ -1,11 +1,34 @@
+<app-create-product-variant [productId]="productId" (variantList)="getProductVariantByProductId()"/>
 @for(variant of listProductVarian$ | async; track variant){
-<div class="example-element-diagram">
+<div class="flex items-center space-x-4">
   <p class="text-lg text-gray-700 font-medium w-40">{{variant.colorName}} Renk</p>
-  <button mat-icon-button [ngClass]="{'text-red-500': !variant.active, 'text-green-500': variant.active}">
-    <mat-icon>{{ variant.active ? 'check_circle' : 'cancel' }}</mat-icon>
+  @if(editingVariantId !== variant.id){
+    <button mat-icon-button [ngClass]="{'text-red-500': !variant.active, 'text-green-500': variant.active}" [style.color]="variant.active ? 'green' : 'red'">
+      <mat-icon>{{ variant.active ? 'check_circle' : 'cancel' }}</mat-icon>
+    </button>
+  }
+  @else {
+  <app-update-product-variant 
+  [productId]="productId" 
+  [variantData]="variant" 
+  (variantUpdated)="editingVariantId = null"
+  (variantList)="getProductVariantByProductId()" 
+  />
+  }
+  <button mat-icon-button class="text-black-500 hover:text-black-700" (click)="fileDialog(variant.id)">
+    <mat-icon>image</mat-icon>
   </button>
-  <button mat-icon-button class="text-blue-500 hover:text-blue-700" (click)="navigateAndCloseDialog(variant.id)">
+  <button mat-icon-button class="text-black-500 hover:text-black-700" (click)="sizeDialog(variant.id)">
+    <mat-icon>work</mat-icon>
+  </button>
+  @if(editingVariantId !== variant.id){
+  <button mat-icon-button class="text-black-500 hover:text-black-700" (click)="editRow(variant.id)">
     <mat-icon>edit</mat-icon>
   </button>
+  }@else {
+  <button mat-icon-button class="text-black-500 hover:text-black-700" (click)="editingVariantId = null">
+    <mat-icon>cancel</mat-icon>
+  </button>
+  }
 </div>
 }

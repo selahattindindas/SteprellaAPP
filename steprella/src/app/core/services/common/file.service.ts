@@ -53,14 +53,17 @@ export class FileService {
       );
     }
 
-    delete(id: number): Observable<ListFile> {
+    delete(id: number, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<ListFile> {
       return this.httpClientService.delete<BaseResponse<ListFile>>({
         controller: 'product-files'
       }, id).pipe(
-        map(response => response.data),
-        catchError(error => {
-          console.error('Dosya silme sırasında hata:', error);
-          return of(); 
+        map(response => {
+          successCallBack(); 
+          return response.data;
+        }),
+        catchError(errorResponse => {
+          errorCallBack(errorResponse);  
+          return of();  
         })
       );
     }

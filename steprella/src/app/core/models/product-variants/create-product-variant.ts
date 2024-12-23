@@ -1,4 +1,5 @@
 export interface CreateProductVariant {
-    productId: number;
-    colorId: number;
+    productId: number | null;
+    colorId: number | null;
+    active: boolean | null;
 }

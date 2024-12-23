@@ -32,34 +32,36 @@ export class ProductService {
     )
   }
 
-  async create(body: CreateProduct, successCallBack: () => void, errorCallBack: (errorMessage: string) => void){
-    const observable: Observable<CreateProduct> = this.httpClientService.post<CreateProduct>({
+  create(body: CreateProduct, successCallBack: () => void, errorCallBack: (errorMessage: string) => void):Observable<CreateProduct>{
+    return this.httpClientService.post<CreateProduct>({
       controller: "products",
       action: "create-product"
-    }, body)
-    await firstValueFrom(observable)
-      .then(response => {
-        successCallBack();
+    }, body).pipe(
+      map(response => {
+        successCallBack(); 
         return response;
+      }),
+      catchError(errorResponse => {
+        errorCallBack(errorResponse);  
+        return of(null as any);  
       })
-      .catch(errorResponse => {
-        errorCallBack(errorResponse);
-      })
+    );
   }
 
-  async update(body: UpdateProduct, successCallBack: () => void, errorCallBack: (errorMessage: string) => void){
-    const observable: Observable<UpdateProduct> = this.httpClientService.put<UpdateProduct>({
+  update(body: UpdateProduct, successCallBack: () => void, errorCallBack: (errorMessage: string) => void):Observable<CreateProduct>{
+   return this.httpClientService.put<UpdateProduct>({
       controller: "products",
       action: "update-product"
-    }, body)
-    await firstValueFrom(observable)
-      .then(response => {
-        successCallBack();
+    }, body).pipe(
+      map(response => {
+        successCallBack(); 
         return response;
+      }),
+      catchError(errorResponse => {
+        errorCallBack(errorResponse);  
+        return of(null as any);  
       })
-      .catch(errorResponse => {
-        errorCallBack(errorResponse);
-      })
+    );
   }
   
   delete(id: number, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<ListProduct> {

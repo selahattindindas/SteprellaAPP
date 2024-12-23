@@ -1,1 +1,11 @@
-<p>create-product-variant works!</p>
+<form #variantForm="ngForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Renk Ekle</mat-label>
+    <mat-select [(ngModel)]="createVariant.colorId" name="colorId" #colorId="ngModel">
+      @for (color of listColor$ | async; track color) {
+      <mat-option [value]="color.id">{{color.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <button type="submit" mat-stroked-button>Basic</button>
+</form>
