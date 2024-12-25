@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
@@ -23,6 +23,7 @@ export class ListSizeComponent implements OnInit {
   private readonly sizeService = inject(SizeService);
   readonly data = inject<{ productVariantId: number }>(MAT_DIALOG_DATA);
 
+  @ViewChild(UpdateSizeComponent) updateSizeComponent!: UpdateSizeComponent;
   dataSource = new MatTableDataSource<ListSize>([]);
   displayedColumns: string[] = ['id', 'sizeValue', 'stockQuantity', 'active', 'option'];
 
@@ -49,5 +50,11 @@ export class ListSizeComponent implements OnInit {
 
   editRow(rowId: number) {
     this.editingStockId = this.editingStockId === rowId ? null : rowId;
+  }
+
+  submitUpdate() {
+    if (this.updateSizeComponent) {
+      this.updateSizeComponent.onSubmit();
+    }
   }
 }

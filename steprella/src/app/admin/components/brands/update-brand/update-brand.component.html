@@ -1,1 +1,3 @@
-<p>update-brand works!</p>
+<form #brandForm="ngForm" (ngSubmit)="onSubmit()">
+    <input matInput name="name" ngModel required (keydown.enter)="onSubmit()" />
+</form>

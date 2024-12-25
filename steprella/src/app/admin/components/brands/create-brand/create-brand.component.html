@@ -1,1 +1,7 @@
-<p>create-brand works!</p>
+<form #brandForm="ngForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+        <mat-label>Marka Yaz</mat-label>
+        <input matInput name="name" ngModel required>
+    </mat-form-field>
+    <button type="submit" mat-stroked-button>+ Ekle</button>
+</form>

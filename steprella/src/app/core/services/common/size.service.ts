@@ -24,15 +24,18 @@ export class SizeService {
       );
     }
   
-    getById(id: number): Observable<ListSize> {
+    getById(id: number): Observable<ListSize | null> {
       return this.httpClientService.get<BaseResponse<ListSize>>({
         controller: "product-sizes"
       }, id).pipe(
-        map(response => response.data)
+        map(response => response.data),
+        catchError(() => {
+          return of(null);
+        })
       )
     }
     
-    create(body: CreateSize, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<CreateSize> {
+    create(body: CreateSize, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<CreateSize | null> {
       return this.httpClientService.post<CreateSize>({
         controller: "product-sizes",
         action: "create-product-size"
@@ -41,35 +44,32 @@ export class SizeService {
           successCallBack(); 
           return response;
         }),
-        catchError(errorResponse => {
-          errorCallBack(errorResponse);  
-          return of(null as any);  
+        catchError(() => {
+          return of(null);
         })
       );
     }
   
-    update(body: UpdateSize, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<UpdateSize> {
+    update(body: UpdateSize, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<UpdateSize | null> {
       return this.httpClientService.put<UpdateSize>({
         controller: "product-sizes",
         action: "update-product-size"
       }, body).pipe(
         tap(() => successCallBack()),
-        catchError(error => {
-          errorCallBack(error.message);
-          return throwError(() => new Error(error.message));
+        catchError(() => {
+          return of(null);
         })
       )
     }
   
-    delete(id: number, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<ListSize> {
+    delete(id: number, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<ListSize | null> {
       return this.httpClientService.delete<BaseResponse<ListSize>>({
         controller: "product-sizes"
       }, id).pipe(
         map(response => response.data),
         tap(() => successCallBack()),
-        catchError(error => {
-          errorCallBack(error.message);
-          return throwError(() => new Error(error.message));
+        catchError(() => {
+          return of(null);
         })
       )
     }

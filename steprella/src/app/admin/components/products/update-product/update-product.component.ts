@@ -4,6 +4,7 @@ import { ProductService } from '../../../../core/services/common/product.service
 import { UpdateProduct } from '../../../../core/models/products/update-product';
 import { MatDialogTitle, MatDialogContent, MatDialogRef, MAT_DIALOG_DATA, MatDialogActions } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-update-product',
@@ -15,20 +16,20 @@ import { firstValueFrom } from 'rxjs';
 })
 export class UpdateProductComponent {
   private readonly productService = inject(ProductService);
+  private readonly sweetAlertService = inject(SweetAlertService);
   private readonly data = inject<{ id: number }>(MAT_DIALOG_DATA);
   private readonly dialogRef = inject(MatDialogRef<UpdateProductComponent>);
 
   listProduct$ = this.productService.getById(this.data.id);
 
   async onSubmit(formData: UpdateProduct) {
-    await firstValueFrom(this.productService.update(formData, 
-        () => {
-        console.log("Başarıyla güncellendi");
+    await firstValueFrom(this.productService.update(formData,
+      () => {
+        this.sweetAlertService.showMessage();
         this.dialogRef.close();
-      }, 
-      (errorMessage) => {
-        console.error("Hata: ", errorMessage);
-      })
-    )
+      },
+      error => {
+      }
+    ))
   }
 }

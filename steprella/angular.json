@@ -28,6 +28,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "node_modules/sweetalert2/dist/sweetalert2.min.css",
               "node_modules/keen-slider/keen-slider.min.css"
             ],
             "scripts": [],

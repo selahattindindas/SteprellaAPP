@@ -6,6 +6,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { UpdateProductVariant } from '../../../../core/models/product-variants/update-product-variant';
 import { ProductVariantService } from '../../../../core/services/common/product-variant.service';
 import { firstValueFrom } from 'rxjs';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-update-product-variant',
@@ -18,6 +19,7 @@ import { firstValueFrom } from 'rxjs';
 
 export class UpdateProductVariantComponent implements OnInit {
   private readonly productVariantService = inject(ProductVariantService);
+  readonly sweetAlertService = inject(SweetAlertService);
 
   @ViewChild('variantForm', { static: true }) variantForm!: NgForm;
   @Input() productId!: number;
@@ -45,6 +47,7 @@ export class UpdateProductVariantComponent implements OnInit {
     await firstValueFrom(this.productVariantService.update(this.updateVariant,
       () => {
         console.log("Başarıyla güncellendi");
+        this.sweetAlertService.showMessage();
         this.variantUpdated.emit(null);
         this.variantList.emit();
       },

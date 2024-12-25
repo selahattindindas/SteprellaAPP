@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -8,6 +8,7 @@ import { CreateProductVariant } from '../../../../core/models/product-variants/c
 import { ProductVariantService } from '../../../../core/services/common/product-variant.service';
 import { firstValueFrom } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-create-product-variant',
@@ -20,13 +21,14 @@ import { MatButtonModule } from '@angular/material/button';
 export class CreateProductVariantComponent {
   private readonly colorService = inject(ColorService);
   private readonly productVariantService = inject(ProductVariantService);
+  private readonly sweetAlertService = inject(SweetAlertService);
 
   @ViewChild('variantForm', { static: true }) variantForm!: NgForm;
   @Input() productId!: number;
   @Output() variantList = new EventEmitter<void>();
 
   listColor$ = this.colorService.getAll();
-  createVariant : CreateProductVariant = { productId: null, colorId : null, active: false};
+  createVariant: CreateProductVariant = { productId: null, colorId: null, active: false };
 
   async onSubmit() {
     if (!this.variantForm.valid) return;
@@ -39,12 +41,11 @@ export class CreateProductVariantComponent {
 
     await firstValueFrom(this.productVariantService.create(this.createVariant,
       () => {
-        console.log("Başarıyla eklendi");
+        this.sweetAlertService.showMessage();
         this.variantForm.reset();
         this.variantList.emit();
       },
       error => {
-        console.log(error);
       }))
   }
 }

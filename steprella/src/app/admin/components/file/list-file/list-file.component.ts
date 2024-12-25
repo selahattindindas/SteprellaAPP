@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { CreateFileComponent } from "../create-file/create-file.component";
 import { FileService } from '../../../../core/services/common/file.service';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { firstValueFrom, Observable } from 'rxjs';
 import { ListProductFile } from '../../../../core/models/files/list-product-file';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-list-file',
@@ -18,30 +19,32 @@ import { ListProductFile } from '../../../../core/models/files/list-product-file
 })
 export class ListFileComponent implements OnInit {
   private readonly fileService = inject(FileService);
-  private readonly crf = inject(ChangeDetectorRef);
-  
+  private readonly sweetAlertService = inject(SweetAlertService);
+
   readonly data = inject<{ productVariantId: number }>(MAT_DIALOG_DATA);
 
-  listFile$: Observable<ListProductFile> | undefined;
+  listFile$: Observable<ListProductFile | null> | undefined;
 
   ngOnInit(): void {
     this.getFile();
   }
-  
-  getFile(){
+
+  getFile() {
     this.listFile$ = this.fileService.getByProductVariantId(this.data.productVariantId);
   }
 
   async delete(id: number): Promise<void> {
-    await firstValueFrom(this.fileService.delete(id, 
-      () =>{
-        this.getFile();
-        this.crf.detectChanges();
-      },
-      error =>{
-        console.log(error);
-      }
-    ));
+    const sweetAlertResult = await this.sweetAlertService.confirmation();
+    if (sweetAlertResult.isConfirmed) {
+      await firstValueFrom(this.fileService.delete(id,
+        () => {
+          this.sweetAlertService.showMessage();
+          this.getFile();
+        },
+        error => {
+        }
+      ))
+    }
 
   }
 }

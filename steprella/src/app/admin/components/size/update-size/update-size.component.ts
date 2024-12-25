@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { SizeService } from '../../../../core/services/common/size.service';
 import { UpdateSize } from '../../../../core/models/sizes/update-size';
 import { firstValueFrom } from 'rxjs';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-update-size',
@@ -14,7 +15,8 @@ import { firstValueFrom } from 'rxjs';
 })
 export class UpdateSizeComponent implements OnInit {
   private readonly sizeService = inject(SizeService);
-
+  private readonly sweetAlertService = inject(SweetAlertService);
+  
   @ViewChild('stockForm', { static: true }) stockForm!: NgForm;
 
   @Input() productVariantId!: number;
@@ -30,7 +32,7 @@ export class UpdateSizeComponent implements OnInit {
     }
   }
 
-  async update() {
+  async onSubmit() {
     if (!this.stockForm.valid) return;
 
     const update: UpdateSize = {
@@ -39,14 +41,14 @@ export class UpdateSizeComponent implements OnInit {
       stockQuantity: this.stockForm.value.stockQuantity,
     }
 
-    await firstValueFrom(
-      this.sizeService.update(update,
+    await firstValueFrom(this.sizeService.update(update,
         () => {
+          this.sweetAlertService.showMessage();
           this.sizeUpdated.emit(null);
           this.sizeList.emit();
         },
         error => {
-          console.log(error);
+
         })
     )
   }

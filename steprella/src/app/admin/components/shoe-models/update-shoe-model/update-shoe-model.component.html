@@ -1,1 +1,3 @@
-<p>update-shoe-model works!</p>
+<form #shoeModelForm="ngForm" (ngSubmit)="onSubmit()">
+    <input matInput name="name" ngModel required (keydown.enter)="onSubmit()">
+</form>

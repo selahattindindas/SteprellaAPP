@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { FileService } from '../../../../core/services/common/file.service';
 import { firstValueFrom } from 'rxjs';
 import { CreateFile } from '../../../../core/models/files/create-file';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-create-file',
@@ -15,6 +16,7 @@ import { CreateFile } from '../../../../core/models/files/create-file';
 })
 export class CreateFileComponent {
   private readonly fileService = inject(FileService);
+  private readonly sweetAlertService = inject(SweetAlertService);
   
   @ViewChild("fileForm", { static: true }) fileForm!: NgForm;
   @Input() productVariantId!: number;
@@ -40,12 +42,11 @@ export class CreateFileComponent {
     await firstValueFrom(
       this.fileService.create(file, 
         () => {
-          console.log("Başarıyla eklendi");
+          this.sweetAlertService.showMessage();
           this.selectedFiles = [];
           this.fileList.emit();
         }, 
-        (error) => {
-          console.log(error);
+        error => {
         }
       )
     );

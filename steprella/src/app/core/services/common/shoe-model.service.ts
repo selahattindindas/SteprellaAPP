@@ -18,17 +18,20 @@ export class ShoeModelService {
       action: "get-all"
     }).pipe(
       map(response => response.data),
-      catchError(error => {
+      catchError(_error => {
         return of([]);
       })
     );
   }
 
-  getById(id: number): Observable<ListShoeModel> {
+  getById(id: number): Observable<ListShoeModel | null> {
     return this.httpClientService.get<BaseResponse<ListShoeModel>>({
       controller: "shoe-models"
     }, id).pipe(
-      map(response => response.data)
+      map(response => response.data),
+      catchError(() => {
+        return of(null);
+      })
     )
   }
 
@@ -37,45 +40,45 @@ export class ShoeModelService {
       controller: "shoe-models",
       action: "by-brand-id"
     }, id).pipe(
-      map(response => response.data)
+      map(response => response.data),
+      catchError(_error => {
+        return of([]);
+      })
     )
   }
 
-  create(body: CreateShoeModel, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<CreateShoeModel> {
+  create(body: CreateShoeModel, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<CreateShoeModel | null> {
     return this.httpClientService.post<CreateShoeModel>({
       controller: "shoe-models",
-      action: "create-brand"
+      action: "create-shoe-model"
     }, body).pipe(
       tap(() => successCallBack()),
-      catchError(error => {
-        errorCallBack(error.message);
-        return throwError(() => new Error(error.message));
+      catchError(() => {
+        return of(null);
       })
     );
   }
 
-  update(body: UpdateShoeModel, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<UpdateShoeModel> {
+  update(body: UpdateShoeModel, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<UpdateShoeModel | null> {
     return this.httpClientService.put<UpdateShoeModel>({
       controller: "shoe-models",
-      action: "update-brand"
+      action: "update-shoe-model"
     }, body).pipe(
       tap(() => successCallBack()),
-      catchError(error => {
-        errorCallBack(error.message);
-        return throwError(() => new Error(error.message));
+      catchError(() => {
+        return of(null);
       })
-    )
+    );
   }
 
-  delete(id: number, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<ListShoeModel> {
+  delete(id: number, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<ListShoeModel | null> {
     return this.httpClientService.delete<BaseResponse<ListShoeModel>>({
       controller: "shoe-models"
     }, id).pipe(
       map(response => response.data),
       tap(() => successCallBack()),
-      catchError(error => {
-        errorCallBack(error.message);
-        return throwError(() => new Error(error.message));
+      catchError(() => {
+        return of(null);
       })
     )
   }

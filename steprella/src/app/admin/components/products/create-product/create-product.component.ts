@@ -4,6 +4,7 @@ import { ProductService } from '../../../../core/services/common/product.service
 import { ProductFormComponent } from '../../../shared/product-form/product-form.component';
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { firstValueFrom } from 'rxjs';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-create-product',
@@ -16,17 +17,17 @@ import { firstValueFrom } from 'rxjs';
 export class CreateProductComponent {
   private readonly productService = inject(ProductService);
   private readonly dialogRef = inject(MatDialogRef<CreateProductComponent>);
+  private readonly sweetAlertService = inject(SweetAlertService);
 
   async onSubmit(formData: CreateProduct) {
-    await firstValueFrom(this.productService.create(formData, 
+    await firstValueFrom(this.productService.create(formData,
       () => {
-      console.log("Başarıyla eklendi");
-      this.dialogRef.close();
-    }, 
-    (errorMessage) => {
-      console.error("Hata: ", errorMessage);
-    }
-  ));
+        this.sweetAlertService.showMessage();
+        this.dialogRef.close();
+      },
+      error => {
+      }
+    ));
 
   }
 }

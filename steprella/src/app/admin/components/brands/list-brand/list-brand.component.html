@@ -1,1 +1,65 @@
-<p>list-brand works!</p>
+<mat-form-field>
+    <mat-label>Ara</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+</mat-form-field>
+
+<app-create-brand (brandList)="getAll()" />
+<div>
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sıra </th>
+            <td mat-cell *matCellDef="let element; let i = index">{{element.id}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Marka </th>
+            <td mat-cell *matCellDef="let element">
+                @if(editingBrandId !== element.id){
+                <span>{{element.name}}</span>
+                }
+                @else(){
+                <app-update-brand [brandData]="element" (brandList)="getAll()" (brandUpdated)="editingBrandId = null" />
+                }
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="options">
+            <th mat-header-cell *matHeaderCellDef>İşlemler</th>
+            <td mat-cell *matCellDef="let element">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <button mat-icon-button (click)="listShoeModelDialog(element.id)">
+                    <mat-icon>open_in_new</mat-icon>
+                </button>
+                    @if(editingBrandId !== element.id){
+                    <button mat-icon-button (click)="editRow(element.id)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+
+                    <button mat-icon-button (click)="delete(element.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    }
+                    @else(){
+                    <button mat-icon-button (click)="submitUpdate()">
+                        <mat-icon>check_circle</mat-icon>
+                    </button>
+
+                    <button mat-icon-button (click)="editingBrandId = null">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                    }
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">Filtre ile eşleşen veri bulunamadı "{{input.value}}"</td>
+        </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

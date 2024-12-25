@@ -4,7 +4,6 @@ import { ProductVariantService } from '../../../../core/services/common/product-
 import { Observable, of } from 'rxjs';
 import { ListProductVariant } from '../../../../core/models/product-variants/list-product-variant';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
 import { DialogService } from '../../../../core/services/dialog.service';
 import { ListSizeComponent } from '../../size/list-size/list-size.component';
 import { ListFileComponent } from '../../file/list-file/list-file.component';
@@ -36,7 +35,6 @@ export class ListProductVariantComponent implements OnInit {
   getProductVariantByProductId(): void {
     this.listProductVarian$ = this.productVariantService.getByProductId(this.productId);
   }
-
 
   editRow(variantId: number) {
     this.editingVariantId = this.editingVariantId === variantId ? null : variantId;

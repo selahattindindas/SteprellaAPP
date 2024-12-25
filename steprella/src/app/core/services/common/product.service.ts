@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
-import { catchError, firstValueFrom, map, Observable, of, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { BaseResponse } from '../../models/base-responses/base-response';
 import { ListProduct } from '../../models/products/list-product';
 import { CreateProduct } from '../../models/products/create-product';
@@ -18,21 +18,24 @@ export class ProductService {
       action: "get-all"
     }).pipe(
       map(response => response.data),
-      catchError(error => {
+      catchError(_error => {
         return of([]);
       })
     );
   }
 
-  getById(id: number): Observable<ListProduct> {
+  getById(id: number): Observable<ListProduct | null> {
     return this.httpClientService.get<BaseResponse<ListProduct>>({
       controller: "products"
     }, id).pipe(
-      map(response => response.data)
+      map(response => response.data),
+      catchError(() => {
+        return of(null);
+      })
     )
   }
 
-  create(body: CreateProduct, successCallBack: () => void, errorCallBack: (errorMessage: string) => void):Observable<CreateProduct>{
+  create(body: CreateProduct, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void):Observable<CreateProduct | null>{
     return this.httpClientService.post<CreateProduct>({
       controller: "products",
       action: "create-product"
@@ -41,14 +44,13 @@ export class ProductService {
         successCallBack(); 
         return response;
       }),
-      catchError(errorResponse => {
-        errorCallBack(errorResponse);  
-        return of(null as any);  
+      catchError(() => {
+        return of(null);
       })
     );
   }
 
-  update(body: UpdateProduct, successCallBack: () => void, errorCallBack: (errorMessage: string) => void):Observable<CreateProduct>{
+  update(body: UpdateProduct, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void):Observable<CreateProduct | null>{
    return this.httpClientService.put<UpdateProduct>({
       controller: "products",
       action: "update-product"
@@ -57,22 +59,20 @@ export class ProductService {
         successCallBack(); 
         return response;
       }),
-      catchError(errorResponse => {
-        errorCallBack(errorResponse);  
-        return of(null as any);  
+      catchError(() => {
+        return of(null);
       })
     );
   }
   
-  delete(id: number, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<ListProduct> {
+  delete(id: number, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<ListProduct | null> {
     return this.httpClientService.delete<BaseResponse<ListProduct>>({
       controller: "products"
     }, id).pipe(
       map(response => response.data),
       tap(() => successCallBack()),
-      catchError(error => {
-        errorCallBack(error.message);
-        return throwError(() => new Error(error.message));
+      catchError(() => {
+        return of(null);
       })
     )
   }

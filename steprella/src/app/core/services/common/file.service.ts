@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
-import { catchError, firstValueFrom, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { BaseResponse } from '../../models/base-responses/base-response';
 import { ListProductFile } from '../../models/files/list-product-file';
 import { CreateFile } from '../../models/files/create-file';
@@ -13,18 +13,19 @@ import { ListFile } from '../../models/files/list-file';
 export class FileService {
     private readonly httpClientService = inject(HttpClientService);
 
-    getByProductVariantId(productVariantId: number): Observable<ListProductFile> {
+    getByProductVariantId(productVariantId: number): Observable<ListProductFile | null> {
         return this.httpClientService.get<BaseResponse<ListProductFile>>({
             controller: "product-files",
             action: "by-product-variant-id"
         }, productVariantId).pipe(
-            map(response => response.data), catchError(error => {
-                return of({} as ListProductFile);
+            map(response => response.data),
+            catchError(() => {
+              return of(null);
             })
         );
     }
 
-    create(body: CreateFile[], successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<any> {
+    create(body: CreateFile[], successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<any | null> {
       const formData: FormData = new FormData();
   
       body.forEach(upload => {
@@ -46,14 +47,13 @@ export class FileService {
           successCallBack(); 
           return response;
         }),
-        catchError(errorResponse => {
-          errorCallBack(errorResponse);  
-          return of(null);  
+        catchError(() => {
+          return of(null);
         })
       );
     }
 
-    delete(id: number, successCallBack: () => void, errorCallBack: (errorMessage: string) => void): Observable<ListFile> {
+    delete(id: number, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<ListFile | null> {
       return this.httpClientService.delete<BaseResponse<ListFile>>({
         controller: 'product-files'
       }, id).pipe(
@@ -61,9 +61,8 @@ export class FileService {
           successCallBack(); 
           return response.data;
         }),
-        catchError(errorResponse => {
-          errorCallBack(errorResponse);  
-          return of();  
+        catchError(() => {
+          return of(null);
         })
       );
     }
