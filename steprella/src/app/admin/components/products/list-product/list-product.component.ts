@@ -89,7 +89,7 @@ export class ListProductComponent implements OnInit, AfterViewInit {
     this.dialogService.openDialog({
       componentType: CreateProductComponent,
       afterClosed: () => console.log('Dialog Açıldı'),
-      options: { width: '500px', height: '400px' },
+      options: { width: '700px', height: '400px' },
     });
   }
 
@@ -98,7 +98,7 @@ export class ListProductComponent implements OnInit, AfterViewInit {
       componentType: UpdateProductComponent,
       data: { id: id },
       afterClosed: () => console.log('Dialog Açıldı'),
-      options: { width: '500px', height: '400px' },
+      options: { width: '700px', height: '400px' },
     });
   }
 }

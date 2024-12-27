@@ -23,7 +23,7 @@ import { ListProduct } from '../../../core/models/products/list-product';
 })
 export class ProductFormComponent implements OnInit, OnChanges {
   @Input() btnTitle = '';
-  @Input() listProduct$: Observable<ListProduct> | undefined;
+  @Input() listProduct$: Observable<ListProduct | null> | undefined;
   @Output() itemSubmit = new EventEmitter();
 
   private readonly formBuilder = inject(FormBuilder);

@@ -49,7 +49,7 @@ export class ListProductVariantComponent implements OnInit {
       componentType: ListSizeComponent,
       data: { productVariantId: productVariantId },
       afterClosed: () => console.log('Dialog Açıldı'),
-      options: { width: '1000px', height: '400px' },
+      options: { width: '700px', height: '400px' },
     });
   }
 
@@ -58,7 +58,7 @@ export class ListProductVariantComponent implements OnInit {
         componentType: ListFileComponent,
         data: { productVariantId: productVariantId },
         afterClosed: () => console.log('Dialog Açıldı'),
-        options: { width: '500px', height: '400px' },
+        options: { width: '700px', height: '400px' },
       });
     }
 }

@@ -18,3 +18,12 @@ html {
 @import 'tailwindcss/utilities.css';
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+::ng-deep .mat-dialog-container {
+  max-width: 1900px !important;
+}
+:root {
+  @include mat.dialog-overrides((
+    container-max-width: 1200px
+  ));
+}
