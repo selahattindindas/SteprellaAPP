@@ -9,6 +9,7 @@ import { ListSize } from "../../../../core/models/sizes/list-size";
 import { SizeService } from "../../../../core/services/common/size.service";
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle } from "@angular/material/dialog";
 import { UpdateSizeComponent } from "../update-size/update-size.component";
+import { SweetAlertService } from "../../../../core/services/sweet-alert.service";
 
 
 @Component({
@@ -21,10 +22,11 @@ import { UpdateSizeComponent } from "../update-size/update-size.component";
 })
 export class ListSizeComponent implements OnInit {
   private readonly sizeService = inject(SizeService);
+  private readonly sweetAlertService = inject(SweetAlertService);
   readonly data = inject<{ productVariantId: number }>(MAT_DIALOG_DATA);
 
   @ViewChild(UpdateSizeComponent) updateSizeComponent!: UpdateSizeComponent;
-  dataSource = new MatTableDataSource<ListSize>([]);
+  dataSource!: MatTableDataSource<ListSize>;
   displayedColumns: string[] = ['id', 'sizeValue', 'stockQuantity', 'active', 'option'];
 
   editingStockId: number | null = null;
@@ -39,13 +41,13 @@ export class ListSizeComponent implements OnInit {
   }
 
   async delete(id: number) {
-    await firstValueFrom(this.sizeService.delete(id, () => {
-      console.log("Silindi");
-      this.getSize();
-    },
-      error => {
-        console.log(error);
-      }));
+    const sweetAlertResult = await this.sweetAlertService.confirmation();
+    if (sweetAlertResult.isConfirmed) {
+      this.sizeService.delete(id, () => {
+        this.sweetAlertService.showMessage();
+        this.getSize();
+      });
+    }
   }
 
   editRow(rowId: number) {

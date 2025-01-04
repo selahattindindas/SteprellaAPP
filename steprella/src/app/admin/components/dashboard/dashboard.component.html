@@ -1,1 +1,61 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+  <!-- İstatistik Kartları -->
+  <div class="stat-cards">
+    <div class="stat-card" *ngFor="let stat of stats" [style.--card-color]="stat.color">
+      <div class="card-icon">
+        <i [class]="stat.icon"></i>
+      </div>
+      <div class="card-content">
+        <h3>{{ stat.title }}</h3>
+        <p class="value">{{ stat.value | number }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ana İçerik Grid -->
+  <div class="dashboard-grid">
+    <!-- Son Aktiviteler -->
+    <div class="dashboard-card activities">
+      <h2>Son Aktiviteler</h2>
+      <div class="activity-list">
+        <div class="activity-item" *ngFor="let activity of recentActivities">
+          <div class="activity-status" [class]="activity.status"></div>
+          <div class="activity-content">
+            <h4>{{ activity.action }}</h4>
+            <p>{{ activity.user }} - {{ activity.time }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- En Çok Satan Ürünler -->
+    <div class="dashboard-card top-products">
+      <h2>En Çok Satan Ürünler</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Ürün</th>
+            <th>Satış</th>
+            <th>Gelir</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of topProducts">
+            <td>{{ product.name }}</td>
+            <td>{{ product.sales }}</td>
+            <td>{{ product.revenue | currency:'TRY':'symbol-narrow':'1.0-0' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Grafik Placeholder -->
+    <div class="dashboard-card chart">
+      <h2>Satış Grafiği</h2>
+      <div class="chart-placeholder">
+        <p>Buraya grafik eklenecek</p>
+        <small>Örnek: Chart.js veya NGX-Charts kullanılabilir</small>
+      </div>
+    </div>
+  </div>
+</div>

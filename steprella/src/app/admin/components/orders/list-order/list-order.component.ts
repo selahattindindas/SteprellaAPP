@@ -22,21 +22,22 @@ export class ListOrderComponent implements OnInit{
 
   @ViewChild(UpdateOrderComponent) updateOrderComponent!: UpdateOrderComponent;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
-  dataSource = new MatTableDataSource<ListOrder>()
+  dataSource! : MatTableDataSource<ListOrder>;
   displayedColumns: string[] = ['id', 'orderNumber', 'status', 'option'];
   editingOrderId: number | null = null;
 
-  ngOnInit(): void {
-    this.getAll();
+  async ngOnInit(){
+    await this.getAll();
   }
 
   async getAll() {
-    const data = await firstValueFrom(this.orderService.getByUserId(this.data.userId));
-    this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    const pageIndex = this.paginator ? this.paginator.pageIndex : 0;
+    const pageSize = this.paginator ? this.paginator.pageSize : 5;
+
+    const allOrder = await firstValueFrom(this.orderService.getByUserId(this.data.userId, pageIndex, pageSize));
+    this.dataSource = new MatTableDataSource(allOrder.data);
+    this.paginator.length = allOrder.totalCount;
   }
 
   editRow(rowId: number) {

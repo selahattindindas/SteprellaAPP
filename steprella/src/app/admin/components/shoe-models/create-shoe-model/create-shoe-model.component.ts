@@ -4,7 +4,6 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CreateShoeModel } from '../../../../core/models/shoe-models/create-shoe-model';
 import { ShoeModelService } from '../../../../core/services/common/shoe-model.service';
-import { firstValueFrom } from 'rxjs';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
@@ -23,7 +22,7 @@ export class CreateShoeModelComponent {
 
   createShoeModel!: CreateShoeModel;
 
-  async onSubmit() {
+  onSubmit() {
     if (!this.shoeModelForm.valid) return;
 
     this.createShoeModel = {
@@ -31,14 +30,12 @@ export class CreateShoeModelComponent {
       brandId: this.brandId
     };
 
-    await firstValueFrom(this.shoeModelService.create(this.createShoeModel,
+    this.shoeModelService.create(this.createShoeModel,
       () => {
         this.sweetAlertService.showMessage();
         this.shoeModelList.emit();
         this.shoeModelForm.reset();
-      },
-      error => {
       }
-    ));
+    );
   }
 }

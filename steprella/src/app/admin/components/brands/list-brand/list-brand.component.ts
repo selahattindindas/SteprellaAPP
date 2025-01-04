@@ -5,7 +5,7 @@ import { DialogService } from '../../../../core/services/dialog.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { firstValueFrom } from 'rxjs';
 import { CreateBrandComponent } from "../create-brand/create-brand.component";
@@ -26,40 +26,40 @@ export class ListBrandComponent implements OnInit {
   private readonly brandService = inject(BrandService);
   private readonly dialogService = inject(DialogService);
   private readonly sweetAlertService = inject(SweetAlertService);
-
-  @ViewChild(UpdateBrandComponent) updateBrandComponent!: UpdateBrandComponent;
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(UpdateBrandComponent) updateBrandComponent!: UpdateBrandComponent;
 
-  dataSource = new MatTableDataSource<ListBrand>()
+  dataSource!: MatTableDataSource<ListBrand>;
+
   displayedColumns: string[] = ['id', 'name', 'options'];
   editingBrandId: number | null = null;
 
-  ngOnInit(): void {
-    this.getAll();
+  async ngOnInit() {
+    await this.getAll();
   }
 
   async getAll() {
-    const data = await firstValueFrom(this.brandService.getAll());
-    this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    const pageIndex = this.paginator ? this.paginator.pageIndex : 0;
+    const pageSize = this.paginator ? this.paginator.pageSize : 5;
+
+    const allBrand = await firstValueFrom(this.brandService.getAll(pageIndex, pageSize))
+    this.dataSource = new MatTableDataSource(allBrand.data);
+    this.paginator.length = allBrand.totalCount;
   }
 
   async delete(id: number) {
     const sweetAlertResult = await this.sweetAlertService.confirmation();
-    if(sweetAlertResult.isConfirmed){
-      await firstValueFrom(this.brandService.delete(id,
+    if (sweetAlertResult.isConfirmed) {
+      this.brandService.delete(id,
         () => {
           this.sweetAlertService.showMessage();
           this.getAll();
-        },
-        error => {
         }
-      ))
+      )
     }
   }
-
+  
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim();
     this.dataSource.filter = filterValue;
@@ -79,7 +79,7 @@ export class ListBrandComponent implements OnInit {
   listShoeModelDialog(brandId: number): void {
     this.dialogService.openDialog({
       componentType: ListShoeModelComponent,
-      data: {brandId: brandId},
+      data: { brandId: brandId },
       afterClosed: () => console.log('Dialog Açıldı'),
       options: { width: '500px', height: '400px' },
     });

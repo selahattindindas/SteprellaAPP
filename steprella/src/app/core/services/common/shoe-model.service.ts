@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
-import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { BaseResponse } from '../../models/base-responses/base-response';
 import { ListShoeModel } from '../../models/shoe-models/list-shoe-model';
 import { CreateShoeModel } from '../../models/shoe-models/create-shoe-model';
@@ -12,74 +12,89 @@ import { UpdateShoeModel } from '../../models/shoe-models/update-shoe-model';
 export class ShoeModelService {
   private readonly httpClientService = inject(HttpClientService);
   
-  getAll(): Observable<ListShoeModel[]> {
+  getAll(page?: number, size?:number): Observable<BaseResponse<ListShoeModel[]>> {
+    let queryString = '';
+
+    if (page !== undefined && size !== undefined) {
+      queryString = `page=${page}&size=${size}`;
+    }
+
     return this.httpClientService.get<BaseResponse<ListShoeModel[]>>({
       controller: "shoe-models",
-      action: "get-all"
+      action: "get-all",
+      queryString: queryString
     }).pipe(
-      map(response => response.data),
-      catchError(_error => {
-        return of([]);
+      map(response => ({
+        totalCount: response.totalCount,
+        data: response.data.length > 0 ? response.data : []
       })
-    );
+    ));
   }
 
-  getById(id: number): Observable<ListShoeModel | null> {
+  getById(id: number): Observable<ListShoeModel> {
     return this.httpClientService.get<BaseResponse<ListShoeModel>>({
       controller: "shoe-models"
     }, id).pipe(
-      map(response => response.data),
-      catchError(() => {
-        return of(null);
-      })
+      map(response => response.data || null)
     )
   }
 
-  getByBrandId(id: number): Observable<ListShoeModel[]> {
+  getByBrandId(brandId: number, page?: number, size?: number): Observable<BaseResponse<ListShoeModel[]>> {
+    let queryString = '';
+
+    if (page !== undefined && size !== undefined) {
+      queryString = `page=${page}&size=${size}`;
+    }
+
     return this.httpClientService.get<BaseResponse<ListShoeModel[]>>({
       controller: "shoe-models",
-      action: "by-brand-id"
-    }, id).pipe(
-      map(response => response.data),
-      catchError(_error => {
-        return of([]);
+      action: `by-brand-id/${brandId}`,
+      queryString: queryString
+    }).pipe(
+      map(response => ({
+        totalCount: response.totalCount,
+        data: response.data.length > 0 ? response.data : []
       })
-    )
+    ));
   }
 
-  create(body: CreateShoeModel, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<CreateShoeModel | null> {
-    return this.httpClientService.post<CreateShoeModel>({
+  async create(body: CreateShoeModel, successCallBack: () => void): Promise<CreateShoeModel> {
+    const observable = this.httpClientService.post<CreateShoeModel>({
       controller: "shoe-models",
       action: "create-shoe-model"
-    }, body).pipe(
-      tap(() => successCallBack()),
-      catchError(() => {
-        return of(null);
-      })
-    );
+    }, body);
+  
+    return firstValueFrom(observable)
+      .then(response => {
+        successCallBack();
+        return response;
+      });
   }
-
-  update(body: UpdateShoeModel, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<UpdateShoeModel | null> {
-    return this.httpClientService.put<UpdateShoeModel>({
+  
+  async update(body: UpdateShoeModel, successCallBack: () => void): Promise<UpdateShoeModel> {
+    const observable = this.httpClientService.put<UpdateShoeModel>({
       controller: "shoe-models",
       action: "update-shoe-model"
-    }, body).pipe(
-      tap(() => successCallBack()),
-      catchError(() => {
-        return of(null);
-      })
-    );
+    }, body);
+  
+    return firstValueFrom(observable)
+      .then(response => {
+        successCallBack();
+        return response;
+      });
   }
-
-  delete(id: number, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<ListShoeModel | null> {
-    return this.httpClientService.delete<BaseResponse<ListShoeModel>>({
+  
+  async delete(id: number, successCallBack: () => void): Promise<ListShoeModel> {
+    const observable = this.httpClientService.delete<BaseResponse<ListShoeModel>>({
       controller: "shoe-models"
     }, id).pipe(
-      map(response => response.data),
-      tap(() => successCallBack()),
-      catchError(() => {
-        return of(null);
-      })
-    )
+      map(response => response.data)
+    );
+  
+    return firstValueFrom(observable)
+      .then(response => {
+        successCallBack();
+        return response;
+      });
   }
 }

@@ -3,7 +3,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CreateShoeModelComponent } from "../create-shoe-model/create-shoe-model.component";
 import { UpdateShoeModelComponent } from "../update-shoe-model/update-shoe-model.component";
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { firstValueFrom } from 'rxjs';
 import { ListShoeModel } from '../../../../core/models/shoe-models/list-shoe-model';
 import { ShoeModelService } from '../../../../core/services/common/shoe-model.service';
@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-list-shoe-model',
@@ -22,38 +23,38 @@ import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle } f
 })
 export class ListShoeModelComponent implements OnInit{
   private readonly shoeModelService = inject(ShoeModelService);
+  private readonly sweetAlertService = inject(SweetAlertService);
   readonly data = inject<{ brandId: number }>(MAT_DIALOG_DATA);
 
   @ViewChild(UpdateShoeModelComponent) updateShoeModelComponent!: UpdateShoeModelComponent;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
-  dataSource = new MatTableDataSource<ListShoeModel>()
+  dataSource!: MatTableDataSource<ListShoeModel>;
   displayedColumns: string[] = ['id', 'name', 'options'];
   editingShoeModelId: number | null = null;
 
-  ngOnInit(): void {
-    this.getAll();
+  async ngOnInit() {
+    await this.getAll();
   }
 
   async getAll() {
-    const data = await firstValueFrom(this.shoeModelService.getByBrandId(this.data.brandId));
-    this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    const pageIndex = this.paginator ? this.paginator.pageIndex : 0;
+    const pageSize = this.paginator ? this.paginator.pageSize : 5;
+    const allModel = await firstValueFrom(this.shoeModelService.getByBrandId(this.data.brandId, pageIndex, pageSize));
+    this.dataSource = new MatTableDataSource(allModel.data);
+    this.paginator.length = allModel.totalCount;
   }
 
-  async delete(id:number){
-    await firstValueFrom(this.shoeModelService.delete(id, 
-      () =>{
-        console.log("Başarıyla Eklendi");
-        this.dataSource.data = this.dataSource.data.filter(shoeModel => shoeModel.id !== id);
-
-      },
-      error =>{
-        console.log(error);
-      }
-    ))
+  async delete(id: number) {
+    const sweetAlertResult = await this.sweetAlertService.confirmation();
+    if (sweetAlertResult.isConfirmed) {
+      this.shoeModelService.delete(id,
+        () => {
+          this.sweetAlertService.showMessage();
+          this.getAll();
+        }
+      )
+    }
   }
 
   applyFilter(event: Event): void {

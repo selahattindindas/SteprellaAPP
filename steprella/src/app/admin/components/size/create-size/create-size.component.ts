@@ -5,7 +5,6 @@ import { MatInputModule } from '@angular/material/input';
 import { SizeService } from '../../../../core/services/common/size.service';
 import { CreateSize } from '../../../../core/models/sizes/create-size';
 import { MatButtonModule } from '@angular/material/button';
-import { firstValueFrom } from 'rxjs';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
@@ -26,7 +25,7 @@ export class CreateSizeComponent {
 
   createSize: CreateSize = { productVariantId: null, sizeValue: null, stockQuantity: null };
 
-  async onSubmit() {
+  onSubmit() {
     if (!this.form.valid) return;
 
     const create = this.createSize = {
@@ -34,15 +33,11 @@ export class CreateSizeComponent {
       productVariantId: this.productVariantId,
     }
 
-    await firstValueFrom(this.sizeService.create(create,
+    this.sizeService.create(create,
       () => {
         this.sweetAlertService.showMessage();
+        this.form.reset();
         this.sizeList.emit();
-      },
-      error => {
-
       })
-    )
-
   }
 }

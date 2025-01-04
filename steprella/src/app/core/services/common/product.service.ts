@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { BaseResponse } from '../../models/base-responses/base-response';
 import { ListProduct } from '../../models/products/list-product';
 import { CreateProduct } from '../../models/products/create-product';
@@ -12,68 +12,65 @@ import { UpdateProduct } from '../../models/products/update-product';
 export class ProductService {
   private readonly httpClientService = inject(HttpClientService);
 
-  getAll(): Observable<ListProduct[]> {
+  getAll(page: number, size: number): Observable<BaseResponse<ListProduct[]>> {
+
     return this.httpClientService.get<BaseResponse<ListProduct[]>>({
       controller: "products",
-      action: "get-all"
+      action: "get-all",
+      queryString: `page=${page}&size=${size}`
     }).pipe(
-      map(response => response.data),
-      catchError(_error => {
-        return of([]);
+      map(response => ({
+        totalCount: response.totalCount,
+        data: response.data.length > 0 ? response.data : []
       })
-    );
+    ));
   }
 
-  getById(id: number): Observable<ListProduct | null> {
+  getById(id: number): Observable<ListProduct> {
     return this.httpClientService.get<BaseResponse<ListProduct>>({
       controller: "products"
     }, id).pipe(
-      map(response => response.data),
-      catchError(() => {
-        return of(null);
-      })
+      map(response => response.data || null)
     )
   }
 
-  create(body: CreateProduct, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void):Observable<CreateProduct | null>{
-    return this.httpClientService.post<CreateProduct>({
+  async create(body: CreateProduct, successCallBack: () => void): Promise<CreateProduct> {
+    const observable = this.httpClientService.post<CreateProduct>({
       controller: "products",
       action: "create-product"
-    }, body).pipe(
-      map(response => {
-        successCallBack(); 
+    }, body);
+  
+    return firstValueFrom(observable)
+      .then(response => {
+        successCallBack();
         return response;
-      }),
-      catchError(() => {
-        return of(null);
-      })
-    );
-  }
-
-  update(body: UpdateProduct, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void):Observable<CreateProduct | null>{
-   return this.httpClientService.put<UpdateProduct>({
-      controller: "products",
-      action: "update-product"
-    }, body).pipe(
-      map(response => {
-        successCallBack(); 
-        return response;
-      }),
-      catchError(() => {
-        return of(null);
-      })
-    );
+      });
   }
   
-  delete(id: number, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<ListProduct | null> {
-    return this.httpClientService.delete<BaseResponse<ListProduct>>({
+  async update(body: UpdateProduct, successCallBack: () => void): Promise<UpdateProduct> {
+    const observable = this.httpClientService.put<UpdateProduct>({
+      controller: "products",
+      action: "update-product"
+    }, body);
+  
+    return firstValueFrom(observable)
+      .then(response => {
+        successCallBack();
+        return response;
+      });
+  }
+  
+  async delete(id: number, successCallBack: () => void): Promise<ListProduct> {
+    const observable = this.httpClientService.delete<BaseResponse<ListProduct>>({
       controller: "products"
     }, id).pipe(
-      map(response => response.data),
-      tap(() => successCallBack()),
-      catchError(() => {
-        return of(null);
-      })
-    )
+      map(response => response.data)
+    );
+  
+    return firstValueFrom(observable)
+      .then(response => {
+        successCallBack();
+        return response;
+      });
   }
 }

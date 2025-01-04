@@ -32,24 +32,19 @@ export class UpdateSizeComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  onSubmit() {
     if (!this.stockForm.valid) return;
-
+  
     const update: UpdateSize = {
       id: this.sizeData.id,
       productVariantId: this.productVariantId,
       stockQuantity: this.stockForm.value.stockQuantity,
-    }
-
-    await firstValueFrom(this.sizeService.update(update,
-        () => {
-          this.sweetAlertService.showMessage();
-          this.sizeUpdated.emit(null);
-          this.sizeList.emit();
-        },
-        error => {
-
-        })
-    )
+    };
+  
+    this.sizeService.update(update, () => {
+      this.sweetAlertService.showMessage();
+      this.sizeUpdated.emit(null);
+      this.sizeList.emit();
+    });
   }
 }

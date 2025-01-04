@@ -1,0 +1,22 @@
+<div class="example-container">
+    <form [formGroup]="authForm" (ngSubmit)="login()">
+        <mat-form-field>
+            <mat-label>E-posta</mat-label>
+            <input matInput formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Şifre</mat-label>
+            <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" />
+            <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide()">
+                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <div class="example-button-row">
+            <button type="submit" [disabled]="!authForm.valid"
+                class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer">Giriş</button>
+        </div>
+    </form>
+</div>

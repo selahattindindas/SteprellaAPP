@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
-import { catchError, map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { BaseResponse } from '../../models/base-responses/base-response';
 import { ListColor } from '../../models/colors/list-color';
 
@@ -15,20 +15,15 @@ export class ColorService {
       controller: "colors",
       action: "get-all"
     }).pipe(
-      map(response => response.data),
-      catchError(
-        () => of([])
-      ))
+      map(response => response.data.length > 0 ? response.data : [])
+    );
   }
 
-  getById(id: number): Observable<ListColor | null> {
+  getById(id: number): Observable<ListColor> {
     return this.httpClientService.get<BaseResponse<ListColor>>({
       controller: "colors"
     }, id).pipe(
-      map(response => response.data),
-      catchError(() => {
-        return of(null);
-      })
-    )
+      map(response => response.data || null)
+    );
   }
 }

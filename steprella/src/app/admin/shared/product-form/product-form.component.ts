@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChan
 import { ListCategory } from '../../../core/models/categories/list-category';
 import { ListBrand } from '../../../core/models/brands/list-brand';
 import { ListShoeModel } from '../../../core/models/shoe-models/list-shoe-model';
-import { combineLatest, Observable, of, switchMap } from 'rxjs';
+import { combineLatest, filter, map, Observable, switchMap, take } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CategoryService } from '../../../core/services/common/category.service';
 import { BrandService } from '../../../core/services/common/brand.service';
@@ -31,99 +31,103 @@ export class ProductFormComponent implements OnInit, OnChanges {
   private readonly brandService = inject(BrandService);
   private readonly shoeModelService = inject(ShoeModelService);
 
-  listCategory$: Observable<ListCategory[]> = of([]);
-  listBrand$: Observable<ListBrand[]> = of([]);
-  listShoeModel$: Observable<ListShoeModel[]> = of([]);
+  listCategory$ = this.categoryService.getAll();
+  listBrand$ = this.brandService.getAll().pipe(map(response => response.data));
+  listShoeModel$!: Observable<ListShoeModel[]>;
 
-  isEditMode: boolean = false;
+  isEditMode = false;
 
   productForm = this.formBuilder.group({
     categoryId: [0, Validators.required],
-    brandId: [0, [Validators.required]],
-    shoeModelId: [0, [Validators.required]],
-    price: [0, [Validators.required]],
-    description: ['', [Validators.required]],
-  })
+    brandId: [0, Validators.required],
+    shoeModelId: [0, Validators.required], 
+    price: [0, Validators.required],
+    description: ['', Validators.required]
+  });
 
   ngOnInit(): void {
-    this.getAll();
+    this.getShoeModel();
+    this.setupBrandIdChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['listProduct$'] && this.listProduct$) {
+    if (changes['listProduct$']?.currentValue) {
       this.isEditMode = true;
-      this.listProduct$.subscribe(product => {
-        if (product) {
-          setTimeout(() => {
-            this.getValue(product);
-          }, 200)
-        }
-      });
+      this.listProduct$?.pipe(
+        filter(Boolean),
+        take(1)
+      ).subscribe(product => this.populateForm(product));
     }
   }
 
-  getValue(product: ListProduct) {
+  getShoeModel(): void {
+    this.listShoeModel$ = this.productForm.get('brandId')?.valueChanges.pipe(
+      filter(Boolean),
+      switchMap(brandId => this.shoeModelService.getByBrandId(brandId)),
+      map(response => response.data)
+    ) || new Observable<ListShoeModel[]>();
+  }
+
+  setupBrandIdChanges(): void {
+    this.productForm.get('brandId')?.valueChanges.pipe(
+      filter(Boolean),
+      switchMap(brandId => this.shoeModelService.getByBrandId(brandId)),
+      map(response => response.data)
+    ).subscribe();
+  }
+
+  populateForm(product: ListProduct): void {
     combineLatest([
-      this.listBrand$ ?? of([]),
-      this.listCategory$ ?? of([]),
-      this.listShoeModel$ ?? of([])
-    ])
-      .pipe(
-        switchMap(([brandList, categoryList, shoeModelList]) => {
-          const category = this.findCategory(product, categoryList);
-          const brand = brandList.find(b => b.name === product.brandName);
-          const shoeModel = brand ? shoeModelList.find(sm => sm.name === product.shoeModelName) : null;
-
-          return of({ category, brand, shoeModel });
-        })
-      )
-      .subscribe(({ category, brand, shoeModel }) => {
-        this.productForm.patchValue({
-          categoryId: category?.id || null,
-          brandId: brand?.id || null,
-          shoeModelId: shoeModel?.id || null,
-          price: product.price || null,
-          description: product.description || ''
+      this.listBrand$,
+      this.listCategory$
+    ]).pipe(take(1)).subscribe(([brands, categories]) => {
+      const category = this.findCategory(product, categories);
+      const brand = brands.find(b => b.name === product.brandName);
+      
+      if (brand) {
+        this.shoeModelService.getByBrandId(brand.id).pipe(take(1)).subscribe(({data}) => {
+          const shoeModel = data.find(sm => sm.name === product.shoeModelName) || null;
+          this.updateForm(category, brand, shoeModel, product);
         });
-      });
-  }
-
-  private findCategory(product: ListProduct, categoryList: ListCategory[]) {
-    return categoryList.reduce((found, c) => {
-      if (c.id === product.category.parentId) {
-        const child = c.children.find(child => child.name === product.category.name);
-        return child || found;
+      } else {
+        this.updateForm(category, null, null, product);
       }
-      return found;
-    }, null as ListCategory | null);
+    });
   }
 
-  getAll() {
-    this.listBrand$ = this.brandService.getAll();
-    this.listCategory$ = this.categoryService.getAll();
-
-    this.productForm.get('brandId')?.valueChanges
-      .pipe(
-        switchMap(brandId => brandId ? this.shoeModelService.getByBrandId(brandId) : of([]))
-      )
-      .subscribe(models => this.listShoeModel$ = of(models));
+  updateForm(category: ListCategory | null, brand: ListBrand | null, shoeModel: ListShoeModel | null, product: ListProduct): void {
+    this.productForm.patchValue({
+      categoryId: category?.id || null,
+      brandId: brand?.id || null,
+      shoeModelId: shoeModel?.id || null,
+      price: product.price || null,
+      description: product.description || ''
+    });
   }
 
-  onSubmit() {
+  findCategory(product: ListProduct, categories: ListCategory[]): ListCategory | null {
+    for (const category of categories) {
+      if (category.id === product.category.parentId) {
+        const child = category.children.find(c => c.name === product.category.name);
+        if (child) return child;
+      }
+    }
+    return null;
+  }
+
+  onSubmit(): void {
     if (!this.productForm.valid) return;
 
     const formData = this.productForm.value;
-
+    
     if (this.isEditMode) {
-      this.listProduct$?.subscribe(product => {
+      this.listProduct$?.pipe(take(1)).subscribe(product => {
         if (product) {
-          const formattedData = { ...formData, id: product.id };
-          this.itemSubmit.emit(formattedData);
+          this.itemSubmit.emit({ ...formData, id: product.id });
         }
       });
     } else {
       this.itemSubmit.emit(formData);
     }
   }
-
 }

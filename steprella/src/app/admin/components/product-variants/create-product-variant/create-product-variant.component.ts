@@ -6,7 +6,6 @@ import { ColorService } from '../../../../core/services/common/color.service';
 import { CommonModule } from '@angular/common';
 import { CreateProductVariant } from '../../../../core/models/product-variants/create-product-variant';
 import { ProductVariantService } from '../../../../core/services/common/product-variant.service';
-import { firstValueFrom } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
@@ -30,7 +29,7 @@ export class CreateProductVariantComponent {
   listColor$ = this.colorService.getAll();
   createVariant: CreateProductVariant = { productId: null, colorId: null, active: false };
 
-  async onSubmit() {
+  onSubmit() {
     if (!this.variantForm.valid) return;
 
     this.createVariant = {
@@ -39,13 +38,11 @@ export class CreateProductVariantComponent {
       active: false
     };
 
-    await firstValueFrom(this.productVariantService.create(this.createVariant,
+    this.productVariantService.create(this.createVariant,
       () => {
         this.sweetAlertService.showMessage();
         this.variantForm.reset();
         this.variantList.emit();
-      },
-      error => {
-      }))
+      });
   }
 }

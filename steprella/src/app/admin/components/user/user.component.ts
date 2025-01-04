@@ -24,20 +24,20 @@ export class UserComponent implements OnInit{
   private readonly dialogService = inject(DialogService);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
-  dataSource = new MatTableDataSource<ListUser>()
+  dataSource! : MatTableDataSource<ListUser>;
   displayedColumns: string[] = ['id', 'email', 'fullName', 'phone', 'option'];
 
-  ngOnInit(): void {
-    this.getAll();
+  async ngOnInit() {
+    await this.getAll();
   }
 
   async getAll() {
-    const data = await firstValueFrom(this.userService.getAll());
-    this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    const pageIndex = this.paginator ? this.paginator.pageIndex : 0;
+    const pageSize = this.paginator ? this.paginator.pageSize : 5;
+    const allUser = await firstValueFrom(this.userService.getAll(pageIndex, pageSize));
+    this.dataSource = new MatTableDataSource(allUser.data);
+    this.paginator.length = allUser.totalCount;
   }
 
   applyFilter(event: Event): void {

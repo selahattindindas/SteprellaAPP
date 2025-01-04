@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle } f
 import { FilePipe } from '../../../../shared/pipes/file.pipe';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { firstValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ListProductFile } from '../../../../core/models/files/list-product-file';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
@@ -36,15 +36,11 @@ export class ListFileComponent implements OnInit {
   async delete(id: number): Promise<void> {
     const sweetAlertResult = await this.sweetAlertService.confirmation();
     if (sweetAlertResult.isConfirmed) {
-      await firstValueFrom(this.fileService.delete(id,
+      this.fileService.delete(id,
         () => {
           this.sweetAlertService.showMessage();
           this.getFile();
-        },
-        error => {
         }
-      ))
-    }
-
+      )}
   }
 }

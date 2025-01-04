@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit
 import { FormsModule, NgForm } from '@angular/forms';
 import { BrandService } from '../../../../core/services/common/brand.service';
 import { UpdateBrand } from '../../../../core/models/brands/update-brand';
-import { firstValueFrom } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
@@ -31,7 +30,7 @@ export class UpdateBrandComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  onSubmit() {
     if (!this.brandForm.valid) return;
 
     this.updateBrand = {
@@ -39,15 +38,12 @@ export class UpdateBrandComponent implements OnInit {
       name: this.brandForm.value.name
     }
 
-    await firstValueFrom(
-      this.brandService.update(this.updateBrand,
-        () => {
-          this.brandUpdated.emit(null);
-          this.brandList.emit();
-          this.sweetAlertService.showMessage();
-        },
-        error => {
-        })
-    )
+    this.brandService.update(this.updateBrand,
+      () => {
+        this.brandUpdated.emit(null);
+        this.brandList.emit();
+        this.sweetAlertService.showMessage();
+      })
+
   }
 }

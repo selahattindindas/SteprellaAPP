@@ -4,7 +4,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CreateBrand } from '../../../../core/models/brands/create-brand';
-import { firstValueFrom } from 'rxjs';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
@@ -30,14 +29,12 @@ export class CreateBrandComponent {
       name: this.brandForm.value.name
     };
 
-    await firstValueFrom(this.brandService.create(this.createBrand,
+    this.brandService.create(this.createBrand,
       () => {
         this.sweetAlertService.showMessage();
         this.brandList.emit();
         this.brandForm.reset();
-      },
-      error => {
       }
-    ));
+    );
   }
 }

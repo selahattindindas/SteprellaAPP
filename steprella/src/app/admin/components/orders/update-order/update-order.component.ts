@@ -8,7 +8,6 @@ import { SweetAlertService } from '../../../../core/services/sweet-alert.service
 import { OrderStatus } from '../../../../core/enums/order-status-enum';
 import { OrderStatusPipe } from '../../../../shared/pipes/order-status.pipe';
 import { UpdateOrder } from '../../../../core/models/orders/update-order';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-update-order',
@@ -32,7 +31,7 @@ export class UpdateOrderComponent {
   @Output() orderUpdated = new EventEmitter<number | null>();
   @Output() orderList = new EventEmitter<void>();
 
-  async onSubmit() {
+  onSubmit() {
     if (!this.orderForm.valid) return;
 
     const update: UpdateOrder = {
@@ -40,15 +39,13 @@ export class UpdateOrderComponent {
       status: this.orderForm.value.status
     }
 
-    await firstValueFrom(this.orderService.update(update,
+    this.orderService.update(update,
       () => {
         this.sweetAlertService.showMessage();
         this.orderUpdated.emit(null);
         this.orderList.emit();
-      },
-      error => {
       }
-    ))
+    )
   }
 
 }

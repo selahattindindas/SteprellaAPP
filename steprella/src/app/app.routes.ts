@@ -1,10 +1,14 @@
 import { Routes } from '@angular/router';
-import { ListProductComponent } from './admin/components/products/list-product/list-product.component';
-import { ListBrandComponent } from './admin/components/brands/list-brand/list-brand.component';
-import { UserComponent } from './admin/components/user/user.component';
 
 export const routes: Routes = [
-    { path: 'product', component: ListProductComponent},
-    { path: 'brand', component: ListBrandComponent },
-    { path: 'users', component: UserComponent},
+    { 
+        path: 'admin', 
+        loadChildren: () => import('./admin/admin.routes').then(m => m.adminRoutes)
+    },
+
+    {
+        path: 'admin/login',
+        loadComponent: () => import('./admin/components/auth/auth.component').then(m => m.AuthComponent),
+        title: 'Steprella Admin Panel Giriş Sayfası',
+    },
 ];

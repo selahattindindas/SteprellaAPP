@@ -7,6 +7,6 @@ export interface ListProduct {
     shoeModelName: string;
     category: ListCategory;
     price: number;
-    createdDate? : string;
-    updatedDate? : string;
+    createdDate?: string;
+    updatedDate?: string;
 }

@@ -14,12 +14,22 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { DialogService } from '../../../../core/services/dialog.service';
 import { CreateProductComponent } from '../create-product/create-product.component';
 import { UpdateProductComponent } from '../update-product/update-product.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-list-product',
-  imports: [CommonModule, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule,
-    MatExpansionModule, ListProductVariantComponent],
   standalone: true,
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatExpansionModule,
+    ListProductVariantComponent
+  ],
   templateUrl: './list-product.component.html',
   styleUrl: './list-product.component.scss',
   animations: [
@@ -31,7 +41,7 @@ import { UpdateProductComponent } from '../update-product/update-product.compone
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListProductComponent implements OnInit, AfterViewInit {
+export class ListProductComponent implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly dialogService = inject(DialogService);
 
@@ -39,24 +49,35 @@ export class ListProductComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   listProduct: ListProduct | undefined;
-  dataSource = new MatTableDataSource<ListProduct>();
-  columnsToDisplay = ['id', 'categoryName', 'brandName', 'shoeModelName', 'price', 'expand'];
+  dataSource!: MatTableDataSource<ListProduct>;
+  columnsToDisplay = [
+    'id',
+    'categoryName',
+    'brandName',
+    'shoeModelName',
+    'price',
+    'expand'
+  ];
 
-  ngOnInit() {
-    this.getAll();
+  async ngOnInit(): Promise<void> {
+    await this.getAll();
+    this.initializeDataSource();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  private initializeDataSource(): void {
     this.dataSource.filterPredicate = this.createFilterPredicate();
     this.dataSource.sortingDataAccessor = this.createSortingDataAccessor();
   }
-
-  getAll() {
-    this.productService.getAll().subscribe((products) => {
-      this.dataSource.data = products;
-    });
+  
+  async getAll(): Promise<void> {
+    const pageIndex = this.paginator?.pageIndex ?? 0;
+    const pageSize = this.paginator?.pageSize ?? 5;
+    
+    const allProduct = await firstValueFrom(this.productService.getAll(pageIndex, pageSize));
+    
+    this.dataSource = new MatTableDataSource(allProduct.data);
+    this.paginator.length = allProduct.totalCount;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event): void {
@@ -65,23 +86,28 @@ export class ListProductComponent implements OnInit, AfterViewInit {
     this.paginator?.firstPage();
   }
 
-  createFilterPredicate(): (data: ListProduct, filter: string) => boolean {
+  private createFilterPredicate(): (data: ListProduct, filter: string) => boolean {
     return (data, filter) => {
-      const filterLowerCase = filter.toLowerCase();
-      const categoryName = data.category?.name.toLowerCase() || '';
-      return (
-        categoryName.includes(filterLowerCase) ||
-        data.brandName.toLowerCase().includes(filterLowerCase) ||
-        data.shoeModelName.toLowerCase().includes(filterLowerCase)
-      );
+      const searchStr = [
+        data.category.name,
+        data.brandName,
+        data.shoeModelName
+      ].join(' ').toLowerCase();
+      
+      return searchStr.includes(filter.toLowerCase());
     };
   }
 
-  createSortingDataAccessor(): (item: ListProduct, property: string) => string {
+  private createSortingDataAccessor(): (item: ListProduct, property: string) => string | number {
     return (item, property) => {
-      return property === 'categoryName'
-        ? item.category?.name?.toLowerCase() || ''
-        : (item as any)[property];
+      switch (property) {
+        case 'categoryName':
+          return item.category.name;
+        case 'price':
+          return item.price;
+        default:
+          return (item as any)[property];
+      }
     };
   }
 
@@ -89,16 +115,22 @@ export class ListProductComponent implements OnInit, AfterViewInit {
     this.dialogService.openDialog({
       componentType: CreateProductComponent,
       afterClosed: () => console.log('Dialog Açıldı'),
-      options: { width: '700px', height: '400px' },
+      options: {
+        width: '700px',
+        height: '400px'
+      },
     });
   }
 
   updateProductDialog(id: number): void {
     this.dialogService.openDialog({
       componentType: UpdateProductComponent,
-      data: { id: id },
+      data: { id },
       afterClosed: () => console.log('Dialog Açıldı'),
-      options: { width: '700px', height: '400px' },
+      options: {
+        width: '700px',
+        height: '400px'
+      },
     });
   }
 }

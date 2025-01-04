@@ -3,7 +3,6 @@ import { ProductFormComponent } from '../../../shared/product-form/product-form.
 import { ProductService } from '../../../../core/services/common/product.service';
 import { UpdateProduct } from '../../../../core/models/products/update-product';
 import { MatDialogTitle, MatDialogContent, MatDialogRef, MAT_DIALOG_DATA, MatDialogActions } from '@angular/material/dialog';
-import { firstValueFrom } from 'rxjs';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
@@ -22,14 +21,12 @@ export class UpdateProductComponent {
 
   listProduct$ = this.productService.getById(this.data.id);
 
-  async onSubmit(formData: UpdateProduct) {
-    await firstValueFrom(this.productService.update(formData,
+  onSubmit(formData: UpdateProduct) {
+    this.productService.update(formData,
       () => {
         this.sweetAlertService.showMessage();
         this.dialogRef.close();
-      },
-      error => {
       }
-    ))
+    )
   }
 }

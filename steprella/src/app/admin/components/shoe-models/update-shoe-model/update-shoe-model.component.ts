@@ -2,8 +2,7 @@ import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angu
 import { FormsModule, NgForm } from '@angular/forms';
 import { ShoeModelService } from '../../../../core/services/common/shoe-model.service';
 import { UpdateShoeModel } from '../../../../core/models/shoe-models/update-shoe-model';
-import { firstValueFrom } from 'rxjs';
-import { Icon, SweetAlertService } from '../../../../core/services/sweet-alert.service';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-update-shoe-model',
@@ -29,7 +28,7 @@ export class UpdateShoeModelComponent {
     }
   }
 
-  async onSubmit() {
+  onSubmit() {
     if (!this.shoeModelForm.valid) return;
 
     this.updateShoeModel = {
@@ -38,14 +37,11 @@ export class UpdateShoeModelComponent {
       brandId: this.brandId
     };
 
-    await firstValueFrom(this.shoeModelService.update(this.updateShoeModel,
+    this.shoeModelService.update(this.updateShoeModel,
       () => {
         this.sweetAlertService.showMessage();
         this.shoeModelUpdated.emit(null);
         this.shoeModelList.emit();
-      },
-      error => {
-      }
-    ));
+      });
   }
 }

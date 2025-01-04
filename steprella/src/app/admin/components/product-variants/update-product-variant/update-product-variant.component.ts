@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { UpdateProductVariant } from '../../../../core/models/product-variants/update-product-variant';
 import { ProductVariantService } from '../../../../core/services/common/product-variant.service';
-import { firstValueFrom } from 'rxjs';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
@@ -36,24 +35,20 @@ export class UpdateProductVariantComponent implements OnInit {
     }
   }
 
-  async onActiveChange(newValue: boolean) {
-
+  onActiveChange(newValue: boolean) {
     this.updateVariant = {
       id: this.variantData.id,
       productId: this.productId,
       active: newValue
     }
 
-    await firstValueFrom(this.productVariantService.update(this.updateVariant,
+    this.productVariantService.update(this.updateVariant,
       () => {
         console.log("Başarıyla güncellendi");
         this.sweetAlertService.showMessage();
         this.variantUpdated.emit(null);
         this.variantList.emit();
-      },
-      eror => {
-        console.log(eror);
       }
-    ))
+    )
   }
 }

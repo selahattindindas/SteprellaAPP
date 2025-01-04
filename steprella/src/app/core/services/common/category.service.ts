@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClientService } from '../http-client.service';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { BaseResponse } from '../../models/base-responses/base-response';
 import { ListCategory } from '../../models/categories/list-category';
 import { CreateCategory } from '../../models/categories/create-category';
@@ -17,57 +17,55 @@ export class CategoryService {
       controller: "categories",
       action: "get-all"
     }).pipe(
-      map(response => response.data),
-      catchError(() => {
-        return of([]);
-      })
+      map(response => response.data.length > 0 ? response.data : [])
     );
   }
 
-  getById(id: number): Observable<ListCategory | null> {
+  getById(id: number): Observable<ListCategory> {
     return this.httpClientService.get<BaseResponse<ListCategory>>({
       controller: "categories"
     }, id).pipe(
-      map(response => response.data),
-      catchError(() => {
-        return of(null);
-      })
-    )
-  }
-
-  create(body: CreateCategory, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<CreateCategory | null> {
-    return this.httpClientService.post<CreateCategory>({
-      controller: "categories",
-      action: "create-category"
-    }, body).pipe(
-      tap(() => successCallBack()),
-      catchError(() => {
-        return of(null);
-      })
+      map(response => response.data || null)
     );
   }
 
-  update(body: UpdateCategory, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<UpdateCategory | null> {
-    return this.httpClientService.put<UpdateCategory>({
+  async create(body: CreateCategory, successCallBack: () => void): Promise<CreateCategory> {
+    const observable = this.httpClientService.post<CreateCategory>({
+      controller: "categories",
+      action: "create-category"
+    }, body);
+    
+    return await firstValueFrom(observable)
+      .then(response => {
+        successCallBack(); 
+        return response;
+      });
+  }
+  
+  async update(body: UpdateCategory, successCallBack: () => void): Promise<UpdateCategory> {
+    const observable = this.httpClientService.put<UpdateCategory>({
       controller: "categories",
       action: "update-category"
-    }, body).pipe(
-      tap(() => successCallBack()),
-      catchError(() => {
-        return of(null);
-      })
-    )
+    }, body);
+    
+    return await firstValueFrom(observable)
+      .then(response => {
+        successCallBack(); 
+        return response;
+      });
   }
-
-  delete(id: number, successCallBack: () => void, _errorCallBack: (errorMessage: string) => void): Observable<ListCategory | null> {
-    return this.httpClientService.delete<BaseResponse<ListCategory>>({
+  
+  async delete(id: number, successCallBack: () => void): Promise<ListCategory> {
+    const observable = this.httpClientService.delete<BaseResponse<ListCategory>>({
       controller: "categories"
     }, id).pipe(
-      map(response => response.data),
-      tap(() => successCallBack()),
-      catchError(() => {
-        return of(null);
-      })
-    )
+      map(response => response.data)
+    );
+  
+    return await firstValueFrom(observable)
+      .then(response => {
+        successCallBack(); 
+        return response;
+      });
   }
 }

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FileService } from '../../../../core/services/common/file.service';
-import { firstValueFrom } from 'rxjs';
 import { CreateFile } from '../../../../core/models/files/create-file';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
@@ -39,17 +38,12 @@ export class CreateFileComponent {
       files: [name]
     }));
   
-    await firstValueFrom(
       this.fileService.create(file, 
         () => {
           this.sweetAlertService.showMessage();
           this.selectedFiles = [];
           this.fileList.emit();
-        }, 
-        error => {
-        }
-      )
-    );
+        });
   }
 
   removePhoto(index: number) {
