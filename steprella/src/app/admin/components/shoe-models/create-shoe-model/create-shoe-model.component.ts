@@ -1,41 +1,46 @@
-import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, model, output, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CreateShoeModel } from '../../../../core/models/shoe-models/create-shoe-model';
-import { ShoeModelService } from '../../../../core/services/common/shoe-model.service';
-import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
+import { SweetAlertService } from '../../../../core/services/common/sweet-alert.service';
+import { AdminShoeModelService } from '../../../../core/services/admin/admin-shoe-model.service';
 
 @Component({
   selector: 'app-create-shoe-model',
   imports: [FormsModule, MatFormField, MatInputModule],
+  standalone: true,
   templateUrl: './create-shoe-model.component.html',
-  styleUrl: './create-shoe-model.component.scss'
+  styleUrl: './create-shoe-model.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateShoeModelComponent {
-  private readonly shoeModelService = inject(ShoeModelService);
+  private readonly adminShoeModelService = inject(AdminShoeModelService);
   private readonly sweetAlertService = inject(SweetAlertService);
 
-  @ViewChild('shoeModelForm') shoeModelForm!: NgForm;
-  @Input() brandId!: number;
-  @Output() shoeModelList = new EventEmitter<void>();
+  readonly brandId = input.required<number>();
+  readonly shoeModelList = output<void>();
 
-  createShoeModel!: CreateShoeModel;
+  readonly shoeModelForm = viewChild<NgForm>('shoeModelForm');
 
-  onSubmit() {
-    if (!this.shoeModelForm.valid) return;
+  readonly createShoeModel = model<CreateShoeModel>({
+    brandId: null,
+    name: null
+  });
 
-    this.createShoeModel = {
-      name: this.shoeModelForm.value.name,
-      brandId: this.brandId
+  onSubmit(): void {
+    const form = this.shoeModelForm();
+    if (!form?.valid) return;
+
+    const modelData: CreateShoeModel = {
+      name: form.value.name,
+      brandId: this.brandId()
     };
 
-    this.shoeModelService.create(this.createShoeModel,
-      () => {
-        this.sweetAlertService.showMessage();
-        this.shoeModelList.emit();
-        this.shoeModelForm.reset();
-      }
-    );
+    this.adminShoeModelService.create(modelData, () => {
+      this.sweetAlertService.showMessage();
+      this.shoeModelList.emit();
+      form.reset();
+    });
   }
 }

@@ -1,5 +1,5 @@
 <form #variantForm="ngForm">
-  <mat-radio-group [(ngModel)]="updateVariant.active" name="active" #active="ngModel"
+  <mat-radio-group [(ngModel)]="updateVariant().active" name="active" #active="ngModel"
     (ngModelChange)="onActiveChange($event)">
     <mat-radio-button [value]="true">Aktif</mat-radio-button>
     <mat-radio-button [value]="false">Kapalı</mat-radio-button>

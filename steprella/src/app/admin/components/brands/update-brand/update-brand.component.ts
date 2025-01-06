@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, model, output, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { BrandService } from '../../../../core/services/common/brand.service';
 import { UpdateBrand } from '../../../../core/models/brands/update-brand';
 import { MatInputModule } from '@angular/material/input';
-import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
+import { SweetAlertService } from '../../../../core/services/common/sweet-alert.service';
+import { AdminBrandService } from '../../../../core/services/admin/admin-brand.service';
 
 @Component({
   selector: 'app-update-brand',
@@ -13,37 +13,42 @@ import { SweetAlertService } from '../../../../core/services/sweet-alert.service
   styleUrl: './update-brand.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UpdateBrandComponent implements OnInit {
-  private readonly brandService = inject(BrandService);
+export class UpdateBrandComponent {
+  private readonly adminBrandService = inject(AdminBrandService);
   private readonly sweetAlertService = inject(SweetAlertService);
 
-  @ViewChild('brandForm') brandForm!: NgForm;
-  @Input() brandData!: any;
-  @Output() brandUpdated = new EventEmitter<number | null>();
-  @Output() brandList = new EventEmitter<void>();
+  readonly brandForm = viewChild<NgForm>('brandForm');
+  
+  readonly brandData = input.required<any>();
+  readonly brandUpdated = output<number | null>();
+  readonly brandList = output<void>();
 
-  updateBrand!: UpdateBrand;
+  readonly updateBrand = model<UpdateBrand>({
+    id: null,
+    name: ''
+  });
 
-  ngOnInit(): void {
-    if (this.brandData) {
-      this.updateBrand = { ...this.brandData };
-    }
+  constructor() {
+    effect(() => {
+      if (this.brandData()) {
+        this.updateBrand.set({ ...this.brandData() });
+      }
+    });
   }
 
-  onSubmit() {
-    if (!this.brandForm.valid) return;
+  onSubmit(): void {
+    const form = this.brandForm();
+    if (!form?.valid) return;
 
-    this.updateBrand = {
-      id: this.brandData.id,
-      name: this.brandForm.value.name
-    }
+    const update: UpdateBrand = {
+      id: this.brandData().id,
+      name: form.value.name
+    };
 
-    this.brandService.update(this.updateBrand,
-      () => {
-        this.brandUpdated.emit(null);
-        this.brandList.emit();
-        this.sweetAlertService.showMessage();
-      })
-
+    this.adminBrandService.update(update, () => {
+      this.sweetAlertService.showMessage();
+      this.brandUpdated.emit(null);
+      this.brandList.emit();
+    });
   }
 }

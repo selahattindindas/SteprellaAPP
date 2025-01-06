@@ -1,4 +1,4 @@
 export interface CreateShoeModel {
-    name: string;
-    brandId: number;
+    name: string | null;
+    brandId: number | null;
 }

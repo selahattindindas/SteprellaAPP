@@ -3,7 +3,7 @@
     <input matInput (keyup)="applyFilter($event)" #input>
 </mat-form-field>
 <div>
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource()" matSort>
 
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Sıra </th>
@@ -44,5 +44,5 @@
         </tr>
     </table>
 
-    <mat-paginator (page)="getAll()" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    <mat-paginator (page)="loadUsers()" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
 </div>

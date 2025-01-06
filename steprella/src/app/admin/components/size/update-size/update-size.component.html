@@ -1,4 +1,15 @@
 <form #stockForm="ngForm" (ngSubmit)="onSubmit()">
-    <input matInput [(ngModel)]="updateSize.stockQuantity" name="stockQuantity" #stockQuantity="ngModel" type="number"
-        min="0" required (keydown.enter)="onSubmit()" />
+    <input matInput 
+    [(ngModel)]="updateSize().stockQuantity" 
+    name="stockQuantity" 
+    #stockQuantity="ngModel" 
+    type="number"
+    min="0" 
+    required 
+    (keydown.enter)="onSubmit()" 
+    />
+    
+    @if(stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)) {
+    <mat-error>Geçerli bir stok sayısı giriniz</mat-error>
+    }
 </form>

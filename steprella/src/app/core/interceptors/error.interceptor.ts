@@ -1,8 +1,8 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpStatusCode } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { SweetAlertService } from '../services/sweet-alert.service';
-import { Icon } from '../services/sweet-alert.service';
+import { SweetAlertService } from '../services/common/sweet-alert.service';
+import { Icon } from '../services/common/sweet-alert.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

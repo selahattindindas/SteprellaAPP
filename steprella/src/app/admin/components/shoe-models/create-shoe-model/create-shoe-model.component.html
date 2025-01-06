@@ -1,7 +1,28 @@
 <form #shoeModelForm="ngForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="example-full-width">
-        <mat-label>Model Yaz</mat-label>
-        <input matInput name="name" ngModel required>
+    <mat-form-field>
+        <mat-label>Model Adı</mat-label>
+        <input matInput 
+               [(ngModel)]="createShoeModel.name" 
+               type="text"
+               name="name" 
+               #name="ngModel"
+               required
+               minlength="2">
+        @if(name.invalid && (name.dirty || name.touched)) {
+            <mat-error>
+                @if(name.errors?.['required']) {
+                    Model adı gereklidir
+                }
+                @if(name.errors?.['minlength']) {
+                    Model adı en az 2 karakter olmalıdır
+                }
+            </mat-error>
+        }
     </mat-form-field>
-    <button type="submit" mat-stroked-button>+ Ekle</button>
+
+    <button type="submit" 
+            mat-stroked-button 
+            [disabled]="!shoeModelForm.valid">
+        + Ekle
+    </button>
 </form>

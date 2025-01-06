@@ -1,3 +1,21 @@
 <form #shoeModelForm="ngForm" (ngSubmit)="onSubmit()">
-    <input matInput name="name" ngModel required (keydown.enter)="onSubmit()">
+    <input 
+    matInput 
+    [(ngModel)]="updateShoeModel.name" 
+    name="name" 
+    #name="ngModel" 
+    required 
+    minlength="2"
+    (keydown.enter)="onSubmit()">
+
+    @if(name.invalid && (name.dirty || name.touched)) {
+    <mat-error>
+        @if(name.errors?.['required']) {
+        Model adı gereklidir
+        }
+        @if(name.errors?.['minlength']) {
+        Model adı en az 2 karakter olmalıdır
+        }
+    </mat-error>
+    }
 </form>

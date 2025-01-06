@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CookieService } from 'ngx-cookie-service';
-import { UserPayload, UserRole } from '../types/auth.types';
+import { UserPayload, UserRole } from '../../types/auth.types';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

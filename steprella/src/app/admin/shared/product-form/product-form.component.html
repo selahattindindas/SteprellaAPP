@@ -1,65 +1,65 @@
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <div class="">
-      <mat-form-field>
-        <mat-label>Kategori</mat-label>
-        <mat-select formControlName="categoryId">
-  
-          @for(category of listCategory$ | async; track category){
-            <mat-optgroup [label]="category.name"></mat-optgroup>
-          
-            @for(child of category.children; track child){
-              <mat-option [value]="child.id"
-              [ngClass]="{'hidden-option': child.children.length !== 0}">
-              {{ child.name }}
-            </mat-option>
-            }
-  
+  <div class="">
+    <mat-form-field>
+      <mat-label>Kategori</mat-label>
+      <mat-select formControlName="categoryId">
+
+        @for(category of listCategory$ | async; track category){
+          <mat-optgroup [label]="category.name"></mat-optgroup>
+        
           @for(child of category.children; track child){
-            @if(child.children.length > 0){
-              <mat-optgroup [label]="child.name">
-                <mat-option *ngFor="let subChild of child.children" [value]="subChild.id">
-                  {{ subChild.name }}
-                </mat-option>
-              </mat-optgroup>
-            }
-          }    
+            <mat-option [value]="child.id"
+            [ngClass]="{'hidden-option': child.children.length !== 0}">
+            {{ child.name }}
+          </mat-option>
+          }
+
+        @for(child of category.children; track child){
+          @if(child.children.length > 0){
+            <mat-optgroup [label]="child.name">
+              <mat-option *ngFor="let subChild of child.children" [value]="subChild.id">
+                {{ subChild.name }}
+              </mat-option>
+            </mat-optgroup>
+          }
+        }    
+      }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Marka</mat-label>
+      <mat-select formControlName="brandId">
+        @for (brand of listBrand$ | async; track brand) {
+        <mat-option [value]="brand.id">{{brand.name}}</mat-option>
         }
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Marka</mat-label>
-        <mat-select formControlName="brandId">
-          @for (brand of listBrand$ | async; track brand) {
-          <mat-option [value]="brand.id">{{brand.name}}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Model</mat-label>
-        <mat-select formControlName="shoeModelId">
-          @for (model of listShoeModel$ | async; track model) {
-          <mat-option [value]="model.id">{{model.name}}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-  
-      <mat-form-field>
-        <mat-label>Açıklama</mat-label>
-        <textarea matInput formControlName="description"></textarea>
-      </mat-form-field>
-  
-      <mat-form-field floatLabel="always">
-        <mat-label>Fiyat</mat-label>
-        <input matInput type="number" name="price" class="example-right-align" placeholder="0" formControlName="price" />
-        <span matTextPrefix>$&nbsp;</span>
-        <span matTextSuffix>.99</span>
-      </mat-form-field>
-    </div>
-  
-    <div class="example-button-row">
-      <button type="submit" [disabled]="!productForm.valid"
-       class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer">{{btnTitle}}</button>
-    </div>
-  </form>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Model</mat-label>
+      <mat-select formControlName="shoeModelId">
+        @for (model of listShoeModel$ | async; track model) {
+        <mat-option [value]="model.id">{{model.name}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Açıklama</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always">
+      <mat-label>Fiyat</mat-label>
+      <input matInput type="number" name="price" class="example-right-align" placeholder="0" formControlName="price" />
+      <span matTextPrefix>$&nbsp;</span>
+      <span matTextSuffix>.99</span>
+    </mat-form-field>
+  </div>
+
+  <div class="example-button-row">
+    <button type="submit" [disabled]="!productForm.valid"
+     class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer">{{btnTitle()}}</button>
+  </div>
+</form>

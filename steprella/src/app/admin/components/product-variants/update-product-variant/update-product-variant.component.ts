@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output, viewChild, OnInit, effect, model } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { UpdateProductVariant } from '../../../../core/models/product-variants/update-product-variant';
-import { ProductVariantService } from '../../../../core/services/common/product-variant.service';
-import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
+import { AdminProductVariantService } from '../../../../core/services/admin/admin-product-variant.service';
 
 @Component({
   selector: 'app-update-product-variant',
@@ -15,40 +14,40 @@ import { SweetAlertService } from '../../../../core/services/sweet-alert.service
   styleUrl: './update-product-variant.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+export class UpdateProductVariantComponent {
+  private readonly adminProductVariantService = inject(AdminProductVariantService);
 
-export class UpdateProductVariantComponent implements OnInit {
-  private readonly productVariantService = inject(ProductVariantService);
-  readonly sweetAlertService = inject(SweetAlertService);
+  readonly variantForm = viewChild<NgForm>('variantForm');
 
-  @ViewChild('variantForm', { static: true }) variantForm!: NgForm;
-  @Input() productId!: number;
-  @Input() variantData!: any;
+  readonly productId = input.required<number>();
+  readonly variantData = input.required<any>();
+  readonly variantUpdated = output<number | null>();
+  readonly variantList = output<void>();
 
-  @Output() variantUpdated = new EventEmitter<number | null>();
-  @Output() variantList = new EventEmitter<void>();
+readonly updateVariant = model<UpdateProductVariant>({
+    id: null,
+    productId: null,
+    active: null
+  });
 
-  updateVariant!: UpdateProductVariant;
-
-  ngOnInit(): void {
-    if (this.variantData) {
-      this.updateVariant = { ...this.variantData };
-    }
+  constructor() {
+    effect(() => {
+      if (this.variantData()) {
+        this.updateVariant.set({ ...this.variantData() });
+      }
+    });
   }
 
-  onActiveChange(newValue: boolean) {
-    this.updateVariant = {
-      id: this.variantData.id,
-      productId: this.productId,
+  onActiveChange(newValue: boolean): void {
+    const update: UpdateProductVariant = {
+      id: this.variantData().id,
+      productId: this.productId(),
       active: newValue
-    }
+    };
 
-    this.productVariantService.update(this.updateVariant,
-      () => {
-        console.log("Başarıyla güncellendi");
-        this.sweetAlertService.showMessage();
-        this.variantUpdated.emit(null);
-        this.variantList.emit();
-      }
-    )
+    this.adminProductVariantService.update(update, () => {
+      this.variantUpdated.emit(null);
+      this.variantList.emit();
+    });
   }
 }

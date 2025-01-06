@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
-import { ProductVariantService } from '../../../../core/services/common/product-variant.service';
-import { Observable, of } from 'rxjs';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
+import { ProductVariantService } from '../../../../core/services/ui/product-variant.service';
 import { ListProductVariant } from '../../../../core/models/product-variants/list-product-variant';
 import { MatIconModule } from '@angular/material/icon';
-import { DialogService } from '../../../../core/services/dialog.service';
+import { DialogService } from '../../../../core/services/common/dialog.service';
 import { ListSizeComponent } from '../../size/list-size/list-size.component';
 import { ListFileComponent } from '../../file/list-file/list-file.component';
 import { CreateProductVariantComponent } from "../create-product-variant/create-product-variant.component";
@@ -19,46 +18,51 @@ import { UpdateProductVariantComponent } from "../update-product-variant/update-
   styleUrl: './list-product-variant.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListProductVariantComponent implements OnInit {
+export class ListProductVariantComponent {
   private readonly productVariantService = inject(ProductVariantService);
   private readonly dialogService = inject(DialogService);
 
-  @Input() productId!: number;
-  editingVariantId: number | null = null;
+  readonly productId = input.required<number>();
+  readonly editingVariantId = signal<number | null>(null);
+  readonly productVariants = signal<ListProductVariant[]>([]);
 
-  listProductVarian$: Observable<ListProductVariant[]> = of([]);
-  
-  ngOnInit(): void {
-    this.getProductVariantByProductId();
+  constructor() {
+    effect(() => {
+      this.loadProductVariants();
+    });
   }
 
-  getProductVariantByProductId(): void {
-    this.listProductVarian$ = this.productVariantService.getByProductId(this.productId);
+  loadProductVariants(): void {
+    this.productVariantService.getByProductId(this.productId())
+      .subscribe({
+        next: (variants) => this.productVariants.set(variants)
+      });
   }
 
-  editRow(variantId: number) {
-    this.editingVariantId = this.editingVariantId === variantId ? null : variantId;
+  editRow(rowId: number): void {
+    this.editingVariantId.update(current => current === rowId ? null : rowId);
   }
 
   onVariantUpdated(): void {
-    this.editingVariantId = null;
+    this.editingVariantId.set(null);
+    this.loadProductVariants();
   }
 
   sizeDialog(productVariantId: number): void {
     this.dialogService.openDialog({
       componentType: ListSizeComponent,
-      data: { productVariantId: productVariantId },
-      afterClosed: () => console.log('Dialog Açıldı'),
+      data: { productVariantId },
+      afterClosed: () => this.loadProductVariants(),
       options: { width: '700px', height: '400px' },
     });
   }
 
   fileDialog(productVariantId: number): void {
-      this.dialogService.openDialog({
-        componentType: ListFileComponent,
-        data: { productVariantId: productVariantId },
-        afterClosed: () => console.log('Dialog Açıldı'),
-        options: { width: '700px', height: '400px' },
-      });
-    }
+    this.dialogService.openDialog({
+      componentType: ListFileComponent,
+      data: { productVariantId },
+      afterClosed: () => this.loadProductVariants(),
+      options: { width: '700px', height: '400px' },
+    });
+  }
 }

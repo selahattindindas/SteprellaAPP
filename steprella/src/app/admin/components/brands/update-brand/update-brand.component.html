@@ -1,3 +1,22 @@
 <form #brandForm="ngForm" (ngSubmit)="onSubmit()">
-    <input matInput name="name" ngModel required (keydown.enter)="onSubmit()" />
+        <input matInput 
+               name="name" 
+               [(ngModel)]="updateBrand().name"
+               #name="ngModel"
+               required 
+               minlength="2"
+               maxlength="50"
+               (keydown.enter)="onSubmit()">
+               
+        @if(name.invalid && (name.dirty || name.touched)) {
+            <mat-error>
+                @if(name.errors?.['required']) {
+                    Marka adı zorunludur
+                } @else if(name.errors?.['minlength']) {
+                    Marka adı en az 2 karakter olmalıdır
+                } @else if(name.errors?.['maxlength']) {
+                    Marka adı en fazla 50 karakter olmalıdır
+                }
+            </mat-error>
+        }
 </form>

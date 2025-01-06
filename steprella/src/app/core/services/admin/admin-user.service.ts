@@ -1,19 +1,19 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClientService } from '../http-client.service';
-import { map, Observable } from 'rxjs';
-import { ListUser } from '../../models/users/list-user';
+import { HttpClientService } from '../common/http-client.service';
+import { Observable, map } from 'rxjs';
 import { BaseResponse } from '../../models/base-responses/base-response';
+import { ListUser } from '../../models/users/list-user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class AdminUserService {
   private readonly httpClientService = inject(HttpClientService);
 
-  getAll(page: number, size:number):Observable<BaseResponse<ListUser[]>>{
+  getAll(page: number, size: number): Observable<BaseResponse<ListUser[]>> {
 
     return this.httpClientService.get<BaseResponse<ListUser[]>>({
-      controller: 'users',
+      controller: 'admin-users',
       action: 'get-all',
       queryString: `page=${page}&size=${size}`
     }).pipe(
@@ -21,12 +21,12 @@ export class UserService {
         totalCount: response.totalCount,
         data: response.data.length > 0 ? response.data : []
       })
-    ));
+      ));
   }
 
-  getById(id:number): Observable<ListUser>{
+  getById(id: number): Observable<ListUser> {
     return this.httpClientService.get<BaseResponse<ListUser>>({
-      controller: 'users'
+      controller: 'admin-users'
     }, id).pipe(
       map(response => response.data || null)
     )

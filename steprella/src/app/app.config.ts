@@ -15,7 +15,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './custom-mat-paginator-int';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthService } from './core/services/auth.service';
+import { AuthService } from './core/services/common/auth.service';
 import { inject } from '@angular/core';
 
 export const appConfig: ApplicationConfig = {

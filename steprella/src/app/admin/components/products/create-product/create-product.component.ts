@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CreateProduct } from '../../../../core/models/products/create-product';
-import { ProductService } from '../../../../core/services/common/product.service';
 import { ProductFormComponent } from '../../../shared/product-form/product-form.component';
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
-import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
+import { SweetAlertService } from '../../../../core/services/common/sweet-alert.service';
+import { AdminProductService } from '../../../../core/services/admin/admin-product.service';
 
 @Component({
   selector: 'app-create-product',
@@ -14,17 +14,14 @@ import { SweetAlertService } from '../../../../core/services/sweet-alert.service
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateProductComponent {
-  private readonly productService = inject(ProductService);
+  private readonly adminProductService = inject(AdminProductService);
   private readonly dialogRef = inject(MatDialogRef<CreateProductComponent>);
   private readonly sweetAlertService = inject(SweetAlertService);
 
   onSubmit(formData: CreateProduct) {
-    this.productService.create(formData,
-      () => {
-        this.sweetAlertService.showMessage();
-        this.dialogRef.close();
-      }
-    );
-
+    this.adminProductService.create(formData, () => {
+      this.sweetAlertService.showMessage();
+      this.dialogRef.close();
+    });
   }
 }

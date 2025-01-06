@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, input, model, output, signal, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { ColorService } from '../../../../core/services/common/color.service';
+import { ColorService } from '../../../../core/services/ui/color.service';
 import { CommonModule } from '@angular/common';
 import { CreateProductVariant } from '../../../../core/models/product-variants/create-product-variant';
-import { ProductVariantService } from '../../../../core/services/common/product-variant.service';
 import { MatButtonModule } from '@angular/material/button';
-import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
+import { AdminProductVariantService } from '../../../../core/services/admin/admin-product-variant.service';
+import { ListColor } from '../../../../core/models/colors/list-color';
 
 @Component({
   selector: 'app-create-product-variant',
@@ -19,30 +19,49 @@ import { SweetAlertService } from '../../../../core/services/sweet-alert.service
 })
 export class CreateProductVariantComponent {
   private readonly colorService = inject(ColorService);
-  private readonly productVariantService = inject(ProductVariantService);
-  private readonly sweetAlertService = inject(SweetAlertService);
+  private readonly adminProductVariantService = inject(AdminProductVariantService);
 
-  @ViewChild('variantForm', { static: true }) variantForm!: NgForm;
-  @Input() productId!: number;
-  @Output() variantList = new EventEmitter<void>();
+  readonly variantForm = viewChild<NgForm>('variantForm');
 
-  listColor$ = this.colorService.getAll();
-  createVariant: CreateProductVariant = { productId: null, colorId: null, active: false };
+  readonly productId = input.required<number>();
+  readonly variantList = output<void>();
 
-  onSubmit() {
-    if (!this.variantForm.valid) return;
+  readonly colors = signal<ListColor[]>([]);
+  readonly createVariant = model<CreateProductVariant>({
+    productId: null,
+    colorId: null,
+    active: false
+  });
 
-    this.createVariant = {
-      productId: this.productId,
-      colorId: this.variantForm.value.colorId,
+  constructor() {
+    effect(() => {
+      this.loadColors();
+      this.createVariant.update(current => ({
+        ...current,
+        productId: this.productId()
+      }));
+    });
+  }
+
+  private loadColors(): void {
+    this.colorService.getAll().subscribe({
+      next: (colors) => this.colors.set(colors)
+    });
+  }
+
+  onSubmit(): void {
+    const form = this.variantForm();
+    if (!form?.valid) return;
+
+    const variantData: CreateProductVariant = {
+      productId: this.productId(),
+      colorId: form.value.colorId,
       active: false
     };
 
-    this.productVariantService.create(this.createVariant,
-      () => {
-        this.sweetAlertService.showMessage();
-        this.variantForm.reset();
-        this.variantList.emit();
-      });
+    this.adminProductVariantService.create(variantData, () => {
+      form.reset();
+      this.variantList.emit();
+    });
   }
 }

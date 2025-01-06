@@ -1,5 +1,5 @@
 export interface UpdateShoeModel {
-    id:number;
-    name: string;
-    brandId: number;
+    id:number | null;
+    name: string | null;
+    brandId: number | null;
 }

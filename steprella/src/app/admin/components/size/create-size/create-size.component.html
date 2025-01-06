@@ -1,13 +1,52 @@
-<form #form="ngForm" (ngSubmit)="onSubmit()">
+<form #stockForm="ngForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <mat-label>Ayakkabı Numarası</mat-label>
-    <input matInput [(ngModel)]="createSize.sizeValue" name="sizeValue" #sizeValue="ngModel" >
+    <input 
+    matInput 
+    [(ngModel)]="createSize().sizeValue" 
+    name="sizeValue" 
+    #sizeValue="ngModel" 
+    type="number" 
+    required
+    min="1" max="55" 
+    pattern="^[1-9][0-9]?$|^55$"
+    >
+
+    @if(sizeValue.invalid && (sizeValue.dirty || sizeValue.touched)) {
+    <mat-error>
+      @if(sizeValue.errors?.['required']) {
+      Ayakkabı numarası gereklidir
+      }
+      @if(sizeValue.errors?.['max']) {
+      Maksimum 55 numara girilebilir
+      }
+      @if(sizeValue.errors?.['min']) {
+      Minimum 1 numara girilebilir
+      }
+      @if(sizeValue.errors?.['pattern']) {
+      Geçerli bir ayakkabı numarası giriniz (1-55)
+      }
+    </mat-error>
+    }
   </mat-form-field>
+
   <mat-form-field>
     <mat-label>Stok Sayısı</mat-label>
-    <input matInput [(ngModel)]="createSize.stockQuantity" name="stockQuantity" #sizeValue="ngModel">
+    <input 
+    matInput 
+    [(ngModel)]="createSize().stockQuantity" 
+    name="stockQuantity" 
+    #stockQuantity="ngModel" 
+    type="number"
+    min="0" 
+    required>
+    
+    @if(stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)) {
+    <mat-error>Geçerli bir stok sayısı giriniz</mat-error>
+    }
   </mat-form-field>
 
-  <button type="submit" mat-stroked-button>Oluştur</button>
-
+  <button type="submit" mat-stroked-button [disabled]="!stockForm.valid">
+    Oluştur
+  </button>
 </form>

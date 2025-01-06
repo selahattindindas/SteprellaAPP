@@ -1,4 +1,4 @@
 export interface UpdateOrder{
-    id: number;
-    status: string;
+    id: number | null;
+    status: string | null;
 }

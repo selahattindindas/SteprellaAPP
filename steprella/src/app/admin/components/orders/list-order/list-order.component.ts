@@ -1,52 +1,75 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, inject, signal, viewChild } from '@angular/core';
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { OrderService } from '../../../../core/services/common/order.service';
+import { OrderService } from '../../../../core/services/ui/order.service';
 import { ListOrder } from '../../../../core/models/orders/list-order';
-import { firstValueFrom } from 'rxjs';
 import { UpdateOrderComponent } from '../update-order/update-order.component';
 import { OrderStatusPipe } from '../../../../shared/pipes/order-status.pipe';
 
 @Component({
   selector: 'app-list-order',
-  imports: [MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatDialogTitle, MatDialogContent, MatDialogActions, OrderStatusPipe, UpdateOrderComponent],
+  imports: [
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    OrderStatusPipe,
+    UpdateOrderComponent
+  ],
   templateUrl: './list-order.component.html',
   styleUrl: './list-order.component.scss'
 })
-export class ListOrderComponent implements OnInit{
+export class ListOrderComponent {
   private readonly orderService = inject(OrderService);
-  readonly data = inject<{ userId: number }>(MAT_DIALOG_DATA);
+  readonly dialogData = inject<{ userId: number }>(MAT_DIALOG_DATA);
 
-  @ViewChild(UpdateOrderComponent) updateOrderComponent!: UpdateOrderComponent;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly updateOrderComponent = viewChild(UpdateOrderComponent);
+  readonly paginator = viewChild(MatPaginator);
+  readonly sort = viewChild(MatSort);
 
-  dataSource! : MatTableDataSource<ListOrder>;
-  displayedColumns: string[] = ['id', 'orderNumber', 'status', 'option'];
-  editingOrderId: number | null = null;
+  readonly dataSource = signal<MatTableDataSource<ListOrder>>(new MatTableDataSource());
+  readonly editingOrderId = signal<number | null>(null);
 
-  async ngOnInit(){
-    await this.getAll();
+  readonly displayedColumns = ['id', 'orderNumber', 'status', 'option'] as const;
+
+  constructor() {
+    effect(() => {
+      this.loadOrders();
+    });
   }
 
-  async getAll() {
-    const pageIndex = this.paginator ? this.paginator.pageIndex : 0;
-    const pageSize = this.paginator ? this.paginator.pageSize : 5;
+  loadOrders(): void {
+    const currentPaginator = this.paginator();
+    const pageIndex = currentPaginator?.pageIndex ?? 0;
+    const pageSize = currentPaginator?.pageSize ?? 5;
 
-    const allOrder = await firstValueFrom(this.orderService.getByUserId(this.data.userId, pageIndex, pageSize));
-    this.dataSource = new MatTableDataSource(allOrder.data);
-    this.paginator.length = allOrder.totalCount;
+    this.orderService.getByUserId(this.dialogData.userId, pageIndex, pageSize)
+      .subscribe({
+        next: (response) => {
+          this.dataSource().data = response.data;
+          if (currentPaginator) {
+            currentPaginator!.length = response.totalCount;
+
+            const currentSort = this.sort();
+            if (currentSort) {
+              this.dataSource().sort = currentSort;
+            }
+          }
+        }
+      });
   }
 
-  editRow(rowId: number) {
-    this.editingOrderId = this.editingOrderId === rowId ? null : rowId;
+  editRow(rowId: number): void {
+    this.editingOrderId.update(current => current === rowId ? null : rowId);
   }
 
-  submitUpdate() {
-    if (this.updateOrderComponent) {
-      this.updateOrderComponent.onSubmit();
-    }
+  submitUpdate(): void {
+    this.updateOrderComponent()?.onSubmit();
   }
 }

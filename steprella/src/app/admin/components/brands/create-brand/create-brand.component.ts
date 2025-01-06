@@ -1,10 +1,10 @@
-import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
-import { BrandService } from '../../../../core/services/common/brand.service';
+import { Component, EventEmitter, inject, model, output, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CreateBrand } from '../../../../core/models/brands/create-brand';
-import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
+import { SweetAlertService } from '../../../../core/services/common/sweet-alert.service';
+import { AdminBrandService } from '../../../../core/services/admin/admin-brand.service';
 
 @Component({
   selector: 'app-create-brand',
@@ -14,26 +14,27 @@ import { SweetAlertService } from '../../../../core/services/sweet-alert.service
   styleUrl: './create-brand.component.scss'
 })
 export class CreateBrandComponent {
-  private readonly brandService = inject(BrandService);
+  private readonly adminBrandService = inject(AdminBrandService);
   private readonly sweetAlertService = inject(SweetAlertService);
 
-  @ViewChild('brandForm') brandForm!: NgForm;
-  @Output() brandList = new EventEmitter<void>();
+  readonly brandForm = viewChild<NgForm>('brandForm');
+
+  readonly brandList = output<void>();
   
-  createBrand!: CreateBrand;
+  readonly createBrand = model<CreateBrand>({
+    name: ''
+  });
 
-  async onSubmit() {
-    if (!this.brandForm.valid) return;
+  onSubmit(): void {
+    const form = this.brandForm();
+    if (!form?.valid) return;
 
-    this.createBrand = {
-      name: this.brandForm.value.name
-    };
-
-    this.brandService.create(this.createBrand,
+    this.adminBrandService.create(
+      { name: form.value.name },
       () => {
         this.sweetAlertService.showMessage();
         this.brandList.emit();
-        this.brandForm.reset();
+        form.reset();
       }
     );
   }

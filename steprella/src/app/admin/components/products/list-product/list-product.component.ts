@@ -1,20 +1,19 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { ProductService } from '../../../../core/services/common/product.service';
+import { ProductService } from '../../../../core/services/ui/product.service';
 import { ListProduct } from '../../../../core/models/products/list-product';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ListProductVariantComponent } from '../../product-variants/list-product-variant/list-product-variant.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { DialogService } from '../../../../core/services/dialog.service';
 import { CreateProductComponent } from '../create-product/create-product.component';
 import { UpdateProductComponent } from '../update-product/update-product.component';
-import { firstValueFrom } from 'rxjs';
+import { DialogService } from '../../../../core/services/common/dialog.service';
 
 @Component({
   selector: 'app-list-product',
@@ -41,49 +40,61 @@ import { firstValueFrom } from 'rxjs';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListProductComponent implements OnInit {
+export class ListProductComponent {
   private readonly productService = inject(ProductService);
   private readonly dialogService = inject(DialogService);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  listProduct: ListProduct | undefined;
-  dataSource!: MatTableDataSource<ListProduct>;
-  columnsToDisplay = [
+  readonly dataSource = signal<MatTableDataSource<ListProduct>>(new MatTableDataSource());
+  readonly paginator = viewChild<MatPaginator>(MatPaginator);
+  readonly sort = viewChild<MatSort>(MatSort);
+  readonly columnsToDisplay = [
     'id',
     'categoryName',
     'brandName',
     'shoeModelName',
     'price',
     'expand'
-  ];
+  ] as const;
 
-  async ngOnInit(): Promise<void> {
-    await this.getAll();
-    this.initializeDataSource();
+  listProduct = signal<ListProduct | undefined>(undefined);
+
+  constructor() {
+    effect(() => {
+      this.initializeDataSource();
+      this.loadProducts();
+    });
   }
 
   private initializeDataSource(): void {
-    this.dataSource.filterPredicate = this.createFilterPredicate();
-    this.dataSource.sortingDataAccessor = this.createSortingDataAccessor();
+    const dataSource = this.dataSource();
+    dataSource.filterPredicate = this.createFilterPredicate();
+    dataSource.sortingDataAccessor = this.createSortingDataAccessor();
   }
   
-  async getAll(): Promise<void> {
-    const pageIndex = this.paginator?.pageIndex ?? 0;
-    const pageSize = this.paginator?.pageSize ?? 5;
+  loadProducts(): void {
+    const currentPaginator = this.paginator();
+    const pageIndex = currentPaginator?.pageIndex ?? 0;
+    const pageSize = currentPaginator?.pageSize ?? 5;
     
-    const allProduct = await firstValueFrom(this.productService.getAll(pageIndex, pageSize));
-    
-    this.dataSource = new MatTableDataSource(allProduct.data);
-    this.paginator.length = allProduct.totalCount;
-    this.dataSource.sort = this.sort;
+    this.productService.getAll(pageIndex, pageSize).subscribe({
+      next: (response) => {
+        this.dataSource().data = response.data;
+        if (currentPaginator) {
+          currentPaginator!.length = response.totalCount;
+
+          const currentSort = this.sort();
+          if (currentSort) {
+            this.dataSource().sort = currentSort;
+          }
+        }
+      }
+    });
   }
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim();
-    this.dataSource.filter = filterValue;
-    this.paginator?.firstPage();
+    this.dataSource().filter = filterValue;
+    this.paginator()?.firstPage();
   }
 
   private createFilterPredicate(): (data: ListProduct, filter: string) => boolean {
@@ -114,7 +125,7 @@ export class ListProductComponent implements OnInit {
   createProductDialog(): void {
     this.dialogService.openDialog({
       componentType: CreateProductComponent,
-      afterClosed: () => console.log('Dialog Açıldı'),
+      afterClosed: () => this.loadProducts(),
       options: {
         width: '700px',
         height: '400px'
@@ -126,7 +137,7 @@ export class ListProductComponent implements OnInit {
     this.dialogService.openDialog({
       componentType: UpdateProductComponent,
       data: { id },
-      afterClosed: () => console.log('Dialog Açıldı'),
+      afterClosed: () => this.loadProducts(),
       options: {
         width: '700px',
         height: '400px'

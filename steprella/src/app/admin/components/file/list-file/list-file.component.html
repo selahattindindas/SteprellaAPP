@@ -1,7 +1,7 @@
 <h1 class="text-xl font-bold mb-4 text-center" mat-dialog-title>Fotoğraf İşlemleri</h1>
 <mat-dialog-content class="mat-typography">
-    <app-create-file [productVariantId]="data.productVariantId" (fileList)="getFile()"/>
-    @for(file of (listFile$ | async)?.files;track file){
+    <app-create-file [productVariantId]="dialogData.productVariantId" (fileList)="loadFiles()"/>
+    @for(file of files()?.files; track file.id){
     <img style="width: 300px; height: auto;" [src]="file | fileArray">
     <p>{{file.fileName}}</p>
     <p>{{file.path}}</p>

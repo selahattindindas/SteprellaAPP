@@ -7,7 +7,7 @@
 </button>
 
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+  <table mat-table [dataSource]="dataSource()" matSort multiTemplateDataRows>
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Sıra </th>
@@ -72,5 +72,5 @@
     </tr>
   </table>
 
-  <mat-paginator (page)="getAll()" [pageSizeOptions]="[5, 10, 15, 20]"></mat-paginator>
+  <mat-paginator (page)="loadProducts()" [pageSizeOptions]="[5, 10, 15, 20]"></mat-paginator>
 </div>

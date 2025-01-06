@@ -1,4 +1,4 @@
 export interface UpdateBrand {
-    id: number;
+    id: number | null;
     name: string;
 }

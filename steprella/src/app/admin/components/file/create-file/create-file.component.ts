@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, Input, output, Output, signal, viewChild, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { FileService } from '../../../../core/services/common/file.service';
 import { CreateFile } from '../../../../core/models/files/create-file';
-import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
+import { SweetAlertService } from '../../../../core/services/common/sweet-alert.service';
+import { AdminFileService } from '../../../../core/services/admin/admin-file.service';
 
 @Component({
   selector: 'app-create-file',
@@ -14,41 +14,44 @@ import { SweetAlertService } from '../../../../core/services/sweet-alert.service
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateFileComponent {
-  private readonly fileService = inject(FileService);
+  private readonly adminFileService = inject(AdminFileService);
   private readonly sweetAlertService = inject(SweetAlertService);
   
-  @ViewChild("fileForm", { static: true }) fileForm!: NgForm;
-  @Input() productVariantId!: number;
-  @Output() fileList = new EventEmitter<void>();
+  readonly fileForm = viewChild<NgForm>('fileForm');
 
-  selectedFiles: File[] = [];
+  readonly productVariantId = input.required<number>();
+  readonly fileList = output<void>();
 
-  onFileSelected(event: Event) {
+  readonly selectedFiles = signal<File[]>([]);
+
+  onFileSelected(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files) {
-      this.selectedFiles = Array.from(inputElement.files);
+      this.selectedFiles.set(Array.from(inputElement.files));
     }
   }
 
-  async onUpload() {
-    if (this.selectedFiles.length === 0 && this.fileForm.valid) return;
-  
-    const file: CreateFile[] = this.selectedFiles.map(name => ({
-      productVariantId: this.productVariantId,
-      files: [name]
+  onUpload(): void {
+    const files = this.selectedFiles();
+    if (files.length === 0 || !this.fileForm()?.valid) return;
+
+    const fileData: CreateFile[] = files.map(file => ({
+      productVariantId: this.productVariantId(),
+      files: [file]
     }));
-  
-      this.fileService.create(file, 
-        () => {
-          this.sweetAlertService.showMessage();
-          this.selectedFiles = [];
-          this.fileList.emit();
-        });
+
+    this.adminFileService.create(fileData, () => {
+      this.sweetAlertService.showMessage();
+      this.selectedFiles.set([]);
+      this.fileList.emit();
+    });
   }
 
-  removePhoto(index: number) {
-    if (index >= 0 && index < this.selectedFiles.length) {
-      this.selectedFiles.splice(index, 1);
-    }
+  removePhoto(index: number): void {
+    this.selectedFiles.update(files => {
+      const newFiles = [...files];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
   }
 }

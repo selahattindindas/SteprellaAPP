@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClientService } from '../http-client.service';
-import { AuthService } from '../auth.service';
+import { HttpClientService } from '../common/http-client.service';
+import { AuthService } from '../common/auth.service';
 import { Login } from '../../models/auth/login';
 import { Token } from '../../models/auth/token';
 import { firstValueFrom, Observable } from 'rxjs';
@@ -24,22 +24,6 @@ export class UserAuthService {
         const response = await firstValueFrom(observable);
         successCallBack();
         return response;
-    }
-
-    async adminLogin(body: Login, callBackFunction: () => void): Promise<void> {
-        const observable: Observable<any | Token> = this.httpClientService.post({
-            controller: 'auth',
-            action: 'admin-login',
-            withCredentials: true
-        }, body);
-
-        const response: BaseResponse<Token> = await firstValueFrom(observable);
-
-        if (response && response.data) {
-            this.authService.setToken(response.data.accessToken, 'accessToken');
-            this.authService.setToken(response.data.refreshToken, 'refreshToken');
-        }
-        callBackFunction();
     }
 
     async login(body: Login, callBackFunction: () => void): Promise<any> {
