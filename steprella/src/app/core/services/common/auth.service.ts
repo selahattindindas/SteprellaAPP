@@ -1,8 +1,15 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal, computed } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CookieService } from 'ngx-cookie-service';
 import { UserPayload, UserRole } from '../../types/auth.types';
-import { BehaviorSubject } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
+
+interface CookieOptions {
+  path: string;
+  secure: boolean;
+  sameSite: 'Strict' | 'Lax' | 'None';
+  domain: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -11,86 +18,174 @@ export class AuthService {
   private readonly jwtHelper = new JwtHelperService();
   private readonly cookieService = inject(CookieService);
 
-  private currentUser = new BehaviorSubject<UserPayload | null>(null);
-  currentUser$ = this.currentUser.asObservable();
+  private readonly cookieOptions: CookieOptions = {
+    path: '/',
+    secure: true,
+    sameSite: 'Strict',
+    domain: 'localhost'
+  };
 
-  private isAuthenticated = new BehaviorSubject<boolean>(false);
-  isAuthenticated$ = this.isAuthenticated.asObservable();
+  // Auth state signals
+  private readonly currentUser = signal<UserPayload | null>(null);
+  private readonly isAuthenticated = signal(false);
+  private readonly isVerified = signal(false);
+
+  // Public observables
+  readonly currentUser$ = toObservable(this.currentUser);
+  readonly isAuthenticated$ = toObservable(this.isAuthenticated);
+  readonly isVerified$ = toObservable(this.isVerified);
+
+  // Computed states
+  readonly authState = computed(() => ({
+    isAuthenticated: this.isAuthenticated(),
+    isVerified: this.isVerified(),
+    currentUser: this.currentUser()
+  }));
 
   constructor() {
+    this.initializeAuthState();
+  }
+
+  private initializeAuthState(): void {
     const token = this.getToken();
-    if (token) {
+    const isVerified = this.cookieService.get('isVerified') === 'true';
+
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
       const payload = this.getUserPayload();
-      this.currentUser.next(payload);
-      this.isAuthenticated.next(true);
+      this.currentUser.set(payload);
+      this.isAuthenticated.set(true);
+      this.isVerified.set(isVerified);
+    } else {
+      this.deleteAllTokens();
     }
+  }
+
+  private setCookie(name: string, value: string): void {
+    this.cookieService.set(name, value, this.cookieOptions);
+  }
+
+  private deleteCookie(name: string): void {
+    this.cookieService.delete(name, this.cookieOptions.path);
   }
 
   setToken(token: string, type: 'accessToken' | 'refreshToken'): void {
     if (!token) return;
 
-    this.cookieService.set(type, token, {
-      path: '/',
-      secure: true,
-      sameSite: 'Strict',
-      domain: 'localhost'
-    });
+    this.setCookie(type, token);
 
     if (type === 'accessToken') {
       const payload = this.getUserPayload();
-      this.currentUser.next(payload);
-      this.isAuthenticated.next(true);
+      this.currentUser.set(payload);
+      this.isAuthenticated.set(true);
+      
+      // Eğer önceden verify olmuşsa, bu durumu koru
+      const isVerified = this.cookieService.get('isVerified') === 'true';
+      this.isVerified.set(isVerified);
     }
   }
 
   getToken(): string | null {
     const token = this.cookieService.get('accessToken');
-    if (token && this.jwtHelper.isTokenExpired(token)) {
-      this.deleteToken();
+    if (!token || this.jwtHelper.isTokenExpired(token)) {
+      this.deleteAllTokens();
       return null;
     }
-    return token || null;
+    return token;
   }
 
   getRefreshToken(): string | null {
-    const refreshToken = this.cookieService.get('refreshToken');
-    if (refreshToken && this.jwtHelper.isTokenExpired(refreshToken)) {
-      this.deleteToken();
+    const token = this.cookieService.get('refreshToken');
+    if (!token || this.jwtHelper.isTokenExpired(token)) {
+      this.deleteAllTokens();
       return null;
     }
-    return refreshToken || null;
+    return token;
+  }
+
+  setVerificationEmail(email: string | null): void {
+    if (email) {
+      this.setCookie('verificationEmail', email);
+    } else {
+      this.deleteCookie('verificationEmail');
+    }
+  }
+
+  getVerificationEmail(): string | null {
+    return this.cookieService.get('verificationEmail') || null;
+  }
+
+  setVerified(value: boolean): void {
+    this.setCookie('isVerified', value.toString());
+    this.isVerified.set(value);
+  }
+
+  checkAuthAndVerification(): { isAuthenticated: boolean; isVerified: boolean } {
+    const token = this.getToken();
+    const isVerified = this.cookieService.get('isVerified') === 'true';
+
+    // Token varsa ve geçerliyse
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      return {
+        isAuthenticated: true,
+        isVerified: isVerified
+      };
+    }
+
+    // Token yoksa veya geçersizse
+    this.deleteAllTokens();
+    return {
+      isAuthenticated: false,
+      isVerified: false
+    };
+  }
+
+  private deleteAllTokens(): void {
+    const cookiesToDelete = ['accessToken', 'refreshToken', 'isVerified', 'verificationEmail'];
+    cookiesToDelete.forEach(cookie => this.deleteCookie(cookie));
+    
+    this.currentUser.set(null);
+    this.isAuthenticated.set(false);
+    this.isVerified.set(false);
   }
 
   deleteToken(): void {
-    this.cookieService.delete('accessToken', '/');
-    this.cookieService.delete('refreshToken', '/');
-    this.currentUser.next(null);
-    this.isAuthenticated.next(false);
+    this.deleteAllTokens();
   }
 
   getUserPayload(): UserPayload | null {
     const token = this.getToken();
     if (!token) return null;
     
-    const decoded = this.jwtHelper.decodeToken(token);
-    
-    return {
-      phone: decoded.phone,
-      fullName: decoded.fullName,
-      sub: decoded.sub,
-      role: decoded.role,
-      iat: decoded.iat,
-      exp: decoded.exp
-    } as UserPayload;
+    try {
+      const decoded = this.jwtHelper.decodeToken(token);
+      return {
+        phone: decoded.phone,
+        fullName: decoded.fullName,
+        sub: decoded.sub,
+        role: decoded.role,
+        iat: decoded.iat,
+        exp: decoded.exp
+      } as UserPayload;
+    } catch (error) {
+      this.deleteAllTokens();
+      return null;
+    }
   }
 
   hasRole(requiredRole: UserRole): boolean {
-    const payload = this.getUserPayload();
-    return payload?.role === requiredRole;
+    return this.currentUser()?.role === requiredRole;
   }
 
-  isTokenValid(): boolean {
-    const token = this.getToken();
-    return token ? !this.jwtHelper.isTokenExpired(token) : false;
+  // Public getters
+  getAuthState() {
+    return this.authState();
+  }
+
+  isUserVerified(): boolean {
+    return this.isVerified();
+  }
+
+  isUserAuthenticated(): boolean {
+    return this.isAuthenticated();
   }
 }

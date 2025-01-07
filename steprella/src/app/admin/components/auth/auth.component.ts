@@ -8,6 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { Login } from '../../../core/models/auth/login';
 import { Icon, SweetAlertService } from '../../../core/services/common/sweet-alert.service';
 import { AdminUserAuthService } from '../../../core/services/admin/admin-user-auth.service';
+import { AuthService } from '../../../core/services/common/auth.service';
+import { VerificationService } from '../../../core/services/common/verification-code.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -26,6 +29,8 @@ import { AdminUserAuthService } from '../../../core/services/admin/admin-user-au
 export class AuthComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly adminUserAuthService = inject(AdminUserAuthService);
+  private readonly authService = inject(AuthService);
+  private readonly verificationService = inject(VerificationService);
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly router = inject(Router);
 
@@ -45,7 +50,6 @@ export class AuthComponent {
   });
 
   readonly hide = signal(true);
-  readonly isLoading = signal(false);
 
   readonly emailErrors = computed(() => {
     const control = this.authForm.get('email');
@@ -78,19 +82,24 @@ export class AuthComponent {
       return;
     }
 
-    this.isLoading.set(true);
-
-    const loginData: Login = {
+    const loginData :Login = {
       email: this.authForm.value.email!,
       password: this.authForm.value.password!
-    };
+    }
 
-    this.adminUserAuthService.adminLogin(loginData,
-      () => {
-        this.sweetAlertService.showMessage('Giriş Başarılı!', Icon.SUCCESS);
-        this.router.navigate(['/admin']);
-        this.isLoading.set(false);
+    this.adminUserAuthService.adminLogin(loginData).pipe(
+      switchMap(() => {
+        this.authService.setVerificationEmail(loginData.email);
+        return this.verificationService.sendVerificationCode(loginData.email);
+      })
+    ).subscribe({
+      next: () => {
+        this.sweetAlertService.showMessage('Doğrulama kodu gönderildi!', Icon.SUCCESS);
+        this.router.navigate(['/verify-code']);
+      },
+      error: () => {
+        this.authService.deleteToken();
       }
-    );
+    });
   }
 }

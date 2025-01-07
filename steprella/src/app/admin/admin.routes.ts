@@ -10,6 +10,7 @@ export const adminRoutes: Routes = [
         component: AdminLayoutComponent,
         title: 'Steprella: Admin Panel Ana Sayfa',
         canActivate: [authGuard, roleGuard(UserRole.ADMIN)],
+        canActivateChild: [authGuard, roleGuard(UserRole.ADMIN)], 
         children:[
             {
                 path: '',

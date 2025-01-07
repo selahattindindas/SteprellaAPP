@@ -1,0 +1,67 @@
+<div class="verify-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Email Doğrulama</mat-card-title>
+      <mat-card-subtitle>
+        Lütfen email adresinize gönderilen doğrulama kodunu giriniz
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Timer göstergesi -->
+      <div class="timer-container">
+        <mat-progress-bar mode="determinate" [value]="progress()"></mat-progress-bar>
+        <span class="timer-text">Kalan süre: {{ timeLeft() }} saniye</span>
+      </div>
+
+      <form [formGroup]="verifyForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Doğrulama Kodu</mat-label>
+          <input matInput 
+                 formControlName="code" 
+                 placeholder="6 haneli kod"
+                 #codeInput>
+          
+          @if (verifyForm.get('code')?.hasError('required') && 
+               verifyForm.get('code')?.touched) {
+            <mat-error>
+              Kod gereklidir
+            </mat-error>
+          }
+
+          @if (verifyForm.get('code')?.hasError('pattern') && 
+               verifyForm.get('code')?.touched) {
+            <mat-error>
+              Kod 6 haneli olmalıdır
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <div class="actions">
+          @if (!isTimerExpired()) {
+            <button mat-raised-button 
+                    color="primary" 
+                    type="submit" 
+                    [disabled]="verifyForm.invalid">
+              Doğrula
+            </button>
+          }
+
+          <button mat-stroked-button 
+                  type="button" 
+                  [color]="isTimerExpired() ? 'primary' : 'basic'"
+                  (click)="resendCode()">
+            {{ isTimerExpired() ? 'Yeni Kod İste' : 'Tekrar Gönder' }}
+          </button>
+
+          <button mat-button 
+                  color="warn" 
+                  type="button" 
+                  (click)="cancel()">
+            İptal Et
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

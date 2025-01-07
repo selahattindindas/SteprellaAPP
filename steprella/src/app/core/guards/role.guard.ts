@@ -8,10 +8,27 @@ export const roleGuard = (requiredRole: UserRole): CanActivateFn => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    if (authService.isTokenValid() && authService.hasRole(requiredRole)) {
-      return true;
+    const { isAuthenticated, isVerified } = authService.checkAuthAndVerification();
+    const hasRequiredRole = authService.hasRole(requiredRole);
+
+    if (!isAuthenticated) {
+      router.navigate(['/login']);
+      return false;
     }
 
-    return false;
+    if (!isVerified) {
+      router.navigate(['/verify-code']);
+      return false;
+    }
+
+    if (!hasRequiredRole) {
+      router.navigate(['/unauthorized']); 
+      return false;
+    }
+
+    return true;
   };
-}; 
+};
+
+export const adminGuard = roleGuard(UserRole.ADMIN);
+export const userGuard = roleGuard(UserRole.CUSTOMER);

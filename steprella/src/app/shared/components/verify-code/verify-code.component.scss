@@ -1,0 +1,42 @@
+.verify-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+
+  mat-card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .timer-container {
+    margin-bottom: 1.5rem;
+    
+    mat-progress-bar {
+      margin-bottom: 0.5rem;
+    }
+
+    .timer-text {
+      display: block;
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    
+    button {
+      flex: 1;
+    }
+  }
+}
