@@ -1,29 +1,17 @@
-@use '@angular/material' as mat;
-
-html {
-  @include mat.theme((
-    color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
-}
-
-
 @import 'tailwindcss/base.css';
 @import 'tailwindcss/components.css';
 @import 'tailwindcss/utilities.css';
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-::ng-deep .mat-dialog-container {
-  max-width: 1900px !important;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-:root {
-  @include mat.dialog-overrides((
-    container-max-width: 1200px
-  ));
+
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+  text-align: left;
 }
+

@@ -1,0 +1,35 @@
+.mat-mdc-form-field {
+    // Normal durum - Gri outline (2px)
+    --mdc-outlined-text-field-outline-color: rgb(71 85 105); 
+    
+    // Focus durumu - Gri outline ve label
+    --mdc-outlined-text-field-hover-outline-color: rgb(71 85 105);
+    --mdc-outlined-text-field-focus-outline-color: rgb(71 85 105); 
+    --mdc-outlined-text-field-focus-label-text-color: rgb(148 163 184);
+    
+    // Label ve input renkleri
+    --mdc-outlined-text-field-label-text-color: rgb(148 163 184);
+    --mdc-outlined-text-field-input-text-color: white;
+    
+    // Error text rengi
+    --mat-form-field-error-text-color: rgb(239 68 68); 
+      
+    // Label hover durumu
+    --outlined-hover-label-text-color: rgb(148 163 184); 
+    --mdc-outlined-text-field-hover-label-text-color: rgb(148 163 184);
+
+
+}
+::ng-deep .mdc-text-field {
+    background-color: rgba(30, 41, 59, 0.5) !important; 
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+}
+::ng-deep .mdc-text-field--outlined .mdc-text-field__input {
+    padding-top: 3px;
+}
+
+::ng-deep .mat-mdc-form-field-error {
+    font-size: 12px;
+    font-weight: bold;
+}

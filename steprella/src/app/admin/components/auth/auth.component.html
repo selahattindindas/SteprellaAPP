@@ -1,49 +1,69 @@
-<div class="flex min-h-screen items-center justify-center bg-gray-50">
-  <div class="w-full max-w-md space-y-8 rounded-lg bg-white p-6 shadow-md">
-    <h2 class="text-center text-2xl font-bold text-gray-900">Admin Girişi</h2>
-    
-    <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="space-y-6">
-      <mat-form-field class="w-full">
-        <mat-label>E-posta</mat-label>
-        <input matInput 
-               formControlName="email" 
-               type="email"
-               placeholder="ornek@email.com"
-               autocomplete="email">
-        @if (emailErrors()) {
-          <mat-error>{{ emailErrors() }}</mat-error>
-        }
-      </mat-form-field>
+<div class="tw-min-h-screen tw-flex tw-items-center tw-justify-center tw-bg-slate-800">
+  <mat-card class="tw-w-full tw-max-w-md tw-p-8 !tw-bg-slate-700 !tw-rounded-xl tw-shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+    <div class="tw-flex tw-justify-center tw-mb-6 tw-mt-4">
+      <img src="assets/images/common/logo.png" class="tw-w-32 tw-h-auto tw-object-contain" alt="Logo">
+    </div>
+    <mat-card-header class="tw-flex tw-justify-center tw-mb-6">
+      <mat-card-title class="!tw-text-xl !tw-text-gray-300 !tw-font-bold !tw-tracking-tight">
+        Admin Panel Giriş Sayfası
+      </mat-card-title>
+    </mat-card-header>
 
-      <mat-form-field class="w-full">
-        <mat-label>Şifre</mat-label>
-        <input matInput 
-               formControlName="password"
-               [type]="hide() ? 'password' : 'text'"
-               placeholder="••••••••"
-               autocomplete="current-password">
-        <button mat-icon-button 
-                matSuffix 
-                type="button"
-                (click)="togglePassword($event)" 
-                [attr.aria-label]="'Şifreyi göster/gizle'"
-                [attr.aria-pressed]="!hide()">
-          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        @if (passwordErrors()) {
-          <mat-error>{{ passwordErrors() }}</mat-error>
-        }
-      </mat-form-field>
+    <mat-card-content>
+      <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="tw-space-y-6">
+        <div>
+          <mat-form-field appearance="outline" class="tw-w-full tw-h-15">
+            <mat-label>E-posta</mat-label>
+            <mat-icon matPrefix class="tw-text-gray-400">mail</mat-icon>
+            <input matInput formControlName="email" type="email">
+            @if (authForm.get('email')?.invalid && (authForm.get('email')?.dirty || authForm.get('email')?.touched)) {
+              <mat-error>
+                @if (authForm.get('email')?.errors?.['required']) {
+                  E-posta zorunludur
+                }
+                @if (authForm.get('email')?.errors?.['email']) {
+                  Geçerli bir e-posta adresi giriniz
+                }
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
 
-      <div class="flex justify-center">
-        <button type="submit"
-                mat-raised-button
-                color="primary"
-                class="w-full"
-                [disabled]="!authForm.valid">
-            Giriş Yap
-        </button>
-      </div>
-    </form>
-  </div>
+        <div>
+          <mat-form-field appearance="outline" class="tw-w-full tw-h-15">
+            <mat-label>Şifre</mat-label>
+            <mat-icon matPrefix class="tw-text-gray-400">lock</mat-icon>
+            <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'">
+            <button mat-icon-button matSuffix type="button" (click)="togglePassword($event)">
+              <mat-icon class="tw-text-gray-400">
+                {{hide() ? 'visibility_off' : 'visibility'}}
+              </mat-icon>
+            </button>
+            @if (authForm.get('password')?.invalid && (authForm.get('password')?.dirty || authForm.get('password')?.touched)) {
+              <mat-error>
+                @if (authForm.get('password')?.errors?.['required']) {
+                  Şifre zorunludur
+                }
+                @if (authForm.get('password')?.errors?.['minlength']) {
+                  Şifre en az 6 karakter olmalıdır
+                }
+                @if (authForm.get('password')?.errors?.['maxlength']) {
+                  Şifre en fazla 20 karakter olmalıdır
+                }
+              </mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="tw-mt-6">
+          <button mat-raised-button color="primary" type="submit" 
+            class="tw-w-full tw-rounded-lg !tw-h-12 !tw-bg-blue-400 hover:!tw-bg-blue-500 !tw-transition-all !tw-duration-300">
+            <div class="tw-flex tw-items-center tw-justify-center">
+              <span class="!tw-text-base !tw-font-semibold">Giriş Yap</span>
+            </div>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

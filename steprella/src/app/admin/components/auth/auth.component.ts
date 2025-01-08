@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal, computed } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,16 +11,19 @@ import { AdminUserAuthService } from '../../../core/services/admin/admin-user-au
 import { AuthService } from '../../../core/services/common/auth.service';
 import { VerificationService } from '../../../core/services/common/verification-code.service';
 import { switchMap } from 'rxjs';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-auth',
   standalone: true,
   imports: [
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
@@ -50,25 +53,6 @@ export class AuthComponent {
   });
 
   readonly hide = signal(true);
-
-  readonly emailErrors = computed(() => {
-    const control = this.authForm.get('email');
-    if (control?.touched && control?.errors) {
-      if (control.errors['required']) return 'E-posta zorunludur';
-      if (control.errors['email']) return 'Geçerli bir e-posta adresi giriniz';
-    }
-    return null;
-  });
-
-  readonly passwordErrors = computed(() => {
-    const control = this.authForm.get('password');
-    if (control?.touched && control?.errors) {
-      if (control.errors['required']) return 'Şifre zorunludur';
-      if (control.errors['minlength']) return 'Şifre en az 6 karakter olmalıdır';
-      if (control.errors['maxlength']) return 'Şifre en fazla 20 karakter olmalıdır';
-    }
-    return null;
-  });
 
   togglePassword(event: MouseEvent): void {
     this.hide.update(state => !state);
