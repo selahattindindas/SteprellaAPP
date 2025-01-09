@@ -1,119 +1,60 @@
-.sidebar {
-  width: 250px;
-  height: 100vh;
-  background: #2c3e50;
+.sidebar-container {
+  position: relative;
+  height: 100%;
+}
+
+.sidebar-overlay {
   position: fixed;
-  left: 0;
   top: 0;
-  color: white;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
   transition: all 0.3s ease;
-  
-  &.collapsed {
-    width: 60px;
-    
-    .logo {
-      padding: 15px;
-      justify-content: center;
-      
-      img {
-        width: 30px;
-      }
-    }
-    
-    .menu-link {
-      padding: 12px 20px;
-      justify-content: center;
-      
-      i {
-        margin: 0;
-      }
-    }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
   }
-  
-  .logo {
-    height: 64px;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    gap: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    
-    img {
-      width: 35px;
-      height: auto;
-    }
-    
-    span {
-      font-size: 20px;
-      font-weight: 600;
-    }
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 245px;
+  background-color: white;
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+
+  &.open {
+    transform: translateX(0);
   }
-  
-  .menu {
-    padding: 15px 0;
-    
-    .menu-item {
-      .menu-link {
-        display: flex;
-        align-items: center;
-        padding: 12px 20px;
-        color: rgba(255,255,255,0.7);
-        text-decoration: none;
-        position: relative;
-        
-        &:hover {
-          background: rgba(255,255,255,0.1);
-          color: white;
-        }
-        
-        &.active {
-          background: rgba(255,255,255,0.1);
-          color: white;
-        }
-        
-        i {
-          margin-right: 12px;
-          width: 20px;
-          text-align: center;
-        }
-        
-        .arrow {
-          margin-left: auto;
-          transition: transform 0.3s ease;
-          
-          &.rotated {
-            transform: rotate(180deg);
-          }
-        }
-      }
-      
-      .submenu {
-        background: rgba(0,0,0,0.1);
-        
-        .submenu-link {
-          display: flex;
-          align-items: center;
-          padding: 10px 20px 10px 52px;
-          color: rgba(255,255,255,0.7);
-          text-decoration: none;
-          
-          &:hover {
-            background: rgba(255,255,255,0.1);
-            color: white;
-          }
-          
-          &.active {
-            background: rgba(255,255,255,0.1);
-            color: white;
-          }
-          
-          i {
-            margin-right: 12px;
-            width: 20px;
-            text-align: center;
-          }
-        }
-      }
-    }
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #4B5563;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #F3F4F6;
+  }
+
+  i {
+    font-size: 1.25rem;
+  }
+
+  span {
+    font-size: 0.875rem;
   }
 }

@@ -1,33 +1,74 @@
-<header class="header">
-  <div class="header-left">
-    <button class="menu-toggle" (click)="toggleSidebar()">
-      <i class="fas fa-bars"></i>
-    </button>
-    <h1>Steprella Admin</h1>
-  </div>
+<div class="tw-bg-white tw-shadow-sm tw-px-4 tw-py-3 tw-mt-4 tw-rounded-md">
+  <div class=" tw-mx-auto">
+    <div class="tw-flex tw-items-center tw-justify-between">
+
+
+
+      <div class="tw-flex tw-items-center tw-flex-1 tw-max-w-xl">
+        <div class="tw-hidden max-xl2:tw-flex tw-mr-6">
+          <i class="fas fa-bars tw-text-xl sidebar-toggle-button" (click)="toggleSidebar()"></i>
+        </div>
+        <div class="tw-relative tw-flex-1">
+          <input type="text" placeholder="Ara..."
+            class="tw-w-4/5 tw-pr-10 tw-pl-4 tw-py-2 tw-rounded-lg tw-border tw-border-admin-custom hover:tw-border-gray-300 focus:tw-border-admin-custom focus:tw-ring-1 focus:tw-ring-admin-custom tw-outline-none tw-text-gray-600 tw-placeholder-gray-400 tw-transition-colors" />
+          <div class="tw-absolute tw-right-[22%] tw-top-1/2 -tw-translate-y-1/2 tw-text-gray-400">
+            <i class="fas fa-search tw-text-sm"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="tw-flex tw-items-center tw-space-x-4">
+        <div class="tw-flex tw-items-center tw-space-x-4 tw-border-r tw-border-gray-200 tw-mr-6 max-xl:tw-hidden">
+          <div class="tw-relative">
+            <i
+              class="far fa-envelope tw-text-gray-600 tw-text-xl tw-cursor-pointer hover:tw-text-gray-800 hover:tw-scale-110 tw-transition-transform"></i>
+            <span
+              class="tw-absolute -tw-top-2 -tw-right-2 tw-bg-admin-custom tw-text-white tw-rounded-full tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-text-xs tw-font-medium">2</span>
+          </div>
+
+          <div class="tw-relative">
+            <i
+              class="far fa-star tw-text-gray-600 tw-text-xl tw-cursor-pointer hover:tw-text-gray-800 hover:tw-scale-110 tw-transition-transform"></i>
+            <span
+              class="tw-absolute -tw-top-2 -tw-right-2 tw-bg-admin-custom tw-text-white tw-rounded-full tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-text-xs tw-font-medium">1</span>
+          </div>
+
+          <div class="tw-relative">
+            <i
+              class="far fa-bell tw-text-gray-600 tw-text-xl tw-cursor-pointer hover:tw-text-gray-800 hover:tw-scale-110 tw-transition-transform"></i>
+            <span
+              class="tw-absolute -tw-top-2 -tw-right-2 tw-bg-admin-custom tw-text-white tw-rounded-full tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-text-xs tw-font-medium">3</span>
+          </div>
+        </div>
+
+        <div class="tw-relative">
+          <div class="tw-flex tw-items-center max-xl:tw-block max-xl:tw-text-center">
+            <img class="tw-w-12 tw-h-12 tw-object-cover tw-rounded-full max-xl:tw-mx-auto"
+              src="assets/images/admin/user.png" alt="User Avatar">
+            <div class="tw-flex tw-flex-col tw-justify-center tw-pl-2 max-xl:tw-pl-0 max-xl:tw-mt-2">
+              <p class="tw-text-sm tw-font-medium tw-truncate tw-cursor-pointer" (click)="toggleUserMenu()">Selahattin D. ▼</p>
+              <p class="tw-text-xs tw-text-gray-400">Admin</p>
+            </div>
+          </div>
+
+          @if(isUserMenuOpen){
+            <div class="tw-absolute tw-right-0 tw-mt-3 tw-w-48 tw-shadow-2xl">
   
-  <div class="header-right">
-    <div class="user-menu" [class.active]="isUserMenuOpen">
-      <button class="user-button" (click)="toggleUserMenu()">
-        <i class="fas fa-user"></i>
-        <span>Admin User</span>
-        <i class="fas fa-chevron-down"></i>
-      </button>
-      <div class="user-dropdown" *ngIf="isUserMenuOpen">
-        <a href="#" class="dropdown-item">
-          <i class="fas fa-user-circle"></i>
-          Profil
-        </a>
-        <a href="#" class="dropdown-item">
-          <i class="fas fa-cog"></i>
-          Ayarlar
-        </a>
-        <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item" (click)="logout()">
-          <i class="fas fa-sign-out-alt"></i>
-          Çıkış Yap
-        </a>
+              <div class="tw-absolute tw-right-4 -tw-top-2 tw-w-4 tw-h-4 ">
+                <div class="tw-w-4 tw-h-4 tw-bg-gray-300 tw-transform tw-rotate-45 tw-absolute tw-left-1 tw-top-1"></div>
+              </div>
+      
+              <div class="tw-bg-gray-300 tw-rounded-lg tw-shadow-lg">
+                <a (click)="logout()"
+                  class="tw-group tw-cursor-pointer tw-flex tw-items-center tw-w-full tw-px-4 tw-py-3">
+                  <i class="fas fa-sign-out-alt tw-text-gray-900 tw-mr-3"></i>
+                  <span class="tw-text-sm tw-font-[500] tw-text-gray-900">Çıkış Yap</span>
+                </a>
+              </div>
+            </div>
+          }
+        </div>
       </div>
     </div>
   </div>
-</header>
+</div>

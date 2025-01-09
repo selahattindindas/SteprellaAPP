@@ -1,23 +1,9 @@
-.admin-layout {
-  display: flex;
-  height: 100vh;
-  
-  &.sidebar-collapsed {
-    .main-content {
-      margin-left: 60px;
-    }
-  }
-}
 
-.main-content {
-  flex: 1;
-  margin-left: 250px;
-  transition: margin-left 0.3s ease;
-  
-  main {
-    padding: 20px;
-    height: calc(100vh - 64px);
-    overflow-y: auto;
-  }
-}
 
+::ng-deep .mat-drawer-backdrop {
+    position: fixed !important;
+  }
+  
+  ::ng-deep .mat-drawer-container {
+    background-color: transparent !important;
+  }
