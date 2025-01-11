@@ -1,13 +1,23 @@
+@use '@angular/material' as mat;
 @import 'tailwindcss/base.css';
 @import 'tailwindcss/components.css';
 @import 'tailwindcss/utilities.css';
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography:(
+      plain-family: 'Inter, "Helvetica Neue", sans-serif'
+    ),
+    density: 0,
+  ));
 }
 
 body {
@@ -16,7 +26,6 @@ body {
   text-align: left;
 }
 
-/* Reset CSS */
 *,
 *::before,
 *::after {
@@ -55,3 +64,16 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-max-width: 1200px;
+}
+
+.mat-mdc-optgroup {
+--mat-optgroup-label-text-color: gray;
+}
+
+
+.mdc-notched-outline__notch{ border-style: none;}
+
+.mat-mdc-icon-button{ line-height: normal;}

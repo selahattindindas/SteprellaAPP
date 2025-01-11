@@ -1,37 +1,52 @@
-<app-create-product-variant [productId]="productId()" (variantList)="loadProductVariants()" />
+<div class="tw-pt-3 tw-w-full">
+  <app-create-product-variant [productId]="productId()" (variantList)="loadProductVariants()"></app-create-product-variant>
 
-@for(variant of productVariants(); track variant.id) {
-<div class="flex items-center space-x-4">
-  <p class="text-lg text-gray-700 font-medium w-40">{{variant.colorName}} Renk</p>
+  @for (variant of productVariants(); track variant.id) {
+  <div class="tw-grid tw-grid-cols-3 tw-items-center tw-p-4 tw-border-b last:tw-border-b-0">
 
-  @if(editingVariantId() !== variant.id) {
-  <button mat-icon-button [ngClass]="{'text-red-500': !variant.active, 'text-green-500': variant.active}"
-    [style.color]="variant.active ? 'green' : 'red'">
-    <mat-icon>{{ variant.active ? 'check_circle' : 'cancel' }}</mat-icon>
-  </button>
-  } @else {
-  <app-update-product-variant [productId]="productId()" [variantData]="variant" (variantUpdated)="onVariantUpdated()"
-    (variantList)="loadProductVariants()" />
-  }
+    <div class="tw-text-left">
+      <p class="tw-text-lg tw-font-normal">{{variant.colorName}} Renkli Ürün</p>
+    </div>
 
-  <button mat-icon-button class="text-black-500 hover:text-black-700" (click)="fileDialog(variant.id)">
-    <mat-icon>image</mat-icon>
-  </button>
+    <div class="tw-text-center">
+      @if (editingVariantId() !== variant.id) {
+      <button mat-icon-button
+        [ngClass]="{'tw-text-red-500': !variant.active, 'tw-text-green-500': variant.active}"
+        [style.color]="variant.active ? 'green' : 'red'">
+        <mat-icon>{{ variant.active ? 'check_circle' : 'cancel' }}</mat-icon>
+      </button>
+      } @else {
+      <app-update-product-variant
+        [productId]="productId()"
+        [variantData]="variant"
+        (variantUpdated)="onVariantUpdated()"
+        (variantList)="loadProductVariants()">
+      </app-update-product-variant>
+      }
+    </div>
 
-  <button mat-icon-button class="text-black-500 hover:text-black-700" (click)="sizeDialog(variant.id)">
-    <mat-icon>work</mat-icon>
-  </button>
 
-  @if(editingVariantId() !== variant.id) {
-  <button mat-icon-button class="text-black-500 hover:text-black-700" (click)="editRow(variant.id)">
-    <mat-icon>edit</mat-icon>
-  </button>
-  } @else {
-  <button mat-icon-button class="text-black-500 hover:text-black-700" (click)="editingVariantId.set(null)">
-    <mat-icon>cancel</mat-icon>
-  </button>
+    <div class="tw-flex tw-justify-end tw-space-x-2">
+      <button mat-icon-button (click)="fileDialog(variant.id)" class="hover:tw-text-gray-800">
+        <mat-icon class="tw-text-gray-600">image</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="sizeDialog(variant.id)" class="hover:tw-text-gray-800">
+        <i class="fa-solid fa-shoe-prints tw-text-gray-600" style="width: 24px; height: 24px;"></i>
+      </button>
+
+      @if (editingVariantId() !== variant.id) {
+      <button mat-icon-button (click)="editRow(variant.id)" class="hover:tw-text-gray-800">
+        <mat-icon class="tw-text-gray-600">build</mat-icon>
+      </button>
+      } @else {
+      <button mat-icon-button (click)="editingVariantId.set(null)" class="hover:tw-text-gray-800">
+        <mat-icon class="tw-text-gray-600">cancel</mat-icon>
+      </button>
+      }
+    </div>
+  </div>
+  } @empty {
+  <p>No variants found.</p>
   }
 </div>
-} @empty {
-<p>No variants found.</p>
-}

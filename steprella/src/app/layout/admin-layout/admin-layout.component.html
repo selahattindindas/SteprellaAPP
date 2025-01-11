@@ -1,14 +1,13 @@
 <div class="tw-flex tw-min-h-screen tw-bg-slate-200">
-  <!-- Sidebar -->
   <app-sidebar 
     #sidenav
-    class="tw-w-0 xl2:tw-w-60 tw-transition-[width] tw-duration-300 tw-ease-in-out tw-overflow-hidden"
+    class="tw-w-0 xl2:tw-w-64 tw-transition-[width] tw-duration-300 tw-ease-in-out tw-overflow-hidden"
     [isCollapsed]="isSidebarCollapsed()" 
     [isOpen]="isOpen()"
     (sidebarToggled)="toggleSidebar()"
   />
 
-  <!-- Main Content -->
+
   <div class="tw-flex-1 tw-min-h-screen tw-transition-all tw-duration-300">
     <div class="tw-max-w-7xl tw-mx-auto tw-px-4 max-custom:tw-px-5">
       <header class="tw-pb-8">

@@ -1,27 +1,27 @@
 .mat-mdc-form-field {
     // Normal durum - Gri outline (2px)
-    --mdc-outlined-text-field-outline-color: rgb(71 85 105); 
+    --mdc-outlined-text-field-outline-color: transparent; 
     
     // Focus durumu - Gri outline ve label
     --mdc-outlined-text-field-hover-outline-color: rgb(71 85 105);
     --mdc-outlined-text-field-focus-outline-color: rgb(71 85 105); 
-    --mdc-outlined-text-field-focus-label-text-color: rgb(148 163 184);
+    --mdc-outlined-text-field-focus-label-text-color: rgb(55 65 81);
     
     // Label ve input renkleri
-    --mdc-outlined-text-field-label-text-color: rgb(148 163 184);
-    --mdc-outlined-text-field-input-text-color: white;
+    --mdc-outlined-text-field-label-text-color: rgb(55 65 81);
+    --mdc-outlined-text-field-input-text-color: rgb(55 65 81);
     
     // Error text rengi
-    --mat-form-field-error-text-color: rgb(239 68 68); 
+    --mat-form-field-error-text-color: rgb(239 68 68);
       
     // Label hover durumu
-    --outlined-hover-label-text-color: rgb(148 163 184); 
-    --mdc-outlined-text-field-hover-label-text-color: rgb(148 163 184);
-
-
+    --filled-hover-active-indicator-color: transparent;
+    --outlined-hover-label-text-color: rgb(55 65 81); 
+    --mdc-outlined-text-field-hover-label-text-color: rgb(55 65 81);
 }
+
 ::ng-deep .mdc-text-field {
-    background-color: rgba(30, 41, 59, 0.5) !important; 
+    background-color: rgba(226, 232, 240, 1) !important; 
     border-radius: 6px;
     backdrop-filter: blur(8px);
 }

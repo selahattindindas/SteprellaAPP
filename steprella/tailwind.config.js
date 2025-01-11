@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   prefix: 'tw-',
-  corePlugins: {
-    preflight: false,
-  },
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
@@ -23,11 +20,9 @@ module.exports = {
         'max-custom': {'max': '1300px'},
         'max-xl': {'max': '550px'}
       },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-      },
     },
   },
+  
   plugins: [
     require('tailwindcss-gradients'),
     require('autoprefixer'),

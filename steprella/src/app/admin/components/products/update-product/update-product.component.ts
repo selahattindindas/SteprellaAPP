@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ProductFormComponent } from '../../../shared/product-form/product-form.component';
 import { ProductService } from '../../../../core/services/ui/product.service';
 import { UpdateProduct } from '../../../../core/models/products/update-product';
-import { MatDialogTitle, MatDialogContent, MatDialogRef, MAT_DIALOG_DATA, MatDialogActions } from '@angular/material/dialog';
+import { MatDialogTitle, MatDialogContent, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SweetAlertService } from '../../../../core/services/common/sweet-alert.service';
 import { AdminProductService } from '../../../../core/services/admin/admin-product.service';
 
 @Component({
   selector: 'app-update-product',
-  imports: [ProductFormComponent, MatDialogTitle, MatDialogContent, MatDialogActions],
+  imports: [ProductFormComponent, MatDialogTitle, MatDialogContent],
   standalone: true,
   templateUrl: './update-product.component.html',
   styleUrl: './update-product.component.scss',

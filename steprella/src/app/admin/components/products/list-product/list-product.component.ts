@@ -127,8 +127,8 @@ export class ListProductComponent {
       componentType: CreateProductComponent,
       afterClosed: () => this.loadProducts(),
       options: {
-        width: '700px',
-        height: '400px'
+        width: '800px',
+        height: '600px'
       },
     });
   }
@@ -139,8 +139,8 @@ export class ListProductComponent {
       data: { id },
       afterClosed: () => this.loadProducts(),
       options: {
-        width: '700px',
-        height: '400px'
+        width: '800px',
+        height: '600px'
       },
     });
   }

@@ -1,65 +1,64 @@
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-  <div class="">
-    <mat-form-field>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="tw-space-y-6 tw-p-6">
+  <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-6">
+
+    <mat-form-field appearance="outline" class="tw-w-full">
       <mat-label>Kategori</mat-label>
       <mat-select formControlName="categoryId">
-
-        @for(category of listCategory$ | async; track category){
-          <mat-optgroup [label]="category.name"></mat-optgroup>
-        
-          @for(child of category.children; track child){
-            <mat-option [value]="child.id"
-            [ngClass]="{'hidden-option': child.children.length !== 0}">
-            {{ child.name }}
+        @for(category of listCategory$ | async; track category) {
+        <mat-optgroup [label]="category.name"></mat-optgroup>
+        @for(child of category.children; track child) {
+        <mat-option [value]="child.id" [ngClass]="{'hidden-option': child.children.length !== 0}">
+          {{ child.name }}
+        </mat-option>
+        }
+        @for(child of category.children; track child) {
+        @if(child.children.length > 0) {
+        <mat-optgroup [label]="child.name">
+          <mat-option *ngFor="let subChild of child.children" [value]="subChild.id">
+            {{ subChild.name }}
           </mat-option>
-          }
-
-        @for(child of category.children; track child){
-          @if(child.children.length > 0){
-            <mat-optgroup [label]="child.name">
-              <mat-option *ngFor="let subChild of child.children" [value]="subChild.id">
-                {{ subChild.name }}
-              </mat-option>
-            </mat-optgroup>
-          }
-        }    
-      }
+        </mat-optgroup>
+        }
+        }
+        }
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="outline" class="tw-w-full">
       <mat-label>Marka</mat-label>
       <mat-select formControlName="brandId">
-        @for (brand of listBrand$ | async; track brand) {
-        <mat-option [value]="brand.id">{{brand.name}}</mat-option>
+        @for(brand of listBrand$ | async; track brand) {
+        <mat-option [value]="brand.id">{{ brand.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="outline" class="tw-w-full">
       <mat-label>Model</mat-label>
       <mat-select formControlName="shoeModelId">
-        @for (model of listShoeModel$ | async; track model) {
-        <mat-option [value]="model.id">{{model.name}}</mat-option>
+        @for(model of listShoeModel$ | async; track model) {
+        <mat-option [value]="model.id">{{ model.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Açıklama</mat-label>
-      <textarea matInput formControlName="description"></textarea>
-    </mat-form-field>
-
-    <mat-form-field floatLabel="always">
+    <mat-form-field appearance="outline" class="tw-w-full">
       <mat-label>Fiyat</mat-label>
-      <input matInput type="number" name="price" class="example-right-align" placeholder="0" formControlName="price" />
+      <input matInput type="number" name="price" placeholder="0" formControlName="price" />
       <span matTextPrefix>$&nbsp;</span>
       <span matTextSuffix>.99</span>
     </mat-form-field>
   </div>
 
-  <div class="example-button-row">
+  <mat-form-field appearance="outline" class="tw-w-full">
+    <mat-label>Açıklama</mat-label>
+    <textarea matInput formControlName="description" class="tw-w-full" rows="4"></textarea>
+  </mat-form-field>
+
+  <div class="tw-text-right">
     <button type="submit" [disabled]="!productForm.valid"
-     class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer">{{btnTitle()}}</button>
+      class="tw-bg-admin-custom tw-cursor-pointer tw-px-6 tw-py-3 tw-rounded-lg tw-text-white tw-font-medium focus:tw-bg-indigo-800 disabled:tw-opacity-50 tw-transition tw-duration-300">
+      {{ btnTitle() }}
+    </button>
   </div>
 </form>

@@ -11,7 +11,7 @@ export class CustomMatPaginatorIntl extends MatPaginatorIntl {
 
     getAndInitTranslations() {
 
-        this.itemsPerPageLabel = "Sıralama Sayısı";
+        this.itemsPerPageLabel = "Sıralama:";
         this.nextPageLabel = "Sonraki sayfa";
         this.previousPageLabel = "Önceki sayfa";
         this.changes.next();

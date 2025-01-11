@@ -1,11 +1,17 @@
 <form #variantForm="ngForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>Renk Ekle</mat-label>
+  <mat-form-field appearance="outline">
+    <mat-label>Renk Seç</mat-label>
     <mat-select [(ngModel)]="createVariant().colorId" name="colorId" #colorId="ngModel">
       @for (color of colors(); track color.id) {
       <mat-option [value]="color.id">{{color.name}}</mat-option>
       }
     </mat-select>
   </mat-form-field>
-  <button type="submit" mat-stroked-button>Basic</button>
+  <button
+  type="submit"
+  mat-stroked-button
+  class="tw-ml-4 tw-bg-admin-color tw-text-white tw-py-2 tw-px-6 tw-rounded-md tw-shadow-md hover:tw-bg-admin-color/90 active:tw-bg-admin-color/80 tw-transition-colors"
+>
+  Oluştur
+</button>
 </form>
