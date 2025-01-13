@@ -1,10 +1,10 @@
-<form #stockForm="ngForm" (ngSubmit)="onSubmit()">
+<form #stockForm="ngForm" (ngSubmit)="onSubmit()" class="tw-flex tw-items-center tw-gap-6">
   <mat-form-field>
-    <mat-label>Ayakkabı Numarası</mat-label>
+    <mat-label>Ayakkabı numarası</mat-label>
     <input 
     matInput 
     [(ngModel)]="createSize().sizeValue" 
-    name="sizeValue" 
+    name="sizeValue"
     #sizeValue="ngModel" 
     type="number" 
     required
@@ -31,11 +31,12 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Stok Sayısı</mat-label>
-    <input 
+    <mat-label>Stok Miktarı</mat-label>
+    <input
     matInput 
     [(ngModel)]="createSize().stockQuantity" 
     name="stockQuantity" 
+    placeholder="Stok sayısı" 
     #stockQuantity="ngModel" 
     type="number"
     min="0" 
@@ -46,7 +47,6 @@
     }
   </mat-form-field>
 
-  <button type="submit" mat-stroked-button [disabled]="!stockForm.valid">
-    Oluştur
-  </button>
+  <button type="submit" [disabled]="!stockForm.valid"
+  class="tw-px-4 tw-py-2 tw-bg-admin-custom tw-text-white tw-font-medium tw-rounded hover:tw-bg-opacity-90 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed">Oluştur</button>
 </form>

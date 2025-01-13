@@ -1,32 +1,40 @@
 <form #fileForm="ngForm" (ngSubmit)="onUpload()">
-        <input type="file" accept="image/*" #fileInput name="files" (change)="onFileSelected($event)" multiple>
+        <div class="tw-max-w-md tw-shadow-lg  tw-mx-auto tw-rounded-lg">
+ 
+                <div class="tw-bg-menu-gradient tw-text-white tw-p-4 tw-rounded-t-lg tw-cursor-pointer hover:tw-opacity-90 tw-transition-all" (click)="triggerFileInput()">
+                <div class="tw-flex tw-items-center tw-gap-2 tw-justify-center">
+                    <mat-icon>cloud_upload</mat-icon>
+                    <span class="tw-font-semibold tw-text-lg">Fotoğraf Yükle</span>
+                </div>
+            </div>
+    
+            <input class="tw-hidden" type="file" accept="image/*" #fileInput name="files" (change)="onFileSelected($event)" multiple>
 
-        <button type="submit" [disabled]="!selectedFiles().length">
-                Ekle
-        </button>
-</form>
+            @if(selectedFiles().length > 0) {
+                <div class="tw-text-gray-200">
+                    @for(file of selectedFiles(); track file.name; let i = $index) {
+                    <div class="tw-flex tw-items-center tw-justify-between tw-p-3 tw-border-b tw-border-gray-400">
+                        <div class="tw-flex tw-items-center tw-gap-3">
+                            <div class="tw-w-6 tw-h-6 tw-rounded-full tw-bg-gray-600 tw-flex tw-items-center tw-justify-center">
+                                <mat-icon class="tw-text-sm">insert_drive_file</mat-icon>
+                            </div>
+                            <div class="tw-max-w-[200px]"> 
+                                <div class="tw-text-sm tw-text-gray-600 tw-font-medium tw-truncate" title="{{ file.name }}">{{ file.name }}</div>
+                                <div class="tw-text-xs tw-text-gray-400">{{ file.size/1024/1024 | number:'.2' }} MB</div>
+                            </div>
+                        </div>
+                                <mat-icon class="tw-text-red-400 tw-cursor-pointer" (click)="removePhoto(i)">cancel</mat-icon>
+                    </div>
+                    }
+                </div>
+            }
 
-@if(selectedFiles().length > 0) {
-<table class="table">
-        <thead>
-                <tr>
-                        <th>Ad</th>
-                        <th>Boyut</th>
-                        <th>İşlem</th>
-                </tr>
-        </thead>
-        <tbody>
-                @for(file of selectedFiles(); track file.name; let i = $index) {
-                <tr>
-                        <td>{{ file.name | titlecase }}</td>
-                        <td>{{ file.size/1024/1024 | number:'.2' }} MB</td>
-                        <td>
-                                <button type="button" class="btn btn-dark btn-xs" (click)="removePhoto(i)">
-                                        Kaldır
-                                </button>
-                        </td>
-                </tr>
-                }
-        </tbody>
-</table>
-}
+            <div class="tw-flex tw-justify-end tw-gap-3 tw-py-4 tw-pr-2">
+                <button type="submit" 
+                        [disabled]="!selectedFiles().length"
+                        class="tw-px-4 tw-py-2 tw-bg-admin-custom tw-text-white tw-font-medium tw-rounded hover:tw-bg-opacity-90 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed">
+                    Yükle
+                </button>
+            </div>
+        </div>
+    </form>

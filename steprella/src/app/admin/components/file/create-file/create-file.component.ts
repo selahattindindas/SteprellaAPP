@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, inject, input, Input, output, Output, signal, viewChild, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CreateFile } from '../../../../core/models/files/create-file';
 import { SweetAlertService } from '../../../../core/services/common/sweet-alert.service';
 import { AdminFileService } from '../../../../core/services/admin/admin-file.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-create-file',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   standalone: true,
   templateUrl: './create-file.component.html',
   styleUrl: './create-file.component.scss',
@@ -16,8 +17,8 @@ import { AdminFileService } from '../../../../core/services/admin/admin-file.ser
 export class CreateFileComponent {
   private readonly adminFileService = inject(AdminFileService);
   private readonly sweetAlertService = inject(SweetAlertService);
-  
   readonly fileForm = viewChild<NgForm>('fileForm');
+  readonly fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
 
   readonly productVariantId = input.required<number>();
   readonly fileList = output<void>();
@@ -43,6 +44,9 @@ export class CreateFileComponent {
     this.adminFileService.create(fileData, () => {
       this.sweetAlertService.showMessage();
       this.selectedFiles.set([]);
+      if (this.fileInput()) {
+        this.fileInput().nativeElement.value = '';
+      }
       this.fileList.emit();
     });
   }
@@ -53,5 +57,9 @@ export class CreateFileComponent {
       newFiles.splice(index, 1);
       return newFiles;
     });
+  }
+
+  triggerFileInput(): void {
+    this.fileInput()?.nativeElement.click();
   }
 }

@@ -3,14 +3,11 @@
 @import 'tailwindcss/components.css';
 @import 'tailwindcss/utilities.css';
 
-
-
-
 html {
   @include mat.theme((
     color: (
       theme-type: light,
-      primary: mat.$azure-palette,
+      primary: mat.$magenta-palette,
       tertiary: mat.$blue-palette,
     ),
     typography:(
@@ -65,15 +62,39 @@ h6 {
   overflow-wrap: break-word;
 }
 
-.mat-mdc-dialog-container {
-  --mdc-dialog-container-max-width: 1200px;
+:root {
+  --mat-dialog-container-max-width: 1200px !important;
+}
+
+
+@media (max-width: 850px) {
+  :root {
+    --mat-dialog-container-max-width: calc(100vw - 20px) !important;
+  }
 }
 
 .mat-mdc-optgroup {
 --mat-optgroup-label-text-color: gray;
 }
 
+.mat-mdc-table{
+  --mat-table-background-color: white;
+}
+
+.mat-mdc-paginator{
+  --mat-paginator-container-background-color: white;
+}
+
+.mat-mdc-cell, .mat-mdc-header-cell {
+  --mat-table-row-item-outline-color: #d3d3d3;
+}
 
 .mdc-notched-outline__notch{ border-style: none;}
 
 .mat-mdc-icon-button{ line-height: normal;}
+
+:root {
+  @include mat.dialog-overrides((
+    container-color: #e7e7e7,
+  ));
+}

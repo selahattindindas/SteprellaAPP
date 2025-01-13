@@ -4,6 +4,10 @@
   --mdc-outlined-text-field-focus-outline-color: transparent;
 }
 
+.mat.table-overrides{
+  --mat-sys-surface: red;
+}
+
 .table-container {
   width: 100%;
   overflow-x: auto !important;

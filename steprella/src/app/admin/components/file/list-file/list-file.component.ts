@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { CreateFileComponent } from "../create-file/create-file.component";
 import { FileService } from '../../../../core/services/ui/file.service';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA,  MatDialogActions,  MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { FilePipe } from '../../../../shared/pipes/file.pipe';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';

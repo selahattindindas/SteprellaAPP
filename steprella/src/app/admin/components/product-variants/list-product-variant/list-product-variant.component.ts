@@ -53,7 +53,7 @@ export class ListProductVariantComponent {
       componentType: ListSizeComponent,
       data: { productVariantId },
       afterClosed: () => this.loadProductVariants(),
-      options: { width: '700px', height: '400px' },
+      options: { width: '800px', height: '600px' },
     });
   }
 
@@ -62,7 +62,7 @@ export class ListProductVariantComponent {
       componentType: ListFileComponent,
       data: { productVariantId },
       afterClosed: () => this.loadProductVariants(),
-      options: { width: '700px', height: '400px' },
+      options: { width: '800px', height: '600px' },
     });
   }
 }
