@@ -1,44 +1,57 @@
-<mat-form-field>
-    <mat-label>Ara</mat-label>
-    <input matInput (keyup)="applyFilter($event)" #input />
-</mat-form-field>
+<div class="tw-bg-white tw-flex tw-justify-between tw-items-center tw-pt-6 tw-rounded-t-xl max-450:tw-block max-450:tw-space-y-4 tw-pb-6">
+    <div class="tw-mx-5 tw-h-[40px] max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto">
+        <input 
+            placeholder="Ara..." 
+            class="tw-bg-slate-200 tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full"
+            (keyup)="applyFilter($event)"
+        />
+    </div>
 
-<app-create-brand (brandList)="loadBrands()" />
+    <div class="tw-mx-5 tw-flex tw-justify-end max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto">
+        <button (click)="createBrandDialog()"
+            class="tw-flex tw-items-center tw-bg-admin-custom tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-admin-custom/80 tw-transition-colors min-450:tw-w-auto"
+        >
+            <mat-icon class="tw-text-white tw-mr-2">add</mat-icon>
+            <span class="tw-text-white tw-font-medium">Oluştur</span>
+        </button>
+    </div>
+</div>
 
-<div>
+
+<div class="tw-rounded-b-xl tw-bg-white tw-shadow-lg tw-px-4 tw-pb-4">
     <table mat-table [dataSource]="dataSource()" matSort>
 
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sıra </th>
-            <td mat-cell *matCellDef="let element; let i = index">{{element.id}}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tw-text-base"> Sıra </th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                {{ dataSource().data.indexOf(element) + 1 }}
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Marka </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tw-text-base"> Marka </th>
             <td mat-cell *matCellDef="let element">
                 @if(editingBrandId() !== element.id){
                 <span>{{element.name}}</span>
                 }
                 @else(){
-                <app-update-brand [brandData]="element" (brandList)="loadBrands()" (brandUpdated)="editingBrandId.set(null)" />
+                <app-update-brand [brandData]="element" (brandList)="loadBrands()"
+                    (brandUpdated)="editingBrandId.set(null)" />
                 }
             </td>
         </ng-container>
 
         <ng-container matColumnDef="options">
-            <th mat-header-cell *matHeaderCellDef>İşlemler</th>
+            <th mat-header-cell *matHeaderCellDef class="tw-text-base">İşlemler</th>
             <td mat-cell *matCellDef="let element">
                 <div style="display: flex; align-items: center; gap: 8px;">
-                    <button mat-icon-button (click)="listShoeModelDialog(element.id)">
-                    <mat-icon>open_in_new</mat-icon>
-                </button>
+
                     @if(editingBrandId() !== element.id){
+                    <button mat-icon-button (click)="listShoeModelDialog(element.id)">
+                        <mat-icon>open_in_new</mat-icon>
+                    </button>
                     <button mat-icon-button (click)="editRow(element.id)">
                         <mat-icon>edit</mat-icon>
-                    </button>
-
-                    <button mat-icon-button (click)="delete(element.id)">
-                        <mat-icon>delete</mat-icon>
                     </button>
                     }
                     @else(){
@@ -57,7 +70,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">Filtre ile eşleşen veri bulunamadı "{{input.value}}"</td>
+            <td class="tw-py-5 tw-text-center tw-font-medium tw-text-lg tw-text-gray-600" colspan="4">Filtre ile eşleşen
+                veri bulunamadı.</td>
         </tr>
     </table>
 

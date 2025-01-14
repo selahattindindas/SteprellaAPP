@@ -24,7 +24,6 @@ import { AdminBrandService } from '../../../../core/services/admin/admin-brand.s
     MatSortModule,
     MatPaginatorModule,
     MatIconModule,
-    CreateBrandComponent,
     UpdateBrandComponent
   ],
   templateUrl: './list-brand.component.html',
@@ -107,7 +106,21 @@ export class ListBrandComponent {
       componentType: ListShoeModelComponent,
       data: { brandId },
       afterClosed: () => this.loadBrands(),
-      options: { width: '500px', height: '400px' },
+      options: { 
+        width: '800px', 
+        height: '600px' 
+      },
+    });
+  }
+
+  createBrandDialog(): void {
+    this.dialogService.openDialog({
+      componentType: CreateBrandComponent,
+      afterClosed: () => this.loadBrands(),
+      options: {
+        width: '280px',
+        height: '250px'
+      },
     });
   }
 }

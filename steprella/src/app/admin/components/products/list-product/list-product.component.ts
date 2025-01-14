@@ -47,7 +47,7 @@ export class ListProductComponent {
   readonly dataSource = signal<MatTableDataSource<ListProduct>>(new MatTableDataSource());
   readonly paginator = viewChild<MatPaginator>(MatPaginator);
   readonly sort = viewChild<MatSort>(MatSort);
-  readonly columnsToDisplay = [
+  readonly columnsToDisplay: string[] = [
     'id',
     'categoryName',
     'brandName',

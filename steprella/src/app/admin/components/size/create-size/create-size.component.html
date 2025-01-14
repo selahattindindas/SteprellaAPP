@@ -1,52 +1,68 @@
-<form #stockForm="ngForm" (ngSubmit)="onSubmit()" class="tw-flex tw-items-center tw-gap-6">
-  <mat-form-field>
-    <mat-label>Ayakkabı numarası</mat-label>
-    <input 
-    matInput 
-    [(ngModel)]="createSize().sizeValue" 
-    name="sizeValue"
-    #sizeValue="ngModel" 
-    type="number" 
-    required
-    min="1" max="55" 
-    pattern="^[1-9][0-9]?$|^55$"
-    >
+<form #stockForm="ngForm" (ngSubmit)="onSubmit()" class="tw-w-full">
+  <div class="tw-bg-white tw-px-6 tw-pt-6 tw-rounded-t-xl">
+    <div class="tw-flex">
+      <div class="tw-flex tw-flex-col min-xl:tw-flex-row tw-gap-4 tw-flex-1">
 
-    @if(sizeValue.invalid && (sizeValue.dirty || sizeValue.touched)) {
-    <mat-error>
-      @if(sizeValue.errors?.['required']) {
-      Ayakkabı numarası gereklidir
-      }
-      @if(sizeValue.errors?.['max']) {
-      Maksimum 55 numara girilebilir
-      }
-      @if(sizeValue.errors?.['min']) {
-      Minimum 1 numara girilebilir
-      }
-      @if(sizeValue.errors?.['pattern']) {
-      Geçerli bir ayakkabı numarası giriniz (1-55)
-      }
-    </mat-error>
-    }
-  </mat-form-field>
+        <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full min-xl:tw-max-w-[200px]">
+          <label class="tw-text-xs tw-font-medium tw-text-gray-600">Ayakkabı Numarası</label>
+          <div class="tw-h-[42px]"> 
+            <input 
+              class="tw-bg-admin-bg tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full"
+              [(ngModel)]="createSize().sizeValue" 
+              name="sizeValue"
+              #sizeValue="ngModel" 
+              type="number" 
+              required
+              min="1" 
+              max="55"
+            >
+          </div>
+          @if(sizeValue.invalid && (sizeValue.dirty || sizeValue.touched)) {
+            <div class="tw-text-red-500 tw-text-xs">
+              @if(sizeValue.errors?.['max']) {
+                <span>Maksimum 55 numara girilebilir</span>
+              }
+              @if(sizeValue.errors?.['min']) {
+                <span>Minimum 1 numara girilebilir</span>
+              }
+            </div>
+          }
+        </div>
 
-  <mat-form-field>
-    <mat-label>Stok Miktarı</mat-label>
-    <input
-    matInput 
-    [(ngModel)]="createSize().stockQuantity" 
-    name="stockQuantity" 
-    placeholder="Stok sayısı" 
-    #stockQuantity="ngModel" 
-    type="number"
-    min="0" 
-    required>
-    
-    @if(stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)) {
-    <mat-error>Geçerli bir stok sayısı giriniz</mat-error>
-    }
-  </mat-form-field>
+        <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full min-xl:tw-max-w-[200px]">
+          <label class="tw-text-xs tw-font-medium tw-text-gray-600">Stok Sayısı</label>
+          <div class="tw-h-[42px]">
+            <input
+              class="tw-bg-admin-bg tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full"
+              [(ngModel)]="createSize().stockQuantity" 
+              name="stockQuantity" 
+              #stockQuantity="ngModel" 
+              type="number"
+              min="1"
+              max="100"
+            >
+          </div>
+          @if(stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)) {
+            <div class="tw-text-red-500 tw-text-xs">
+              @if(stockQuantity.errors?.['min']) {
+                <span>Minimum 1 olmalıdır</span>
+              }
+              @if(stockQuantity.errors?.['max']) {
+                <span>Maksimum 100 olmalıdır</span>
+              }
+            </div>
+          }
+        </div>
 
-  <button type="submit" [disabled]="!stockForm.valid"
-  class="tw-px-4 tw-py-2 tw-bg-admin-custom tw-text-white tw-font-medium tw-rounded hover:tw-bg-opacity-90 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed">Oluştur</button>
+        <!-- Button -->
+        <button 
+          type="submit" 
+          [disabled]="!stockForm.valid"
+          class="tw-px-6 tw-h-[42px] tw-cursor-pointer tw-bg-admin-custom tw-text-white tw-font-medium tw-rounded-lg hover:tw-bg-opacity-90 tw-whitespace-nowrap min-xl:tw-translate-y-[24px]"
+        >
+          Oluştur
+        </button>
+      </div>
+    </div>
+  </div>
 </form>

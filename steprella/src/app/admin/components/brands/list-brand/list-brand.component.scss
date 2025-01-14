@@ -1,12 +1,9 @@
-table {
-    width: 10%;
-  }
-  
-  .mat-mdc-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
-  
-  td, th {
-    width: 25%;
-  }
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: transparent;
+  --mdc-outlined-text-field-hover-outline-color: transparent;
+  --mdc-outlined-text-field-focus-outline-color: transparent;
+}
+
+.mat.table-overrides{
+  --mat-sys-surface: red;
+}

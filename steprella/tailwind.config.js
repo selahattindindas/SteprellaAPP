@@ -11,6 +11,7 @@ module.exports = {
       colors: {
         admin: {
           custom: '#5f4be8',
+          bg: '#e7e7e7',
 
         }
       },
@@ -18,7 +19,9 @@ module.exports = {
         'xl2': '1600px',
         'max-xl2': {'max': '1599px'},
         'max-custom': {'max': '1300px'},
-        'max-xl': {'max': '550px'}
+        'max-xl': {'max': '550px'},
+        'min-xl': {'min': '550px'},
+        'max-450': {'max': '450px'},
       },
     },
   },

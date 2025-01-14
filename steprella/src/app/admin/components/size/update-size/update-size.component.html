@@ -1,15 +1,27 @@
-<form #stockForm="ngForm" (ngSubmit)="onSubmit()">
-    <input matInput 
-    [(ngModel)]="updateSize().stockQuantity" 
-    name="stockQuantity" 
-    #stockQuantity="ngModel" 
-    type="number"
-    min="0" 
-    required 
-    (keydown.enter)="onSubmit()" 
+<form #stockForm="ngForm" (ngSubmit)="onSubmit()" class="tw-flex tw-flex-col tw-gap-1">
+    <input 
+      class="tw-bg-admin-bg tw-border-none tw-rounded-full tw-px-3 tw-h-[24px] tw-w-[90px] focus:tw-outline-none"
+      [(ngModel)]="updateSize().stockQuantity" 
+      name="stockQuantity" 
+      #stockQuantity="ngModel" 
+      type="number"
+      min="1" 
+      max="100"
+      required 
+      (keydown.enter)="onSubmit()"
     />
     
     @if(stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)) {
-    <mat-error>Geçerli bir stok sayısı giriniz</mat-error>
+      <div class="tw-text-red-500 tw-text-xs">
+        @if(stockQuantity.errors?.['required']) {
+          <span>Stok sayısı gereklidir</span>
+        }
+        @if(stockQuantity.errors?.['min']) {
+          <span>Minimum 1 olmalıdır</span>
+        }
+        @if(stockQuantity.errors?.['max']) {
+          <span>Maksimum 100 olmalıdır</span>
+        }
+      </div>
     }
-</form>
+  </form>

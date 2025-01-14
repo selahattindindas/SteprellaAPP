@@ -1,14 +1,16 @@
-import { Component, EventEmitter, inject, model, output, viewChild } from '@angular/core';
+import { Component, inject, model, output, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { MatFormField } from '@angular/material/form-field';
+import {  MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CreateBrand } from '../../../../core/models/brands/create-brand';
 import { SweetAlertService } from '../../../../core/services/common/sweet-alert.service';
 import { AdminBrandService } from '../../../../core/services/admin/admin-brand.service';
+import { MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-create-brand',
-  imports: [FormsModule, MatFormField, MatInputModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDialogTitle, MatDialogContent, MatDialogActions,MatButtonModule],
   standalone: true,
   templateUrl: './create-brand.component.html',
   styleUrl: './create-brand.component.scss'
