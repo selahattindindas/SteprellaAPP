@@ -7,24 +7,23 @@ html {
   @include mat.theme((
     color: (
       theme-type: light,
-      primary: mat.$violet-palette,
-      tertiary: mat.$blue-palette,
+      primary: mat.$blue-palette,
     ),
     typography:(
-      plain-family: 'Inter, "Helvetica Neue", sans-serif'
+      plain-family: "Manrope, serif"
     ),
     density: 0,
   ));
 
   @include mat.dialog-overrides((
-    container-color: #e7e7e7,
+    container-color: #f4f7fb,
     container-max-width: 1200px,
   ));
 
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Manrope',   serif;
   line-height: 1.5;
   text-align: left;
   -webkit-font-smoothing: antialiased;
@@ -87,7 +86,7 @@ h6 {
 
 .mat-mdc-cell, 
 .mat-mdc-header-cell {
-  --mat-table-row-item-outline-color: #d3d3d3;
+  --mat-table-row-item-outline-color: #f4f4f9;
 }
 
 .mdc-notched-outline__notch {
@@ -104,3 +103,30 @@ h6 {
   }
 }
 
+.table-responsive{
+  overflow-x: auto;
+}
+
+.mat-mdc-header-row{
+  --mat-table-header-headline-color: #29343d;
+}
+
+.mat-badge-content{
+  --mat-badge-background-color: #5f4be8;
+}
+
+html {
+  --mat-sys-background: #fff;
+  --mat-sys-outline: #e0e6eb;
+}
+
+@media (min-width: 1200px) {
+  .sidebar-responsive {
+    &.mat-sidenav {
+      position: fixed !important;
+      visibility: visible !important;
+      transform: none !important;
+      width: 260px !important;
+    }
+  }
+}

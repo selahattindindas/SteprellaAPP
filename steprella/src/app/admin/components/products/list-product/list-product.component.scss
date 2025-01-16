@@ -8,13 +8,10 @@
   --mat-sys-surface: red;
 }
 
-.table-container {
-  width: 100%;
-  overflow-x: auto !important;
+.table-responsive {
+  overflow-x: auto;
 
   .mat-mdc-table {
-    width: max-content !important;
-
 
     tr.example-detail-row {
       height: 0;

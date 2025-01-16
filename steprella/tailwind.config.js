@@ -11,9 +11,11 @@ module.exports = {
       colors: {
         admin: {
           custom: '#5f4be8',
-          bg: '#e7e7e7',
-
-        }
+          bg: '#f4f7fb',
+        },
+        customGray: '#29343d',
+        customBackground: '#f4f7fb',
+        teal: '#526b7a'
       },
       screens: {
         'xl2': '1600px',
@@ -21,7 +23,9 @@ module.exports = {
         'max-custom': {'max': '1300px'},
         'max-xl': {'max': '550px'},
         'min-xl': {'min': '550px'},
+        'max-400': {'max': '400px'},
         'max-450': {'max': '450px'},
+        'max-md': { 'max': '768px' },
       },
     },
   },

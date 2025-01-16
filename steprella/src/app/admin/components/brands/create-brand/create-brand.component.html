@@ -1,29 +1,44 @@
-<h1 class="tw-text-2xl tw-font-medium tw-mb-6 tw-text-gray-800" mat-dialog-title>Marka Ekle</h1>
+<!-- Dialog Header -->
+<h1 class="tw-text-2xl tw-font-medium tw-text-gray-800" mat-dialog-title id="create-brand-dialog-title">
+    Marka Ekle
+</h1>
 
+<!-- Dialog Content -->
 <mat-dialog-content>
-    <form #brandForm="ngForm" (ngSubmit)="onSubmit()">
-        <p>Lütfen marka adını giriniz</p>
-        <div class="tw-mt-3">
-            <mat-form-field>
-                <mat-label>Marka</mat-label>
-                <input matInput name="name" [(ngModel)]="createBrand().name" #name="ngModel" required minlength="2"
-                    maxlength="50" placeholder="Marka adı giriniz...">
+    <form #brandForm="ngForm" (ngSubmit)="onSubmit()" class="tw-space-y-4" aria-labelledby="create-brand-dialog-title">
 
-                @if(name.invalid && (name.dirty || name.touched)) {
-                <mat-error>
-                    @if(name.errors?.['minlength']) {
-                    En az 2 karakter olmalıdır
-                    } @else if(name.errors?.['maxlength']) {
-                    En fazla 50 karakter olmalıdır
-                    }
-                </mat-error>
+        <!-- Form Description -->
+        <p class="tw-text-gray-600">Lütfen marka adını giriniz</p>
+
+        <!-- Brand Name Input -->
+        <mat-form-field appearance="outline" class="tw-w-full">
+            <mat-label>Marka</mat-label>
+            <input matInput type="text" name="name" [(ngModel)]="createBrand().name" #name="ngModel" required
+                minlength="2" maxlength="50" placeholder="Marka adı giriniz..." aria-required="true">
+
+            <!-- Validation Messages -->
+            @if(name.invalid && (name.dirty || name.touched)) {
+            <mat-error role="alert">
+                @if(name.errors?.['required']) {
+                Marka adı zorunludur
+                } @else if(name.errors?.['minlength']) {
+                En az 2 karakter olmalıdır
+                } @else if(name.errors?.['maxlength']) {
+                En fazla 50 karakter olmalıdır
                 }
-            </mat-form-field>
-        </div>
-
-
+            </mat-error>
+            }
+        </mat-form-field>
     </form>
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-button type="submit" cdkFocusInitial>Ekle</button>
+
+<!-- Dialog Actions -->
+<mat-dialog-actions align="end" class="tw-mt-6">
+    <button mat-button mat-dialog-close type="button" class="tw-text-gray-600">
+        İptal
+    </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!brandForm.valid" (click)="onSubmit()"
+        cdkFocusInitial>
+        Ekle
+    </button>
 </mat-dialog-actions>

@@ -1,36 +1,49 @@
-<div class="tw-fixed tw-inset-0 tw-bg-black/70 tw-z-40 tw-transition-all"
-  [ngClass]="{'tw-opacity-0 tw-invisible': !isOpen() || !isCollapsed(), 'tw-opacity-100 tw-visible': isOpen() && isCollapsed()}"
-  (click)="closeSidebar()">
-</div>
+<aside class="tw-pt-7">
+  <!-- Logo Section -->
+  <header class="tw-mx-4">
+    <a routerLink="/admin">
+      <img src="assets/images/common/logo2.png" 
+           alt="Steprella Logo"
+           class="tw-w-32 tw-h-auto tw-object-contain">
+    </a>
+  </header>
 
-<aside #sidenav class="tw-fixed tw-top-0 tw-left-0 tw-h-full tw-w-[264px] tw-bg-white tw-z-50 tw-shadow-2xl 
-  tw-transition-transform tw-duration-300 tw-ease-in-out"
-  [ngClass]="{'tw--translate-x-full': !isOpen() && isCollapsed(), 'tw-translate-x-0': isOpen() || !isCollapsed()}">
-
-  <div class="tw-py-7">
-    <div class="tw-mx-4">
-      <img src="assets/images/common/logo2.png" class="tw-w-32 tw-h-auto tw-object-contain tw-cursor-pointer"
-        routerLink="/admin">
-    </div>
-
-    <nav class="tw-mt-14">
+  <!-- Navigation Section -->
+  <nav class="tw-mt-5">
+    <mat-nav-list>
+      <!-- Menu Groups -->
       @for (menuGroup of menu; track menuGroup) {
-      <div class="tw-mb-4">
+        <section class="tw-mb-4">
+          <!-- Group Header -->
+          <h2 class="tw-mx-4 tw-py-2 tw-text-xs tw-font-semibold tw-uppercase tw-text-customGray tw-tracking-widest">
+            {{ menuGroup.label }}
+          </h2>
 
-        <div class="tw-px-5 tw-mb-2 tw-text-xs tw-font-semibold tw-text-gray-400 tw-uppercase">
-          {{ menuGroup.label }}
-        </div>
-
-        @for (item of menuGroup.item; track item) {
-        <a [routerLink]="item.route" routerLinkActive="tw-bg-menu-gradient tw-text-white tw-rounded-md"
-          class="tw-flex tw-items-center tw-cursor-pointer tw-px-5 tw-py-3 tw-text-gray-800 tw-font tw-no-underline tw-decoration-none tw-transition-all tw-duration-300 tw-ease-in-out hover:tw-bg-slate-200 hover:tw-rounded-md">
-          <i [class]="item.icon + ' tw-w-5 tw-text-lg'"></i>
-          <span class="tw-ml-3 tw-font-semibold tw-text-sm tw-tracking-wide">{{ item.label }}</span>
-        </a>
-        }
-      </div>
+          <!-- Menu Items -->
+          <ul class="tw-list-none tw-p-0">
+            @for (item of menuGroup.item; track item) {
+              <li>
+                <a [routerLink]="item.route" 
+                   routerLinkActive="!tw-bg-indigo-500 !tw-text-white !tw-rounded-xl"
+                   class="tw-flex tw-items-center tw-cursor-pointer tw-ml-5 tw-pl-4 tw-py-3 
+                          tw-no-underline tw-text-customGray tw-decoration-none 
+                          hover:tw-bg-violet-100 hover:tw-rounded-xl 
+                          tw-duration-300 tw-ease-in-out">
+                  
+                  <!-- Icon -->
+                  <i [class]="item.icon + ' tw-w-5 tw-text-lg'"
+                     aria-hidden="true"></i>
+                  
+                  <!-- Label -->
+                  <span class="tw-ml-3 tw-font-normal tw-text-sm">
+                    {{ item.label }}
+                  </span>
+                </a>
+              </li>
+            }
+          </ul>
+        </section>
       }
-    </nav>
-  </div>
-
+    </mat-nav-list>
+  </nav>
 </aside>

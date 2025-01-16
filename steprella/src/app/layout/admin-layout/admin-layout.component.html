@@ -1,22 +1,44 @@
-<div class="tw-flex tw-min-h-screen tw-bg-slate-200">
-  <app-sidebar 
-    #sidenav
-    class="tw-w-0 xl2:tw-w-64 tw-transition-[width] tw-duration-300 tw-ease-in-out tw-overflow-hidden"
-    [isCollapsed]="isSidebarCollapsed()" 
-    [isOpen]="isOpen()"
-    (sidebarToggled)="toggleSidebar()"
-  />
-
-
-  <div class="tw-flex-1 tw-min-h-screen tw-transition-all tw-duration-300">
-    <div class="tw-max-w-7xl tw-mx-auto tw-px-4 max-custom:tw-px-5">
-      <header class="tw-pb-8">
-        <app-header (toggleSidebarEvent)="toggleSidebar()" />
-      </header>
-
-      <main class="tw-pb-8">
-        <router-outlet />
-      </main>
-    </div>
+@if (isLoading()) {
+  <!-- Loading Screen -->
+  <div class="tw-fixed tw-inset-0 tw-bg-white" 
+       role="progressbar"
+       aria-label="Loading content">
   </div>
-</div>
+} @else {
+  <!-- Main Layout -->
+  <div class="tw-flex tw-min-h-screen">
+    <!-- Sidenav Container -->
+    <mat-sidenav-container class="tw-h-screen tw-w-full" 
+                          role="navigation"
+                          aria-label="Main navigation">
+      
+      <!-- Sidebar -->
+      <mat-sidenav #sidenav 
+                   [mode]="isSidebarCollapsed() ? 'over' : 'side'" 
+                   [opened]="isOpen()"
+                   (closed)="onSidenavClosed()"
+                   class="!tw-w-[260px] !tw-bg-white !tw-rounded-none"
+                   role="complementary"
+                   aria-label="Sidebar navigation">
+        <app-sidebar [isCollapsed]="isSidebarCollapsed()" 
+                    [isOpen]="isOpen()" />
+      </mat-sidenav>
+
+      <!-- Main Content Area -->
+      <mat-sidenav-content role="main">
+        <!-- Header -->
+        <app-header (toggleSidebarEvent)="toggleSidebar()" />
+
+        <!-- Page Content -->
+        <main class="tw-rounded-3xl tw-mx-5 tw-mb-5 tw-bg-customBackground tw-min-h-[calc(100vh-104px)]">
+          <div class="tw-max-w-7xl tw-mx-auto">
+            <div class="tw-pt-14 tw-px-6">
+              <router-outlet />
+            </div>
+          </div>
+        </main>
+      </mat-sidenav-content>
+
+    </mat-sidenav-container>
+  </div>
+}

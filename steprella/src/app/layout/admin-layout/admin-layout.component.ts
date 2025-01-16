@@ -1,62 +1,74 @@
-import { Component, viewChild, type ElementRef, HostListener, inject, PLATFORM_ID, signal } from '@angular/core';
+import { Component, HostListener, inject, PLATFORM_ID, signal, viewChild, computed, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
+import {MatButtonModule} from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, SidebarComponent],
-  templateUrl: './admin-layout.component.html'
+  imports: [
+    CommonModule, 
+    RouterModule,
+    MatButtonModule,
+    MatSidenavModule, 
+    MatListModule, 
+    HeaderComponent, 
+    SidebarComponent],
+  templateUrl: './admin-layout.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminLayoutComponent {
-  private readonly platformId = inject(PLATFORM_ID);
-  private readonly sidenavRef = viewChild<ElementRef>('sidenav');
-  private readonly BREAKPOINT = 1600;
-
-  readonly isSidebarCollapsed = signal<boolean>(false);
-  readonly isOpen = signal<boolean>(true);
+export class AdminLayoutComponent implements OnInit {
+  private platformId = inject(PLATFORM_ID);
+  readonly sidenav = viewChild<MatSidenav>('sidenav');
+  
+  private _isOpen = signal(true);
+  private _isSidebarCollapsed = signal(false);
+  private _isLoading = signal(true);
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
-      this.handleResize();
-      window.addEventListener('resize', () => this.handleResize());
+      const width = window.innerWidth;
+      this._isSidebarCollapsed.set(width < 1200);
+      this._isOpen.set(width >= 1200);
     }
   }
 
-  private handleResize(): void {
+  ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const isSmallScreen = window.innerWidth < this.BREAKPOINT;
-      this.isSidebarCollapsed.set(isSmallScreen);
-      this.isOpen.set(!isSmallScreen);
+        this._isLoading.set(false);
+    }
+  }
+
+  readonly isLoading = computed(() => this._isLoading());
+
+  readonly isSidebarCollapsed = computed(() => {
+    if (!isPlatformBrowser(this.platformId)) return false;
+    return this._isSidebarCollapsed();
+  });
+
+  readonly isOpen = computed(() => {
+    if (!isPlatformBrowser(this.platformId)) return true;
+    return this._isOpen();
+  });
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: { target: { innerWidth: number } }) {
+    if (isPlatformBrowser(this.platformId)) {
+      const width = event.target.innerWidth;
+      this._isSidebarCollapsed.set(width < 1200);
+      this._isOpen.set(width >= 1200);
     }
   }
 
   toggleSidebar(): void {
-    if (this.isSidebarCollapsed()) {
-      this.isOpen.update(state => !state);
-    }
+    this._isOpen.update(state => !state);
   }
 
-  @HostListener('document:click', ['$event'])
-  onClickOutside({ target }: MouseEvent): void {
-    const element = target as HTMLElement;
-    const isOutsideClick = this.sidenavRef() && 
-                          this.isSidebarCollapsed() && 
-                          this.isOpen() &&
-                          !this.sidenavRef()?.nativeElement.contains(element) &&
-                          !element.closest('.sidebar-toggle-button');
-
-    if (isOutsideClick) {
-      this.isOpen.set(false);
-    }
-  }
-
-  @HostListener('window:keydown.escape')
-  onEscapePress(): void {
-    if (this.isSidebarCollapsed() && this.isOpen()) {
-      this.isOpen.set(false);
-    }
+  onSidenavClosed() {
+    this._isOpen.set(false);
   }
 }

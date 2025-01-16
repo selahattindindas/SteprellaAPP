@@ -1,9 +1,12 @@
-
-
-::ng-deep .mat-drawer-backdrop {
+@media (min-width: 1200px) {
+  .sidebar-fixed {
     position: fixed !important;
+    visibility: visible !important;
+    transform: none !important;
+    width: 260px !important;
   }
-  
-  ::ng-deep .mat-drawer-container {
-    background-color: transparent !important;
+
+  .main-content {
+    margin-left: 260px;
   }
+}

@@ -10,11 +10,13 @@
 
     <div class="tw-text-center">
       @if (editingVariantId() !== variant.id) {
-      <button mat-icon-button
-        [ngClass]="{'tw-text-red-500': !variant.active, 'tw-text-green-500': variant.active}"
-        [style.color]="variant.active ? 'green' : 'red'">
-        <mat-icon>{{ variant.active ? 'check_circle' : 'cancel' }}</mat-icon>
-      </button>
+        <span class="tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium"
+              [ngClass]="{
+                'tw-bg-green-100 tw-text-green-700': variant.active,
+                'tw-bg-red-100 tw-text-red-700': !variant.active
+              }">
+          {{ variant.active ? 'Aktif' : 'Kapalı' }}
+        </span>
       } @else {
       <app-update-product-variant
         [productId]="productId()"
@@ -28,20 +30,20 @@
 
     <div class="tw-flex tw-justify-end tw-space-x-2">
       <button mat-icon-button (click)="fileDialog(variant.id)" class="hover:tw-text-gray-800">
-        <mat-icon class="tw-text-gray-600">image</mat-icon>
+        <mat-icon class="tw-text-teal">image</mat-icon>
       </button>
 
       <button mat-icon-button (click)="sizeDialog(variant.id)" class="hover:tw-text-gray-800">
-        <i class="fa-solid fa-shoe-prints tw-text-gray-600" style="width: 24px; height: 24px;"></i>
+        <i class="fa-solid fa-shoe-prints tw-text-teal" style="width: 24px; height: 24px;"></i>
       </button>
 
       @if (editingVariantId() !== variant.id) {
       <button mat-icon-button (click)="editRow(variant.id)" class="hover:tw-text-gray-800">
-        <mat-icon class="tw-text-gray-600">build</mat-icon>
+        <mat-icon class="tw-text-teal">build</mat-icon>
       </button>
       } @else {
       <button mat-icon-button (click)="editingVariantId.set(null)" class="hover:tw-text-gray-800">
-        <mat-icon class="tw-text-gray-600">cancel</mat-icon>
+        <mat-icon class="tw-text-teal">cancel</mat-icon>
       </button>
       }
     </div>

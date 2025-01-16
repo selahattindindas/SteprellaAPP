@@ -1,6 +1,8 @@
-import { Component, input, output, signal, viewChild, type ElementRef } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 interface Menu{
   label: string;
@@ -16,16 +18,26 @@ interface MenuItem{
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatListModule,
+    MatIconModule
+  ],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styles: [`
+    .active-link {
+      background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%) !important;
+      color: white !important;
+      border-radius: 6px;
+      margin: 0 8px;
+    }
+  `]
 })
 export class SidebarComponent {
   readonly isCollapsed = input<boolean>();
   readonly isOpen = input<boolean>();
   readonly sidebarToggled = output<void>();
-  
-  private readonly sidenavRef = viewChild<ElementRef>('sidenav');
 
   readonly menu: Menu[] = [
     {
@@ -85,9 +97,4 @@ export class SidebarComponent {
     
   ];
 
-  closeSidebar(): void {
-    if (this.sidenavRef()) {
-      this.sidebarToggled.emit();
-    }
-  }
 }
