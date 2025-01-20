@@ -1,26 +1,6 @@
-@use '@angular/material' as mat;
 @import 'tailwindcss/base.css';
 @import 'tailwindcss/components.css';
 @import 'tailwindcss/utilities.css';
-
-html {
-  @include mat.theme((
-    color: (
-      theme-type: light,
-      primary: mat.$blue-palette,
-    ),
-    typography:(
-      plain-family: "Manrope, serif"
-    ),
-    density: 0,
-  ));
-
-  @include mat.dialog-overrides((
-    container-color: #f4f7fb,
-    container-max-width: 1200px,
-  ));
-
-}
 
 body {
   font-family: 'Manrope',   serif;
@@ -42,8 +22,7 @@ body {
 img,
 picture,
 video,
-canvas,
-svg {
+canvas{
   display: block;
   max-width: 100%;
 }
@@ -65,68 +44,4 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
-}
-
-// Material Design overrides
-.mat-mdc-dialog-container {
-  --mat-dialog-container-max-width: 1200px;
-}
-
-.mat-mdc-optgroup {
-  --mat-optgroup-label-text-color: gray;
-}
-
-.mat-mdc-table {
-  --mat-table-background-color: white;
-}
-
-.mat-mdc-paginator {
-  --mat-paginator-container-background-color: white;
-}
-
-.mat-mdc-cell, 
-.mat-mdc-header-cell {
-  --mat-table-row-item-outline-color: #f4f4f9;
-}
-
-.mdc-notched-outline__notch {
-  border-style: none;
-}
-
-.mat-mdc-icon-button {
-  line-height: normal;
-}
-
-@media (max-width: 850px) {
-  .mat-mdc-dialog-container {
-    --mat-dialog-container-max-width: calc(100vw - 20px);
-  }
-}
-
-.table-responsive{
-  overflow-x: auto;
-}
-
-.mat-mdc-header-row{
-  --mat-table-header-headline-color: #29343d;
-}
-
-.mat-badge-content{
-  --mat-badge-background-color: #5f4be8;
-}
-
-html {
-  --mat-sys-background: #fff;
-  --mat-sys-outline: #e0e6eb;
-}
-
-@media (min-width: 1200px) {
-  .sidebar-responsive {
-    &.mat-sidenav {
-      position: fixed !important;
-      visibility: visible !important;
-      transform: none !important;
-      width: 260px !important;
-    }
-  }
 }

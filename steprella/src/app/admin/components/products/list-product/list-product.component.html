@@ -1,87 +1,120 @@
-<div class="tw-bg-white tw-flex tw-justify-between tw-items-center tw-pt-6 tw-rounded-t-xl max-450:tw-block max-450:tw-space-y-4 tw-pb-6">
-  <div class="tw-mx-5 tw-h-[40px] max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto">
-      <input 
-          placeholder="Ara..." 
-          class="tw-bg-slate-200 tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full"
-          (keyup)="applyFilter($event)"
-      />
+<section class="product-list">
+  <!-- Search and Create Button Header -->
+  <div class="tw-bg-white tw-flex tw-justify-between tw-items-center tw-pt-6 tw-rounded-t-xl max-450:tw-block max-450:tw-space-y-4 tw-pb-6">
+      <!-- Search Input -->
+      <div class="tw-mx-5 tw-h-[40px] max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto">
+          <input type="search"
+                 aria-label="Ürün ara"
+                 placeholder="Ara..." 
+                 class="tw-bg-slate-200 tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full"
+                 (keyup)="applyFilter($event)">
+      </div>
+
+      <!-- Create Button -->
+      <div class="tw-mx-5 tw-flex tw-justify-end max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto">
+          <button (click)="createProductDialog()"
+                  aria-label="Yeni ürün oluştur"
+                  class="tw-flex tw-items-center tw-bg-admin-custom tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-admin-custom/80 tw-transition-colors min-450:tw-w-auto">
+              <mat-icon class="tw-text-white tw-mr-2">add</mat-icon>
+              <span class="tw-text-white tw-font-medium">Oluştur</span>
+          </button>
+      </div>
   </div>
 
-  <div class="tw-mx-5 tw-flex tw-justify-end max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto">
-      <button (click)="createProductDialog()"
-          class="tw-flex tw-items-center tw-bg-admin-custom tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-admin-custom/80 tw-transition-colors min-450:tw-w-auto"
-      >
-          <mat-icon class="tw-text-white tw-mr-2">add</mat-icon>
-          <span class="tw-text-white tw-font-medium">Oluştur</span>
-      </button>
-  </div>
-</div>
+  <!-- Product Table Section -->
+  <section class="tw-rounded-b-xl tw-bg-white tw-shadow-lg tw-px-4 tw-pb-4">
+      <div class="table-container tw-overflow-x-auto" role="region" aria-label="Ürün listesi">
+          <table mat-table 
+                 class="tw-w-full" 
+                 [dataSource]="dataSource()" 
+                 matSort 
+                 multiTemplateDataRows>
 
-  <div class="tw-rounded-b-xl tw-bg-white tw-shadow-lg tw-px-4 tw-pb-4">
-    <div class="table-responsive">
-      <table mat-table class="tw-w-full" [dataSource]="dataSource()" matSort multiTemplateDataRows>
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef scope="col" class="tw-text-base">Sıra</th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                      {{ dataSource().data.indexOf(element) + 1 }}
+                  </td>
+              </ng-container>
 
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef class="tw-text-base">Sıra</th>
-          <td mat-cell *matCellDef="let element; let i = index">
-            {{ dataSource().data.indexOf(element) + 1 }}
-          </td>
-        </ng-container>
+              <!-- Category Column -->
+              <ng-container matColumnDef="categoryName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" class="tw-text-base">Kategori</th>
+                  <td mat-cell *matCellDef="let element">{{ element.category.name }}</td>
+              </ng-container>
 
-        <ng-container matColumnDef="categoryName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="tw-text-base"> Kategori </th>
-          <td mat-cell *matCellDef="let element"> {{ element.category.name }} </td>
-        </ng-container>
+              <!-- Brand Column -->
+              <ng-container matColumnDef="brandName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" class="tw-text-base">Marka</th>
+                  <td mat-cell *matCellDef="let element">{{ element.brandName }}</td>
+              </ng-container>
 
-        <ng-container matColumnDef="brandName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="tw-text-base"> Marka </th>
-          <td mat-cell *matCellDef="let element"> {{ element.brandName }} </td>
-        </ng-container>
+              <!-- Model Column -->
+              <ng-container matColumnDef="shoeModelName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" class="tw-text-base">Model</th>
+                  <td mat-cell *matCellDef="let element">{{ element.shoeModelName }}</td>
+              </ng-container>
 
-        <ng-container matColumnDef="shoeModelName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="tw-text-base"> Model </th>
-          <td mat-cell *matCellDef="let element"> {{ element.shoeModelName }} </td>
-        </ng-container>
+              <!-- Price Column -->
+              <ng-container matColumnDef="price">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col" class="tw-text-base">Fiyat</th>
+                  <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
+              </ng-container>
 
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="tw-text-base"> Fiyat </th>
-          <td mat-cell *matCellDef="let element"> {{ element.price | currency }} </td>
-        </ng-container>
+              <!-- Actions Column -->
+              <ng-container matColumnDef="expand">
+                  <th mat-header-cell *matHeaderCellDef scope="col" class="tw-text-base">İşlemler</th>
+                  <td mat-cell *matCellDef="let element">
+                      <button mat-icon-button 
+                              aria-label="Detayları göster/gizle"
+                              (click)="(listProduct = listProduct === element ? null : element); $event.stopPropagation()">
+                          <mat-icon class="tw-text-teal">
+                              {{ listProduct === element ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+                          </mat-icon>
+                      </button>
+                      <button mat-icon-button 
+                              aria-label="Ürünü düzenle"
+                              (click)="updateProductDialog(element.id)">
+                          <mat-icon class="tw-text-teal">edit</mat-icon>
+                      </button>
+                  </td>
+              </ng-container>
 
-        <ng-container matColumnDef="expand">
-          <th class="cursor-pointer" mat-header-cell *matHeaderCellDef class="tw-text-base"> İşlemler </th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button aria-label="expand row"
-              (click)="(listProduct = listProduct === element ? null : element); $event.stopPropagation()">
-              <mat-icon class="tw-text-teal">{{ listProduct === element ? 'keyboard_arrow_up' :
-                'keyboard_arrow_down' }}</mat-icon>
-            </button>
-            <button mat-icon-button (click)="updateProductDialog(element.id)">
-              <mat-icon class="tw-text-teal">edit</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+              <!-- Expanded Detail Section -->
+              <ng-container matColumnDef="expandedDetail">
+                  <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                      <div class="example-element-detail" 
+                           [@detailExpand]="element == listProduct ? 'expanded' : 'collapsed'">
+                          <app-list-product-variant [productId]="element.id"></app-list-product-variant>
+                      </div>
+                  </td>
+              </ng-container>
 
-        <ng-container matColumnDef="expandedDetail">
-          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-            <div class="example-element-detail" [@detailExpand]="element == listProduct ? 'expanded' : 'collapsed'">
-              <app-list-product-variant [productId]="element.id"></app-list-product-variant>
-            </div>
-          </td>
-        </ng-container>
+              <!-- Table Rows -->
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+              <tr mat-row 
+                  *matRowDef="let element; columns: columnsToDisplay;" 
+                  class="example-element-row"
+                  [class.example-expanded-row]="listProduct === element"
+                  (click)="listProduct = listProduct === element ? null : element">
+              </tr>
+              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
-          [class.example-expanded-row]="listProduct === element"
-          (click)="listProduct = listProduct === element ? null : element">
-        </tr>
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-        <tr class="mat-row" *matNoDataRow>
-          <td class="tw-py-5 tw-text-center tw-font-medium tw-text-lg tw-text-gray-600" colspan="6">
-            Filtre ile eşleşen veri bulunamadı.
-          </td>
-        </tr>
-      </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" (page)="loadProducts()"></mat-paginator>
-    </div>
-  </div>
+              <!-- No Data Row -->
+              <tr class="mat-row" *matNoDataRow>
+                  <td class="tw-py-5 tw-text-center tw-font-medium tw-text-lg tw-text-gray-600" 
+                      colspan="6">
+                      Filtre ile eşleşen veri bulunamadı.
+                  </td>
+              </tr>
+          </table>
+
+          <!-- Pagination -->
+          <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" 
+                        (page)="loadProducts()"
+                        aria-label="Sayfa navigasyonu">
+          </mat-paginator>
+      </div>
+  </section>
+</section>

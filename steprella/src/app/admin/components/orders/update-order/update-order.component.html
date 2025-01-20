@@ -1,5 +1,5 @@
 <form #orderForm="ngForm">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
         <mat-label>Sipariş Durumu</mat-label>
         <mat-select name="status" ngModel required>
           @for (status of orderStatusList; track status) {

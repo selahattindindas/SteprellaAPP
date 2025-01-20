@@ -83,7 +83,7 @@ export class UserComponent {
       data: { userId },
       options: { 
         width: '700px', 
-        height: '400px' 
+        height: '550px' 
       },
     });
   }

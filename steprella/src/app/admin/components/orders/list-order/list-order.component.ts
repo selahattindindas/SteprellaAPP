@@ -1,5 +1,5 @@
 import { Component, effect, inject, signal, viewChild } from '@angular/core';
-import { MatDialogTitle, MatDialogContent, MatDialogActions, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogTitle, MatDialogContent, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -18,7 +18,6 @@ import { OrderStatusPipe } from '../../../../shared/pipes/order-status.pipe';
     MatIconModule,
     MatDialogTitle,
     MatDialogContent,
-    MatDialogActions,
     OrderStatusPipe,
     UpdateOrderComponent
   ],

@@ -9,7 +9,7 @@ import { ShoeModelService } from '../../../../core/services/ui/shoe-model.servic
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { SweetAlertService } from '../../../../core/services/common/sweet-alert.service';
 import { AdminShoeModelService } from '../../../../core/services/admin/admin-shoe-model.service';
 
@@ -24,7 +24,6 @@ import { AdminShoeModelService } from '../../../../core/services/admin/admin-sho
     MatIconModule,
     MatDialogTitle,
     MatDialogContent,
-    MatDialogActions,
     CreateShoeModelComponent,
     UpdateShoeModelComponent
   ],
