@@ -23,8 +23,11 @@ img,
 picture,
 video,
 canvas{
-  display: block;
+  overflow-clip-margin: content-box;
+    overflow: clip;
+    vertical-align: middle;
   max-width: 100%;
+  
 }
 
 // Form elements

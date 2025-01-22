@@ -9,6 +9,11 @@ export const routes: Routes = [
     },
 
     {
+        path: '',
+        loadChildren: () => import('./ui/user.routes').then(m => m.userRoutes)
+    },
+
+    {
         path: 'admin/login',
         loadComponent: () => import('./admin/components/auth/auth.component').then(m => m.AuthComponent),
         title: 'Steprella Admin Panel Giriş Sayfası',
