@@ -15,7 +15,12 @@ module.exports = {
         },
         customGray: '#29343d',
         customBackground: '#f4f7fb',
-        teal: '#526b7a'
+        teal: '#526b7a',
+        ui:{
+          bg: '#ed5221',
+          customGray: '#666565',
+          black: '#1c1e25'
+        }
       },
       screens: {
         'xl2': '1600px',

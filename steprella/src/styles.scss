@@ -2,9 +2,23 @@
 @import 'tailwindcss/components.css';
 @import 'tailwindcss/utilities.css';
 
+// Variables
+$font-family-base: 'Manrope', serif;
+$line-height-base: 1.5;
+
+// Mixins
+@mixin icon-base {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+// Base styles
 body {
-  font-family: 'Manrope',   serif;
-  line-height: 1.5;
+  font-family: $font-family-base;
+  line-height: $line-height-base;
   text-align: left;
   -webkit-font-smoothing: antialiased;
 }
@@ -22,12 +36,11 @@ body {
 img,
 picture,
 video,
-canvas{
+canvas {
   overflow-clip-margin: content-box;
-    overflow: clip;
-    vertical-align: middle;
+  overflow: clip;
+  vertical-align: middle;
   max-width: 100%;
-  
 }
 
 // Form elements
@@ -47,4 +60,41 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
+}
+
+.icon {
+  &-heart {
+    @include icon-base;
+    background-image: url('assets/svg/favorite.svg');
+  }
+
+  &-user {
+    @include icon-base;
+    background-image: url('assets/svg/user.svg');
+  }
+
+  &-cart {
+    @include icon-base;
+    background-image: url('assets/svg/cart.svg');
+  }
+
+  &-shopping {
+    @include icon-base;
+    background-image: url('assets/svg/shopping.svg');
+  }
+
+  &-bars {
+    @include icon-base;
+    background-image: url('assets/svg/bars.svg');
+  }
+
+  &-compass {
+    @include icon-base;
+    background-image: url('assets/svg/compass.svg');
+  }
+
+  &-search {
+    @include icon-base;
+    background-image: url('assets/svg/search.svg');
+  }
 }

@@ -1,0 +1,90 @@
+<div class="sidebar" [class.open]="isOpen()">
+  <div class="sidebar-header">
+    <img src="assets/images/common/logo2.png" alt="Logo" class="logo">
+    <button class="close-btn" (click)="toggleSidebar()">
+      <i class="fa-solid fa-xmark tw-text-sm"></i>
+    </button>
+  </div>
+
+  <nav class="categories">
+    <ul class="main-categories">
+      @for (category of categoryList(); track category.id) {
+      <li>
+        <a (click)="toggleMainCategory(category.id)" class="main-category"
+          [class.active]="selectedMainCategory() === category.id">
+          {{ category.name }}
+        </a>
+      </li>
+      }
+    </ul>
+
+    @if (selectedMainCategory()) {
+    <ul class="subcategories">
+      @for (category of categoryList(); track category.id) {
+      @if (category.id === selectedMainCategory()) {
+      @if (category.id !== 15) {
+      @for (subCategory of category.children; track subCategory.id) {
+      <li>
+        <a class="sub-category">
+          {{ subCategory.name }}
+        </a>
+      </li>
+      }
+      } @else {
+      @for (subCategory of category.children; track subCategory.id) {
+      <li>
+        <a (click)="toggleSubCategory(subCategory.id)" class="sub-category">
+          {{ subCategory.name }}
+          <span class="arrow" [class.expanded]="selectedSubCategory() === subCategory.id">
+            <i class="fa-solid fa-chevron-right"></i>
+          </span>
+        </a>
+
+        @if (selectedSubCategory() === subCategory.id) {
+        <ul class="child-categories">
+          @for (childCategory of subCategory.children; track childCategory.id) {
+          <li>
+            <a class="child-category">
+              {{ childCategory.name }}
+            </a>
+          </li>
+          }
+        </ul>
+        }
+      </li>
+      }
+      }
+      }
+      }
+    </ul>
+    }
+  </nav>
+  <div class="bottom-container">
+    <div class="bottom-buttons">
+      <button class="login-btn">Giriş</button>
+      <button class="register-btn">Kayıt Ol</button>
+    </div>
+
+    <div class="footer-links">
+      <a class="footer-link">
+        <i class="icon-cart"></i>
+        Sepet
+      </a>
+      <a class="footer-link">
+        <i class="icon-shopping"></i>
+        Sipariş
+      </a>
+      <a class="footer-link">
+        <i class="icon-compass"></i>
+        Yardım
+      </a>
+    </div>
+    <div class="footer-secondary">
+      <a class="">
+        <i class="fa-brands fa-whatsapp"></i>
+        Whatsapp destek hattı.
+      </a>
+    </div>
+  </div>
+
+</div>
