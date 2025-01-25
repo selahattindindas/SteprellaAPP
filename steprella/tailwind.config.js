@@ -19,7 +19,8 @@ module.exports = {
         ui:{
           bg: '#ed5221',
           customGray: '#666565',
-          black: '#1c1e25'
+          black: '#1c1e25',
+          slateGray: '#525456'
         }
       },
       screens: {

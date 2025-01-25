@@ -1,0 +1,20 @@
+<app-slider-header 
+    [title]="'Alışverişe Başla'"
+    (prev)="prevSlide()"
+    (next)="nextSlide()">
+</app-slider-header>
+
+<app-spacing-slider 
+    #slider 
+    [breakpoints]="sliderBreakpoints"
+    [defaultPerView]="4"
+    [defaultSpacing]="24">
+  @for(brand of brandList; track brand) {
+    <div class="keen-slider__slide">
+      <div class="brand-card">
+        <i [ngClass]="brand.logo" class="brand-logo"></i>
+      </div>
+    </div>
+  }
+</app-spacing-slider>
+

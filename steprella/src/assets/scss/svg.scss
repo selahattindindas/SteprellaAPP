@@ -1,0 +1,66 @@
+@mixin brands-base {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    background-color: #1c1e25; // Default renk
+    transition: background-color 0.3s ease;
+  }
+  
+  .logo {
+    &-adidas {
+      @include brands-base;
+      mask-image: url('../svg/brands/adidas.svg');
+    }
+  
+    &-converse {
+      @include brands-base;
+      mask-image: url('../svg/brands/converse.svg');
+    }
+  
+    &-hummel {
+      @include brands-base;
+      mask-image: url('../svg/brands/hummel.svg');
+    }
+  
+    &-levis {
+      @include brands-base;
+      mask-image: url('../svg/brands/levis.svg');
+    }
+  
+    &-lotto {
+      @include brands-base;
+      mask-image: url('../svg/brands/lotto.svg');
+    }
+  
+    &-lumberjack {
+      @include brands-base;
+      mask-image: url('../svg/brands/lumberjack.svg');
+    }
+  
+    &-nike {
+      @include brands-base;
+      mask-image: url('../svg/brands/nike.svg');
+    }
+  
+    &-puma {
+      @include brands-base;
+      mask-image: url('../svg/brands/puma.svg');
+    }
+  
+    &-reebok {
+      @include brands-base;
+      mask-image: url('../svg/brands/reebok.svg');
+    }
+  
+    &-under_armour {
+      @include brands-base;
+      mask-image: url('../svg/brands/under_armour.svg');
+    }
+  }
+  

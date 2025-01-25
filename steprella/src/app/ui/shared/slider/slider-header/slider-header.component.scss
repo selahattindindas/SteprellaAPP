@@ -1,0 +1,48 @@
+.slider-header {
+    @apply tw-flex tw-items-center tw-justify-between tw-mb-8;
+  }
+  
+  .title-section {
+    @apply tw-flex tw-items-center tw-gap-3;
+    
+    .icon {
+      @apply tw-text-ui-bg tw-text-2xl;
+    }
+    
+    .slider-title {
+      @apply tw-font-medium tw-text-3xl tw-text-ui-black;
+    }
+  }
+  
+  .nav-buttons {
+    @apply tw-flex tw-gap-2;
+  }
+  
+  .nav-button {
+    @apply tw-w-12 tw-h-12 tw-rounded-full 
+           tw-flex tw-items-center tw-justify-center
+           tw-transition-all tw-duration-300
+           tw-border-none tw-cursor-pointer;
+  
+    &.prev {
+      @apply tw-bg-pink-50;
+      i {
+        @apply tw-text-orange-500;
+      }
+    }
+  
+    &.next {
+      @apply tw-bg-orange-500;
+      i {
+        @apply tw-text-white;
+      }
+    }
+  
+    i {
+      @apply tw-text-xs;
+    }
+  
+    &:hover {
+      @apply tw-scale-110;
+    }
+  }

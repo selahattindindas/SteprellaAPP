@@ -1,0 +1,14 @@
+<div class="slider-header">
+    <div class="title-section">
+      <i class="fa-solid fa-bolt icon"></i>
+      <h2 class="slider-title">{{ title() }}</h2>
+    </div>
+    <div class="nav-buttons">
+      <button class="nav-button prev" (click)="prev.emit()">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="nav-button next" (click)="next.emit()">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>

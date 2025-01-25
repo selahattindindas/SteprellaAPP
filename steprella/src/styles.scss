@@ -65,36 +65,36 @@ h6 {
 .icon {
   &-heart {
     @include icon-base;
-    background-image: url('assets/svg/favorite.svg');
+    background-image: url('assets/svg/icons/favorite.svg');
   }
 
   &-user {
     @include icon-base;
-    background-image: url('assets/svg/user.svg');
+    background-image: url('assets/svg/icons/user.svg');
   }
 
   &-cart {
     @include icon-base;
-    background-image: url('assets/svg/cart.svg');
+    background-image: url('assets/svg/icons/cart.svg');
   }
 
   &-shopping {
     @include icon-base;
-    background-image: url('assets/svg/shopping.svg');
+    background-image: url('assets/svg/icons/shopping.svg');
   }
 
   &-bars {
     @include icon-base;
-    background-image: url('assets/svg/bars.svg');
+    background-image: url('assets/svg/icons/bars.svg');
   }
 
   &-compass {
     @include icon-base;
-    background-image: url('assets/svg/compass.svg');
+    background-image: url('assets/svg/icons/compass.svg');
   }
 
   &-search {
     @include icon-base;
-    background-image: url('assets/svg/search.svg');
+    background-image: url('assets/svg/icons/search.svg');
   }
 }
