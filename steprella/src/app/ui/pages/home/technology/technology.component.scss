@@ -1,0 +1,64 @@
+.technology-content {
+    @apply tw-max-w-[1450px] tw-mx-auto tw-px-4;
+}
+
+.section-header {
+    @apply tw-text-center tw-mb-12;
+}
+
+.subtitle {
+    @apply tw-text-gray-500 tw-text-base tw-font-bold tw-tracking-[0.3em] tw-uppercase;
+}
+
+.title {
+    @apply tw-text-4xl tw-mt-4 tw-font-bold;
+}
+
+.features-grid {
+    @apply tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-gap-16;
+}
+
+.feature-card {
+    @apply tw-bg-[#f7f7f7] tw-rounded-2xl tw-p-8;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-content {
+    @apply tw-relative tw-h-full tw-flex tw-flex-col;
+}
+
+.feature-text {
+    @apply tw-text-lg tw-text-gray-700 tw-mb-8;
+    max-width: 80%;
+}
+
+.feature-image {
+    @apply tw-flex tw-items-end tw-justify-center tw-flex-grow;
+    
+    img {
+        @apply tw-w-full tw-h-auto tw-object-contain;
+        max-height: 350px;
+    }
+}
+
+// Responsive düzenlemeler
+@media (max-width: 768px) {
+    .feature-card {
+        height: auto;
+        min-height: 400px;
+    }
+
+    .feature-text {
+        max-width: 100%;
+    }
+    
+    .features-grid {
+        @apply tw-gap-8;
+    }
+    
+    .title {
+        @apply tw-text-4xl;
+    }
+}

@@ -1,1 +1,32 @@
-<p>footer works!</p>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-main">
+      <!-- Left Section -->
+      <div class="footer-left">
+        <h2 class="interest-text">İLGİNİZİ <br>ÇEKİYOR MU?</h2>
+        <a class="shopping-link">
+          Alışverişe Başla <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <!-- Right Section -->
+      <div class="footer-right">
+        <div class="brand-section">
+          <img src="assets/images/common/logo_light.png" alt="Sneaker Logo" class="logo">
+          <nav class="nav-menu">
+            @for(link of navigationLinks; track link.title) {
+              <a [routerLink]="link.path" class="nav-link">{{link.title}}</a>
+            }
+          </nav>
+        </div>
+        <div class="social-links">
+          @for(social of socialLinks; track social.icon) {
+            <a [href]="social.url" class="social-link" target="_blank">
+              <i class="fa-brands fa-{{social.icon}}"></i>
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

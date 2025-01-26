@@ -1,0 +1,23 @@
+<section class="technology">
+    <div class="technology-content">
+        <!-- Header -->
+        <div class="section-header">
+            <span class="subtitle">TEKNOLOJİ</span>
+            <h2 class="title">Spor Ayakkabı Zirveye Ulaşıyor</h2>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            @for(feature of features; track feature) {
+                <div class="feature-card">
+                    <div class="feature-content">
+                        <p class="feature-text">{{ feature.title }}</p>
+                        <div class="feature-image">
+                            <img [src]="feature.image" [alt]="feature.altText">
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

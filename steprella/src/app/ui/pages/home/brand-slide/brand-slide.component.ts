@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, viewChild } from '@angular/core';
-import { SpacingSliderComponent, SliderBreakpoint } from '../../../slider/spacing-slider/spacing-slider.component';
-import { SliderHeaderComponent } from '../../../slider/slider-header/slider-header.component';
+import { SliderHeaderComponent } from '../../../shared/slider/slider-header/slider-header.component';
+import { SpacingSliderComponent, SliderBreakpoint } from '../../../shared/slider/spacing-slider/spacing-slider.component';
 
 interface BrandSlider {
   name: string;

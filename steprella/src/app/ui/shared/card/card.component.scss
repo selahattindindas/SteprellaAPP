@@ -23,7 +23,7 @@
     }
 
     .product-info {
-      @apply tw-py-4;
+      @apply tw-py-4 tw-bg-white;
 
       .rating {
         @apply tw-flex tw-items-center tw-gap-2 tw-text-sm tw-pb-2 tw-text-gray-600;

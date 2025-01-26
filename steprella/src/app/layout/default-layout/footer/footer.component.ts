@@ -1,11 +1,28 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
+  currentYear = new Date().getFullYear();
+  
+  navigationLinks = [
+    { title: 'Shop', path: '/shop' },
+    { title: 'About', path: '/about' },
+    { title: 'Blog', path: '/blog' },
+    { title: 'Contact', path: '/contact' }
+  ];
 
+  socialLinks = [
+    { icon: 'facebook', url: '#' },
+    { icon: 'instagram', url: '#' },
+    { icon: 'twitter', url: '#' },
+    { icon: 'pinterest', url: '#' }
+  ];
 }

@@ -1,0 +1,70 @@
+.footer {
+  @apply tw-bg-black tw-text-white tw-py-16;
+}
+
+.footer-content {
+  @apply tw-max-w-[1440px] tw-mx-auto tw-px-4;
+}
+
+.footer-main {
+  @apply tw-grid tw-gap-8 tw-py-8 tw-relative tw-border-y tw-border-gray-500;
+  grid-template-columns: 60% 40%;
+
+  &::after {
+    content: '';
+    @apply tw-absolute tw-top-0 tw-bottom-0 tw-w-[1px] tw-bg-gray-500;
+    left: 60%;
+    height: 100%;
+  }
+}
+
+.footer-left {
+  @apply tw-flex tw-flex-col tw-justify-between;
+}
+
+.interest-text {
+  @apply tw-text-6xl md:tw-text-8xl tw-font-bold tw-leading-tight;
+}
+
+.shopping-link {
+  @apply tw-text-orange-500 hover:tw-text-orange-400 tw-flex tw-items-center tw-gap-2 tw-text-lg;
+  
+  i {
+    @apply tw-transition-transform tw-duration-300;
+  }
+  
+  &:hover i {
+    @apply tw-translate-x-2;
+  }
+}
+
+.footer-right {
+  @apply tw-flex tw-flex-col tw-justify-between tw-items-start ;
+}
+
+.brand-section {
+  @apply tw-flex tw-flex-col tw-items-start tw-gap-6;
+}
+
+.logo {
+  @apply tw-h-8 tw-w-auto;
+}
+
+.nav-menu {
+  @apply tw-flex tw-flex-col tw-items-start tw-gap-4;
+}
+
+.nav-link {
+  @apply tw-text-white hover:tw-text-gray-300 tw-transition-colors tw-duration-300;
+}
+
+.social-links {
+  @apply tw-flex tw-gap-6 tw-mt-6;
+}
+
+.social-link {
+  @apply tw-text-white hover:tw-text-gray-300 tw-transition-colors tw-duration-300;
+  @apply tw-w-10 tw-h-10 tw-rounded-full tw-border tw-border-gray-500;
+  @apply tw-flex tw-items-center tw-justify-center;
+}
+
