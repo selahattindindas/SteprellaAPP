@@ -1,0 +1,7 @@
+.filter-container {
+  @apply tw-flex ;
+
+  .products-grid {
+    @apply tw-flex-1;
+  }
+}

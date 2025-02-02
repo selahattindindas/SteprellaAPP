@@ -1,0 +1,75 @@
+<div class="filter-sidebar">
+    <div class="tw-pr-4">
+        <h2 class="filter-header-title">Filtreler</h2>
+        <div class="filter-group">
+
+            <app-filter-section
+            [items]="brandList()"
+            [title]="'Markalar'"
+            [sectionKey]="'brands'"
+            [expandedSections] = "expandedSections"
+            (toggleSection) = "toggleSection('brands')"
+            (filterChange)="onFilterChange($event)"
+            />
+
+            <app-filter-section
+            [items]="sizeList()"
+            [title]="'Bedenler'"
+            [sectionKey]="'sizes'"
+            [expandedSections] = "expandedSections"
+            (toggleSection) = "toggleSection('sizes')"
+            (filterChange)="onFilterChange($event)"
+            />
+
+            <app-filter-section
+            [items]="colorList()"
+            [title]="'Renkler'"
+            [sectionKey]="'colors'"
+            [expandedSections] = "expandedSections"
+            (toggleSection) = "toggleSection('colors')"
+            (filterChange)="onFilterChange($event)"
+            />
+
+            <app-filter-section
+            [items]="genderList()"
+            [title]="'Cinsiyet'"
+            [sectionKey]="'genders'"
+            [expandedSections] = "expandedSections"
+            (toggleSection) = "toggleSection('genders')"
+            (filterChange)="onFilterChange($event)"
+            />
+
+            <app-filter-section
+            [items]="usageAreaList()"
+            [title]="'Kullanım Alanı'"
+            [sectionKey]="'usageAreas'"
+            [expandedSections] = "expandedSections"
+            (toggleSection) = "toggleSection('usageAreas')"
+            (filterChange)="onFilterChange($event)"
+             />
+
+            <app-filter-section
+            [items]="materialList()"
+            [title]="'Materyal'"
+            [sectionKey]="'materials'"
+            [expandedSections] = "expandedSections"
+            (toggleSection) = "toggleSection('materials')"
+            (filterChange)="onFilterChange($event)"
+              />
+
+            <app-filter-section
+                [items]="priceRanges()"
+                [title]="'Fiyat Aralığı'"
+                [sectionKey]="'price'"
+                [expandedSections]="expandedSections"
+                (toggleSection)="toggleSection('price')"
+                (filterChange)="onFilterChange($event)"
+            />
+            
+            <app-filter-button 
+              (applyFilters)="handleApplyFilters()"
+              (clearFilters)="handleClearFilters()" />
+
+        </div>
+    </div>
+</div>

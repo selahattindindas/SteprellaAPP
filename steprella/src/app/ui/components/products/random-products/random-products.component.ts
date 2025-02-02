@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { CardComponent } from '../../../shared/card/card.component';
 import { SpacingSliderComponent } from '../../../shared/slider/spacing-slider/spacing-slider.component';
 import { SliderBreakpoint } from '../../../shared/slider/spacing-slider/spacing-slider.component';
@@ -24,7 +24,7 @@ interface Product {
 export class RandomProductsComponent {
   readonly slider = viewChild<SpacingSliderComponent>('slider');
 
-  readonly listProduct: Product[] = [{
+  readonly listProduct= signal<Product[]>([{
     id: 1,
     name: 'Nike Running Shoe',
     price: 349,
@@ -68,15 +68,14 @@ export class RandomProductsComponent {
     reviews: 11600,
     image: 'assets/images/ui/shoe1.png',
     soldOutPercentage: 85
-  },
-  ];
+  },]) 
 
-  readonly sliderBreakpoints: SliderBreakpoint[] = [
+  readonly sliderBreakpoints = signal< SliderBreakpoint[]>([
     { minWidth: 1440, perView: 4, spacing: 24 },
     { maxWidth: 1200, perView: 3, spacing: 20 },
     { maxWidth: 768, perView: 2, spacing: 16 },
     { maxWidth: 480, perView: 1, spacing: 16 },
-  ];
+  ]);
 
   nextSlide() {
     this.slider()?.slider?.next();

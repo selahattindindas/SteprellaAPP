@@ -1,0 +1,23 @@
+<div class="search-container">
+    <div class="search-input-container">
+        <i class="icon-search"></i>
+        <input class="search-input" placeholder="Ürün ara..." (input)="onSearch($event)">
+    </div>
+
+    @if (searchText()) {
+    <h2 class="search-results-title">Aranan Sonuçlar: "{{ searchText() }}"</h2>
+
+    @if (filteredProducts.length > 0) {
+    <div class="product-grid">
+        @for (product of filteredProducts(); track product.id){
+        <!-- <app-card [listProduct]="[product]"></app-card> -->
+        }
+    </div>
+    } @else {
+    <div class="no-results flex flex-col items-center">
+        <img src="https://image.useinsider.com/default/action-builder/no-result.png" width="200" alt="No results">
+        <p class="no-results-text mt-4">Aradığınız ürün bulunamadı</p>
+    </div>
+    }
+    }
+</div>

@@ -48,9 +48,20 @@ export class ProductVariantService {
     );
   }
 
-  fiter(brandId?: number, colorId?: number, categoryId?: number, sizeValue?: number, page?: number, size?: number): Observable<ListProductVariant[]> {
+  filter(
+    brandId?: number, 
+    colorId?: number, 
+    categoryId?: number, 
+    sizeValue?: number, 
+    minPrice?: number,
+    maxPrice?: number,
+    materialId?: number,
+    usageAreaId?: number,
+    featureId?: number[],
+    page?: number, 
+    size?: number): Observable<ListProductVariant[]> {
 
-    let queryParams = Object.entries({ brandId, colorId, categoryId, sizeValue })
+    let queryParams = Object.entries({ brandId, colorId, categoryId, sizeValue, minPrice, maxPrice, materialId, usageAreaId, featureId })
       .filter(([_, value]) => value !== undefined)
       .map(([key, value]) => `${key}=${value}`)
       .join('&');
@@ -62,7 +73,7 @@ export class ProductVariantService {
     return this.httpClientService.get<BaseResponse<ListProductVariant[]>>({
       controller: "product-variants",
       action: "filter",
-      queryString: queryParams ? `?${queryParams}` : ''
+      queryString: queryParams ? `${queryParams}` : ''
     }).pipe(
       map(response => response.data.length > 0 ? response.data : [])
     );

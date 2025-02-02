@@ -30,6 +30,7 @@
     "keen-slider": "^6.8.6",
     "ngx-cookie-service": "^19.0.0",
     "rxjs": "~7.8.0",
+    "slugify": "^1.6.6",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

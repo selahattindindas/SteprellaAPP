@@ -1,0 +1,27 @@
+<div class="filter-section">
+    <div class="section-header" (click)="toggle()">
+        <span class="header-title">{{ title()}}</span>
+        <span class="arrow" [class.expanded]="expandedSections()[sectionKey()]"></span>
+    </div>
+    @if(expandedSections()[sectionKey()]){
+    <div class="section-content">
+        @for(item of items(); track item.id){
+        <div class="filter-item">
+            <label class="checkbox-label">
+                <input [type]="sectionKey() === 'genders' ? 'radio' : 'checkbox'"
+                       [name]="sectionKey()"
+                       class="checkbox"
+                       [checked]="item.selected"
+                       (change)="onCheckboxChange(item, $event)">
+                <span class="item-name">{{ item.name }}</span>
+            </label>
+        </div>
+        }
+        @if(hasMoreItems()){
+            <button class="show-more-btn" (click)="showMore()">
+                + Daha Fazla Göster
+            </button>
+        }
+    </div>
+    }
+</div>

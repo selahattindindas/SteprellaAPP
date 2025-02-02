@@ -6,12 +6,12 @@
 
 <app-spacing-slider 
     #slider 
-    [breakpoints]="sliderBreakpoints"
+    [breakpoints]="sliderBreakpoints()"
     [defaultPerView]="4"
     [defaultSpacing]="24">
-    @for(product of listProduct; track product) {
+    @for(product of listProduct(); track product) {
         <div class="keen-slider__slide">
-            <app-card [listProduct]="[product]"></app-card>
+            <!-- <app-card [listProduct]="[product]"></app-card> -->
         </div>
     }
 </app-spacing-slider>

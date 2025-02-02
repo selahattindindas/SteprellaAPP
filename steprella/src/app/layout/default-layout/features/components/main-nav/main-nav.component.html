@@ -2,8 +2,10 @@
   <ul class="tw-flex tw-gap-8">
     @for(category of categoryList(); track category) {
     <div class="nav-item">
-      <a class="nav-link">
-        <li>{{category.name}}</li>
+      <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" 
+         [queryParams]="{categoryId: category.id}"
+         class="nav-link">
+        {{ category.name }}
       </a>
       <div class="dropdown-menu">
         <div class="dropdown-content">
@@ -14,7 +16,11 @@
                   <h3>Ayakkabı</h3>
                   <ul>
                     @for(child of category.children; track child) {
-                      <li><a>{{child.name}}</a></li>
+                      <li>
+                        <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" [queryParams]="{categoryId: child.id}">
+                          {{child.name}}
+                        </a>
+                      </li>
                     }
                   </ul>
                 </div>
@@ -26,7 +32,11 @@
                     <h3>{{child.name}}</h3>
                     <ul>
                       @for(subChild of child.children; track subChild) {
-                        <li><a>{{subChild.name}}</a></li>
+                        <li>
+                          <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" [queryParams]="{categoryId: subChild.id}">
+                            {{subChild.name}}
+                          </a>
+                        </li>
                       }
                     </ul>
                   </div>

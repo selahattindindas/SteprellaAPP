@@ -10,8 +10,11 @@
     <ul class="main-categories">
       @for (category of categoryList(); track category.id) {
       <li>
-        <a (click)="toggleMainCategory(category.id)" class="main-category"
-          [class.active]="selectedMainCategory() === category.id">
+        <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" 
+           [queryParams]="{categoryId: category.id}"
+           (click)="toggleMainCategory(category.id)" 
+           class="main-category"
+           [class.active]="selectedMainCategory() === category.id">
           {{ category.name }}
         </a>
       </li>
@@ -25,7 +28,8 @@
       @if (category.id !== 15) {
       @for (subCategory of category.children; track subCategory.id) {
       <li>
-        <a class="sub-category">
+        <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" [queryParams]="{categoryId: subCategory.id}"
+           class="sub-category">
           {{ subCategory.name }}
         </a>
       </li>
@@ -33,7 +37,8 @@
       } @else {
       @for (subCategory of category.children; track subCategory.id) {
       <li>
-        <a (click)="toggleSubCategory(subCategory.id)" class="sub-category">
+        <a (click)="toggleSubCategory(subCategory.id)" 
+           class="sub-category">
           {{ subCategory.name }}
           <span class="arrow" [class.expanded]="selectedSubCategory() === subCategory.id">
             <i class="fa-solid fa-chevron-right"></i>
@@ -44,7 +49,9 @@
         <ul class="child-categories">
           @for (childCategory of subCategory.children; track childCategory.id) {
           <li>
-            <a class="child-category">
+            <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]"
+               [queryParams]="{category: childCategory.name, categoryId: childCategory.id}"
+               class="child-category">
               {{ childCategory.name }}
             </a>
           </li>

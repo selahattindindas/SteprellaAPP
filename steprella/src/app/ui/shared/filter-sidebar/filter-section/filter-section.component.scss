@@ -1,0 +1,67 @@
+.filter-section {
+    @apply tw-border-b tw-border-gray-200 tw-py-3;
+
+    .section-header {
+      @apply tw-w-full tw-flex tw-justify-between tw-items-center tw-cursor-pointer tw-py-2  tw-rounded-lg tw-pr-2 tw-transition-colors tw-duration-200;
+
+      .header-title{
+        @apply tw-font-medium tw-text-ui-black;
+      }
+
+      .arrow {
+        @apply tw-w-2.5 tw-h-2.5 tw-border-t-2 tw-border-r-2 tw-border-gray-400 tw-transform tw-rotate-45 tw-transition-transform tw-duration-200;
+
+        &.expanded {
+          @apply tw-rotate-[135deg] tw-translate-y-[-2px];
+        }
+      }
+    }
+
+    .section-content {
+      @apply tw-mt-2 tw-space-y-1;
+    }
+  }
+
+  .filter-item {
+    @apply tw-py-1.5;
+  
+    .checkbox-label {
+      @apply tw-flex tw-items-center tw-gap-1 tw-cursor-pointer tw-text-ui-customGray hover:tw-text-gray-900 tw-text-sm tw-transition-colors tw-duration-200 tw-px-2 tw-py-1 tw-rounded-md;
+  
+      &:hover {
+        @apply tw-font-semibold;
+      }
+  
+      input[type="checkbox"],
+      input[type="radio"] {
+        @apply tw-w-5 tw-h-5 tw-rounded tw-border tw-border-gray-400 tw-bg-white tw-appearance-none tw-relative tw-cursor-pointer;
+        
+        &:checked {
+          @apply tw-border-orange-500 tw-bg-ui-bg; 
+        }
+  
+        &::before {
+          content: "\f00c"; 
+          font-family: "Font Awesome 6 Free"; 
+          font-weight: 900;
+          @apply tw-text-white tw-text-xs tw-absolute tw-top-1/2 tw-left-1/2 tw-transform tw--translate-x-1/2 tw--translate-y-1/2;
+        }
+  
+        &:not(:checked)::before {
+          content: "";
+        }
+      }
+
+      input[type="radio"] {
+        @apply tw-rounded-full;
+      }
+
+      .item-name{
+        @apply tw-ml-2;
+      }
+    }
+  }
+
+  .show-more-btn {
+    @apply tw-text-sm tw-text-orange-500 tw-font-medium tw-mt-2 tw-w-full tw-text-left tw-px-2 tw-py-1 hover:tw-text-ui-bg tw-transition-colors tw-duration-200;
+  }

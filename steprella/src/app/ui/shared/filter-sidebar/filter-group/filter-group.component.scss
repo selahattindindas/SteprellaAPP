@@ -1,0 +1,12 @@
+.filter-sidebar {
+    @apply tw-w-72 tw-sticky tw-top-0;
+  
+    .filter-header-title{
+      @apply tw-text-xl tw-font-semibold tw-text-gray-800 tw-mb-6;
+    }
+  
+    .filter-group {
+      @apply tw-h-[calc(100vh-50px)] tw-overflow-y-auto;
+    }
+  }
+  

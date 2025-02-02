@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from '../../../../../core/services/ui/category.service';
 import { ListCategory } from '../../../../../core/models/categories/list-category';
+import { UrlService } from '../../../../../core/services/common/url.service';
 
 @Component({
   selector: 'app-mobile-sidebar',
@@ -14,6 +15,7 @@ import { ListCategory } from '../../../../../core/models/categories/list-categor
 })
 export class MobileSidebarComponent {
   private readonly categoryService = inject(CategoryService);
+  readonly urlService = inject(UrlService);
 
   readonly categoryList = signal<ListCategory[]>([]);
   readonly isOpen = signal(false);

@@ -2,11 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainNavComponent } from '../features/components/main-nav/main-nav.component';
 import { MobileSidebarComponent } from '../features/components/mobile-sidebar/mobile-sidebar.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, MainNavComponent, MobileSidebarComponent],
+  imports: [CommonModule, MainNavComponent, MobileSidebarComponent, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

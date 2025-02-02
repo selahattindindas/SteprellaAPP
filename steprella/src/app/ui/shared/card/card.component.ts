@@ -1,32 +1,24 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  rating: number;
-  reviews: number;
-  image: string;
-  soldOutPercentage: number;
-}
+import { ListProductVariant } from '../../../core/models/product-variants/list-product-variant';
+import { FilePipe } from '../../../shared/pipes/file.pipe';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FilePipe],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent {
-  readonly listProduct = input<Product[]>([]);
+  readonly listProduct = input<ListProductVariant[]>([]);
 
-  addToCart(product: Product) {
+  addToCart(product: ListProductVariant) {
     console.log('Added to cart:', product);
   }
 
-  toggleFavorite(product: Product) {
+  toggleFavorite(product: ListProductVariant) {
     console.log('Toggled favorite:', product);
   }
 }

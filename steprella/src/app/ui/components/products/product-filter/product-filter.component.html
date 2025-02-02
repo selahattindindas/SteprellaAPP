@@ -1,0 +1,21 @@
+<div class="filter-container">
+    <app-filter-group
+      (applyFilters)="handleFilters($event)"
+      (clearFilters)="clearFilters()"
+    />
+    
+    <div class="products-grid">
+      @if(loading()) {
+        <div class="loading">Yükleniyor...</div>
+      } @else if(products().length > 0) {
+  
+          <app-card [listProduct]="products()" />
+        
+      } @else {
+        <div class="no-results">
+          <h2>Üzgünüz, aradığınız kriterlere uygun ürün bulunamadı.</h2>
+          <p>Lütfen farklı filtreler deneyiniz.</p>
+        </div>
+      }
+    </div>
+  </div>

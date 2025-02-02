@@ -1,8 +1,11 @@
 <div class="card">
-  @for(product of listProduct(); track product){
+  @for(product of listProduct(); track product.id){
   <div class="product-card">
     <div class="image-container">
-      <img [src]="product.image" [alt]="product.name" class="product-image">
+      @for(files of product.productFiles ; track files){
+        <img [src]="files | fileArray" [alt]="files.fileName" class="product-image">
+      }
+      
       <button (click)="toggleFavorite(product)" class="favorite-btn">
         <i class="fa-regular fa-heart tw-text-xl"></i>
       </button>
@@ -11,10 +14,10 @@
     <div class="product-info">
       <div class="rating">
         <i class="fa-solid fa-star tw-text-base tw-text-amber-500"></i>
-        <span>{{product.rating}} ({{product.reviews | number}}k Yorumlar)</span>
+        <span>{{product.rating}} ({{product.ratingCount | number}}kişi puanladı)</span>
       </div>
 
-      <h3 class="product-name">{{product.name}}</h3>
+      <h3 class="product-name">{{product.brandName}} - {{product.shoeModelName}}</h3>
 
       <div class="product-bottom">
         <div class="price-container">

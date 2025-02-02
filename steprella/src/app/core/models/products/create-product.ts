@@ -3,5 +3,8 @@ export interface CreateProduct {
     description: string;
     categoryId: number;
     brandId: number;
+    featureId: number[];
+    materialId: number;
+    usageAreaId: number;
     shoeModelId: number;
 }

@@ -1,0 +1,13 @@
+.filter-actions {
+    @apply tw-pt-7;
+
+
+    button {
+      @apply tw-bg-orange-500 tw-text-white tw-py-2.5 tw-px-4 tw-rounded-lg tw-w-full tw-font-medium tw-text-sm hover:tw-bg-orange-600 tw-transition-colors tw-duration-200 tw-mx-4 tw-mb-4;
+      width: calc(100% - 32px);
+
+      .check-button{
+        @apply tw-flex tw-items-center tw-justify-center
+    }
+    }
+  }

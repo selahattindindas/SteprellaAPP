@@ -1,0 +1,25 @@
+<div class="filter-section">
+    <div class="section-header" (click)="toggle()">
+        <span class="header-title">{{ title()}}</span>
+        <span class="arrow" [class.expanded]="expandedSections()[sectionKey()]"></span>
+    </div>
+    @if(expandedSections()[sectionKey()]){
+    <div class="section-content">
+        <div class="price-inputs">
+            <div class="price-input-wrapper">
+                <input type="number" class="price-input" [(ngModel)]="priceRange.currentMin"
+                    (change)="updatePriceRange('min', priceRange.currentMin)" [min]="priceRange.min"
+                    [max]="priceRange.currentMax" placeholder="Min">
+                <span class="currency">₺</span>
+            </div>
+            <span class="separator">-</span>
+            <div class="price-input-wrapper">
+                <input type="number" class="price-input" [(ngModel)]="priceRange.currentMax"
+                    (change)="updatePriceRange('max', priceRange.currentMax)" [min]="priceRange.currentMin"
+                    [max]="priceRange.max" placeholder="Max">
+                <span class="currency">₺</span>
+            </div>
+        </div>
+    </div>
+    }
+</div>
