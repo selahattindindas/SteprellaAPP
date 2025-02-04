@@ -1,21 +1,36 @@
 <div class="filter-container">
-    <app-filter-group
-      (applyFilters)="handleFilters($event)"
-      (clearFilters)="clearFilters()"
-    />
-    
-    <div class="products-grid">
-      @if(loading()) {
-        <div class="loading">Yükleniyor...</div>
-      } @else if(products().length > 0) {
-  
-          <app-card [listProduct]="products()" />
-        
-      } @else {
-        <div class="no-results">
-          <h2>Üzgünüz, aradığınız kriterlere uygun ürün bulunamadı.</h2>
-          <p>Lütfen farklı filtreler deneyiniz.</p>
-        </div>
-      }
+  <app-filter-group (applyFilters)="handleFilters($event)" (clearFilters)="clearFilters()" />
+
+  <div class="products-grid">
+    @if(loading()) {
+    <div class="loading">Yükleniyor...</div>
+    } @else if(products().length > 0) {
+
+    <app-card [listProduct]="products()" />
+
+    } @else {
+    <div class="no-results">
+      <h2>Üzgünüz, aradığınız kriterlere uygun ürün bulunamadı.</h2>
+      <p>Lütfen farklı filtreler deneyiniz.</p>
     </div>
+    }
   </div>
+</div>
+<div class="pagination">
+  <button (click)="changePage(currentPage() - 1)" [disabled]="currentPage() <= 1">Önceki</button>
+  
+  @for(page of getPageNumbers(); track $index) {
+    @if(page === '...') {
+      <span class="ellipsis">...</span>
+    } @else {
+      <button 
+        (click)="changePage(+page)"
+        [class.active]="currentPage() === page">
+        {{ page }}
+      </button>
+    }
+  }
+  
+  <button (click)="changePage(currentPage() + 1)" 
+          [disabled]="currentPage() * pageSize() >= totalItems()">Sonraki</button>
+</div>

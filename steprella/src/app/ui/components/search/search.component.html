@@ -1,17 +1,18 @@
 <div class="search-container">
     <div class="search-input-container">
-        <i class="icon-search"></i>
-        <input class="search-input" placeholder="Ürün ara..." (input)="onSearch($event)">
+        <input class="search-input" placeholder="Ürün ara..." [(ngModel)]="searchText" (keyup.enter)="searchProducts()">
+        <button class="search-button" (click)="searchProducts()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Ara
+        </button>
     </div>
 
-    @if (searchText()) {
+    @if (hasSearched()) {
     <h2 class="search-results-title">Aranan Sonuçlar: "{{ searchText() }}"</h2>
 
-    @if (filteredProducts.length > 0) {
+    @if (products().length > 0) {
     <div class="product-grid">
-        @for (product of filteredProducts(); track product.id){
-        <!-- <app-card [listProduct]="[product]"></app-card> -->
-        }
+        <app-card [listProduct]="products()"></app-card>
     </div>
     } @else {
     <div class="no-results flex flex-col items-center">

@@ -1,0 +1,19 @@
+@import url('../../../../../assets/scss/svg.scss');
+
+.brand-card {
+  @apply tw-w-full tw-h-[100px] tw-aspect-square tw-p-4 tw-rounded-lg tw-bg-white tw-border tw-border-gray-200;
+  @apply tw-flex tw-items-center tw-justify-center;
+  @apply tw-cursor-pointer tw-transition-colors tw-duration-300 tw-ease-in-out;
+
+  &:hover {
+    @apply tw-bg-[#1c1e25];
+
+    .brand-logo {
+      @apply tw-bg-white;
+    }
+  }
+}
+
+.brand-logo {
+  @apply tw-w-full tw-h-full;
+}

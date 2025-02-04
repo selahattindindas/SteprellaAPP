@@ -10,7 +10,6 @@
             <label class="checkbox-label">
                 <input [type]="sectionKey() === 'genders' ? 'radio' : 'checkbox'"
                        [name]="sectionKey()"
-                       class="checkbox"
                        [checked]="item.selected"
                        (change)="onCheckboxChange(item, $event)">
                 <span class="item-name">{{ item.name }}</span>

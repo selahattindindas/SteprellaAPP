@@ -2,10 +2,14 @@
   @for(product of listProduct(); track product.id){
   <div class="product-card">
     <div class="image-container">
-      @for(files of product.productFiles ; track files){
-        <img [src]="files | fileArray" [alt]="files.fileName" class="product-image">
+      @if (product.productFiles && product.productFiles.length > 0) {
+      @for(files of product.productFiles; track files) {
+      <img src='assets/images/ui/shoe1.png' [alt]="files.fileName" class="product-image">
       }
-      
+      } @else {
+      <img src='assets/images/ui/shoe1.png' alt="Default product image" class="product-image">
+      }
+
       <button (click)="toggleFavorite(product)" class="favorite-btn">
         <i class="fa-regular fa-heart tw-text-xl"></i>
       </button>
@@ -37,3 +41,9 @@
   </div>
   }
 </div>
+
+<!-- <app-paginator 
+[pageSize]="pageSize()" 
+[totalCount]="totalCount()"
+(pageChange)="handlePageChange($event)"
+/> -->

@@ -1,10 +1,10 @@
 .card {
-  @apply tw-flex tw-flex-wrap tw-gap-6 tw-w-full tw-justify-between;
+  @apply tw-flex tw-flex-wrap tw-gap-6 tw-max-w-[1450px] tw-mx-auto tw-justify-between;
 
   .product-card {
-    @apply tw-overflow-hidden  tw-rounded-t-3xl tw-flex-grow;
-    width: calc(25% - 1.5rem);
-    min-width: 280px;
+    @apply tw-overflow-hidden tw-rounded-t-3xl;
+    width: 340px; // (1450px - (3 * 24px gap)) / 4 ≈ 340px
+    min-width: 260px; // minimum genişlik
 
     .image-container {
       @apply tw-relative tw-w-full tw-h-64 tw-bg-[#f7f7f7];

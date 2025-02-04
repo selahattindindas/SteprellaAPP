@@ -13,11 +13,12 @@ import { ListFeature } from '../../../../core/models/features/list-feature';
 import { ListMaterial } from '../../../../core/models/materials/list-material';
 import { ListUsageArea } from '../../../../core/models/usage-areas/list-usage-area';
 import { FeatureService } from '../../../../core/services/ui/feature.service';
+import { FilterPriceComponent } from '../filter-price/filter-price.component';
 
 @Component({
   selector: 'app-filter-group',
   standalone: true,
-  imports: [CommonModule, FilterSectionComponent, FilterButtonComponent],
+  imports: [CommonModule, FilterSectionComponent, FilterPriceComponent, FilterButtonComponent],
   templateUrl: './filter-group.component.html',
   styleUrl: './filter-group.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -30,7 +31,6 @@ export class FilterGroupComponent {
   private readonly usageAreaService = inject(UsageAreaService);
   private readonly staticDataService = inject(StaticDataService);
 
-  // Signals for lists
   readonly brandList = signal<ListBrand[]>([]);
   readonly colorList = signal<ListColor[]>([]);
   readonly featureList = signal<ListFeature[]>([]);
@@ -39,14 +39,11 @@ export class FilterGroupComponent {
   readonly sizeList = signal<any[]>([]);
   readonly genderList = signal<any[]>([]);
 
-  // Selected filters
   readonly selectedFilters = signal<{[key: string]: number[]}>({});
 
-  // Outputs
   readonly applyFilters = output<any>();
   readonly clearFilters = output<void>();
 
-  // Section states
   expandedSections: { [key: string]: boolean } = {
     brands: true,
     colors: true,
@@ -56,18 +53,13 @@ export class FilterGroupComponent {
     usageAreas: true
   };
 
-  readonly priceRanges = signal<any[]>([
-    { id: 1, name: '0 TL - 500 TL', min: 0, max: 500, selected: false },
-    { id: 2, name: '500 TL - 2000 TL', min: 500, max: 2000, selected: false },
-    { id: 3, name: '2000 TL ve üzeri', min: 2000, max: null, selected: false }
-  ]);
+
 
   constructor() {
     this.loadData();
   }
 
   private loadData(): void {
-    // Load initial data from services
     this.brandService.getAll(0,5).subscribe(response => this.brandList.set(response.data));
     this.featureService.getAll(0,5).subscribe(response => this.featureList.set(response.data));
     this.colorService.getAll().subscribe(response => this.colorList.set(response));

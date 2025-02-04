@@ -10,6 +10,24 @@ import { ListProductVariant } from '../../models/product-variants/list-product-v
 export class ProductVariantService {
   private readonly httpClientService = inject(HttpClientService);
 
+  getActiveProductVariants(page?: number, size?: number): Observable<BaseResponse<ListProductVariant[]>> {
+    let queryString = '';
+    if (page !== undefined && size !== undefined) {
+      queryString = `page=${page}&size=${size}`;
+    }
+
+    return this.httpClientService.get<BaseResponse<ListProductVariant[]>>({
+      controller: 'product-variants',
+      action: 'get-active-products',
+      queryString: queryString
+    }).pipe(
+      map(response => ({
+        totalCount: response.totalCount,
+        data: response.data.length > 0 ? response.data : []
+      }))
+    );
+  }
+
   getById(id: number): Observable<ListProductVariant> {
     return this.httpClientService.get<BaseResponse<ListProductVariant>>({
       controller: "product-variants"
@@ -32,7 +50,7 @@ export class ProductVariantService {
     );
   }
 
-  search(searchTerm: string, page?: number, size?: number): Observable<ListProductVariant[]> {
+  search(searchTerm: string, page?: number, size?: number): Observable<BaseResponse<ListProductVariant[]>> {
     let queryString = `searchTerm=${searchTerm}`;
 
     if (page !== undefined && size !== undefined) {
@@ -44,22 +62,25 @@ export class ProductVariantService {
       action: "search",
       queryString: queryString
     }).pipe(
-      map(response => response.data.length > 0 ? response.data : [])
-    );
+      map(response => ({
+        totalCount: response.totalCount,
+        data: response.data.length > 0 ? response.data : []
+      })
+      ));
   }
 
   filter(
-    brandId?: number, 
-    colorId?: number, 
-    categoryId?: number, 
-    sizeValue?: number, 
+    brandId?: number,
+    colorId?: number,
+    categoryId?: number,
+    sizeValue?: number,
     minPrice?: number,
     maxPrice?: number,
     materialId?: number,
     usageAreaId?: number,
     featureId?: number[],
-    page?: number, 
-    size?: number): Observable<ListProductVariant[]> {
+    page?: number,
+    size?: number): Observable<BaseResponse<ListProductVariant[]>>{
 
     let queryParams = Object.entries({ brandId, colorId, categoryId, sizeValue, minPrice, maxPrice, materialId, usageAreaId, featureId })
       .filter(([_, value]) => value !== undefined)
@@ -75,7 +96,10 @@ export class ProductVariantService {
       action: "filter",
       queryString: queryParams ? `${queryParams}` : ''
     }).pipe(
-      map(response => response.data.length > 0 ? response.data : [])
-    );
+      map(response => ({
+        totalCount: response.totalCount,
+        data: response.data.length > 0 ? response.data : []
+      })
+      ));
   }
 }

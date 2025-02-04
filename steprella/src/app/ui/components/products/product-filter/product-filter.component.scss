@@ -5,3 +5,46 @@
     @apply tw-flex-1;
   }
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  gap: 10px;
+
+  .ellipsis {
+    padding: 10px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  button.active {
+    background-color: #0056b3;
+  }
+}
+
+.pagination button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pagination span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
