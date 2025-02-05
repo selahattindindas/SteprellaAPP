@@ -1,0 +1,19 @@
+.number-slide {
+    @apply tw-flex tw-items-center tw-justify-center tw-h-[500px] md:tw-h-[600px] tw-rounded-2xl tw-relative;
+  }
+  
+  .image-container {
+    @apply tw-w-full tw-h-full tw-flex tw-items-center tw-justify-center tw-p-10;
+    
+    img {
+      @apply tw-max-w-full tw-max-h-full tw-object-contain;
+    }
+  }
+  
+  .thumbnail .keen-slider__slide {
+    @apply tw-rounded-2xl tw-mt-3 tw-h-56 tw-cursor-pointer tw-border tw-border-slate-300;
+  }
+  
+  .thumbnail .keen-slider__slide.active {
+    @apply tw-border tw-border-ui-bg;
+  }

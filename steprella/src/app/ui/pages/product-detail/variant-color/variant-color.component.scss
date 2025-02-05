@@ -1,0 +1,12 @@
+.product-variant-card {
+    @apply tw-border tw-border-slate-300 tw-rounded-lg 
+           tw-h-20 tw-w-full
+           tw-flex tw-items-center tw-justify-center
+           tw-p-2;  
+
+    img {
+      @apply tw-max-h-full tw-max-w-full 
+             tw-object-contain
+             tw-h-auto tw-w-auto;  
+    }
+  }

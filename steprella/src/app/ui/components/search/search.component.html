@@ -12,7 +12,12 @@
 
     @if (products().length > 0) {
     <div class="product-grid">
-        <app-card [listProduct]="products()"></app-card>
+        <app-card 
+        [listProduct]="products()" 
+        [currentPage]="currentPage()"
+        [pageSize]="pageSize()"
+        [totalCount]="totalCount()"
+        (onPageChange)="handlePageChange($event)" />
     </div>
     } @else {
     <div class="no-results flex flex-col items-center">

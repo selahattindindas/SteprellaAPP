@@ -1,0 +1,56 @@
+<div class="comment-section">
+  <div class="comments-header">
+    <h3 class="section-title">Yorumlar</h3>
+    
+  </div>
+  <div class="divider"></div>
+
+  <div class="comments-list">
+    @for (comment of comments; track comment.id) {
+    <div class="comment-card">
+      <div class="comment-left">
+        <div class="user-avatar">
+          <img src="assets/images/admin/user.png" [alt]="comment.userName">
+        </div>
+      </div>
+      <div class="comment-right">
+        <div class="comment-header">
+          <div class="user-info">
+            <span class="user-name">{{comment.userName}}</span>
+            <span class="comment-date">{{comment.date | date:'dd MMM yyyy'}}</span>
+          </div>
+          <div class="rating-stars">
+            @for (star of [1,2,3,4,5]; track $index) {
+            <i class="fa-solid fa-star" [class.active]="star <= comment.rating"></i>
+            }
+          </div>
+        </div>
+        <p class="comment-text">{{comment.text}}</p>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="add-comment-form">
+    <div class="seciton-header">
+      <h3 class="section-title">Yorum Ekle</h3>
+      <span class="section-description">Yorum alanını doldurunuz.</span>
+    </div>
+
+    <div class="rating-container">
+      <p>Puanınız</p>
+      
+      <div class="stars">
+        @for (star of [1,2,3,4,5]; track $index) {
+        <i class="fa-regular fa-star" (click)="rate(star)" [class.active]="star <= rating"></i>
+        }
+      </div>
+    </div>
+
+    <div class="review-container">
+      <textarea [(ngModel)]="review" placeholder="Yorumunuzu buraya yazın..." class="review-input"></textarea>
+    </div>
+
+    <button class="submit-btn">Gönder</button>
+  </div>
+</div>

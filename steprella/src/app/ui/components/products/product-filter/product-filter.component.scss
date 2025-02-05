@@ -1,50 +1,53 @@
 .filter-container {
-  @apply tw-flex ;
+  @apply tw-flex  tw-gap-6 tw-w-[1450px] tw-mx-auto;
+
+  app-filter-group {
+    @apply tw-w-[280px] tw-flex-shrink-0;
+  }
 
   .products-grid {
     @apply tw-flex-1;
   }
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-  gap: 10px;
+.no-results {
+  @apply tw-flex tw-justify-center tw-items-center tw-min-h-[400px] tw-w-full;
 
-  .ellipsis {
-    padding: 10px;
-    color: #333;
-    font-weight: bold;
+  .no-results-content {
+    @apply tw-text-center tw-max-w-md tw-mx-auto tw-p-8;
+
+    .icon-container {
+      @apply tw-mb-6 tw-animate-bounce;
+    }
+
+    .title {
+      @apply tw-text-2xl tw-font-semibold tw-text-ui-black tw-mb-4;
+    }
+
+    .description {
+      @apply tw-text-gray-600 tw-mb-6;
+    }
+
+    .suggestions {
+      @apply tw-text-left tw-mb-8 tw-space-y-3;
+
+      li {
+        @apply tw-flex tw-items-center tw-gap-3 tw-text-ui-customGray;
+
+        i {
+          @apply tw-text-ui-bg;
+        }
+      }
+    }
+
+    .reset-button {
+      @apply tw-bg-orange-500 tw-text-white tw-px-6 tw-py-3 tw-rounded-lg 
+             tw-flex tw-items-center tw-gap-2 tw-mx-auto
+             hover:tw-bg-orange-600 tw-transition-colors;
+
+      i {
+        @apply tw-text-sm;
+      }
+    }
   }
-
-  button.active {
-    background-color: #0056b3;
-  }
-}
-
-.pagination button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.pagination button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.pagination button:hover:not(:disabled) {
-  background-color: #0056b3;
-}
-
-.pagination span {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
 }

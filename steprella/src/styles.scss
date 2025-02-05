@@ -98,3 +98,11 @@ h6 {
     background-image: url('assets/svg/icons/search.svg');
   }
 }
+
+.thumbnail .keen-slider__slide {
+  @apply tw-rounded-2xl tw-border tw-border-slate-300;
+}
+
+.thumbnail .keen-slider__slide.active {
+  @apply tw-border tw-border-ui-bg;
+}

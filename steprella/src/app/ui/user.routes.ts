@@ -39,6 +39,11 @@ export const userRoutes: Routes = [
                         }
                     }
                 ]
+            },
+            {
+                path: 'detay/:id',
+                loadComponent: () => import('./components/products/product-detail/product-detail.component')
+                .then(m => m.ProductDetailComponent)
             }
         ]
     }

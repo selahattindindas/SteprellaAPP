@@ -3,7 +3,7 @@ import { CardComponent } from "../../shared/card/card.component";
 import { ListProductVariant } from '../../../core/models/product-variants/list-product-variant';
 import { ProductVariantService } from '../../../core/services/ui/product-variant.service';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -15,22 +15,21 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SearchComponent implements OnInit {
   private readonly productVariantService = inject(ProductVariantService);
-  private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
   readonly searchText = signal<string>('');
   readonly products = signal<ListProductVariant[]>([]);
   readonly hasSearchedSignal = signal<boolean>(false);
-  readonly totalCount = signal<number>(0);
-  readonly pageSize = signal<number>(1); // Sayfa başına ürün sayısı
+  readonly currentPage = signal(1);
+  readonly pageSize = signal(10);
+  readonly totalCount = signal(0);
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['search_text']) {
         this.searchText.set(params['search_text']);
+        this.searchProducts(params['page'] || 1);
       }
-      const page = params['page'] || 1;
-      this.searchProducts(+page); // Sayfa numarasını al ve arama yap
     });
   }
 
@@ -40,21 +39,15 @@ export class SearchComponent implements OnInit {
 
   searchProducts(page: number = 1) {
     if (this.searchText().length > 0) {
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { search_text: this.searchText(), page },
-        queryParamsHandling: 'merge'
-      });
-
-      this.productVariantService.search(this.searchText(), page, this.pageSize()).subscribe({
+      this.productVariantService.search(this.searchText(), page - 1, this.pageSize()).subscribe({
         next: (response) => {
           this.products.set(response.data);
+          this.currentPage.set(page);
           this.totalCount.set(response.totalCount);
           this.hasSearchedSignal.set(true);
         },
         error: () => {
           this.products.set([]);
-          this.totalCount.set(0);
           this.hasSearchedSignal.set(true);
         }
       });
@@ -62,6 +55,6 @@ export class SearchComponent implements OnInit {
   }
 
   handlePageChange(page: number) {
-    this.searchProducts(page); // Yeni sayfa numarası ile arama yap
+    this.searchProducts(page);
   }
 }

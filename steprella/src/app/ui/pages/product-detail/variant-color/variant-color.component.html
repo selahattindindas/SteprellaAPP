@@ -1,0 +1,11 @@
+<app-slider-header [title]="'Renk Seç'" (prev)="prevSlide()" (next)="nextSlide()">
+</app-slider-header>
+<app-spacing-slider #slider>
+  @for(image of images; track image.id) {
+  <div class="keen-slider__slide">
+    <div class="product-variant-card">
+      <img width="100" [src]="image.path">
+    </div>
+  </div>
+  }
+</app-spacing-slider>
