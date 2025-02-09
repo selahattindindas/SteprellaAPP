@@ -2,10 +2,10 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../../shared/card/card.component';
 import { FilterGroupComponent } from '../../../shared/filter-sidebar/filter-group/filter-group.component';
-import { ActivatedRoute } from '@angular/router';
-import { ProductVariantService } from '../../../../core/services/ui/product-variant.service';
-import { ListProductVariant } from '../../../../core/models/product-variants/list-product-variant';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UrlService } from '../../../../core/services/common/url.service';
+import { ProductService } from '../../../../core/services/ui/product.service';
+import { ListProduct } from '../../../../core/models/products/list-product';
 
 interface FilterParams {
   categoryId?: number;
@@ -28,10 +28,11 @@ interface FilterParams {
 })
 export class ProductFilterComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private productService = inject(ProductVariantService);
+  private productService = inject(ProductService);
   private urlService = inject(UrlService);
+  private router = inject(Router);
 
-  readonly products = signal<ListProductVariant[]>([]);
+  readonly products = signal<ListProduct[]>([]);
   readonly loading = signal(false);
   readonly currentPage = signal(1);
   readonly pageSize = signal(10);
@@ -48,18 +49,28 @@ export class ProductFilterComponent implements OnInit {
   }
 
   handleFilters(filters: FilterParams) {
-    this.fetchProducts(filters);
+    const queryParams = this.urlService.createFilterQueryParams(filters);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
   }
 
   handlePageChange(page: number) {
     this.currentPage.set(page);
-    const filters = this.urlService.parseQueryParams(this.route.snapshot.queryParams);
-    this.fetchProducts(filters);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page },
+      queryParamsHandling: 'merge'
+    });
   }
 
   private fetchProducts(filters: FilterParams) {
     this.loading.set(true);
     this.productService.filter(
+      this.currentPage() - 1,
+      this.pageSize(),
       filters.brandId?.[0],
       filters.colorId?.[0],
       filters.categoryId,
@@ -69,8 +80,6 @@ export class ProductFilterComponent implements OnInit {
       filters.materialId?.[0],
       filters.usageAreaId?.[0],
       filters.genderId,
-      this.currentPage() - 1,
-      this.pageSize()
     ).subscribe({
       next: (response) => {
         this.products.set(response.data);
@@ -86,7 +95,10 @@ export class ProductFilterComponent implements OnInit {
   }
 
   clearFilters() {
-    const filters = { categoryId: this.route.snapshot.queryParams['categoryId'] };
-    this.fetchProducts(filters as FilterParams);
+    const categoryId = this.route.snapshot.queryParams['categoryId'];
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: categoryId ? { categoryId } : {}
+    });
   }
 }

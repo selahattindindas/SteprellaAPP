@@ -1,0 +1,21 @@
+.image-container {
+  @apply tw-w-full tw-flex tw-items-center tw-justify-center ;
+}
+
+.slider {
+  @apply tw-h-[500px];
+
+}
+
+.thumbnail {
+  @apply tw-mt-7;
+
+  .image-container {
+    @apply tw-p-5 tw-h-[155px] tw-cursor-pointer;
+
+  }
+}
+
+img {
+  @apply tw-max-w-full tw-max-h-full tw-object-contain;
+}

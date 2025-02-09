@@ -1,16 +1,56 @@
 .slider-header {
-    @apply tw-flex tw-items-center tw-justify-between tw-mb-8;
+    @apply tw-flex tw-items-center tw-justify-between;
   }
   
   .title-section {
-    @apply tw-flex tw-items-center tw-gap-3;
+    @apply tw-flex tw-items-center;
+
+    .icon{
+      @apply tw-mr-3;
+    }
+
+    &.xs{
+      .icon {
+        @apply tw-text-lg;
+      }
+      .slider-title {
+        @apply tw-text-lg;
+      }
+    }
+
+    &.sm {
+      .icon {
+        @apply tw-text-xl;
+      }
+      .slider-title {
+        @apply tw-text-2xl;
+      }
+    }
+
+    &.md {
+      .icon {
+        @apply tw-text-2xl;
+      }
+      .slider-title {
+        @apply tw-text-3xl;
+      }
+    }
+
+    &.lg {
+      .icon {
+        @apply tw-text-3xl;
+      }
+      .slider-title {
+        @apply tw-text-4xl;
+      }
+    }
     
     .icon {
-      @apply tw-text-ui-bg tw-text-2xl;
+      @apply tw-text-ui-bg;
     }
     
     .slider-title {
-      @apply tw-font-medium tw-text-3xl tw-text-ui-black;
+      @apply tw-font-medium tw-text-ui-black;
     }
   }
   

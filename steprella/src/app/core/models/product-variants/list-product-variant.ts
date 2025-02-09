@@ -1,14 +1,11 @@
-import { ListComment } from "../comments/list-comment";
 import { ListFile } from "../files/list-file";
-import { ListProduct } from "../products/list-product";
 import { ListSize } from "../sizes/list-size";
 
-export interface ListProductVariant extends ListProduct {
+export interface ListProductVariant {
+    id: number;
     colorName: string;
     active: boolean;
-    ratingCount: number;
-    rating: number;
+    isFavorite: boolean;
     productSizes: ListSize[];
-    productComments: ListComment[]; 
     productFiles: ListFile[];
 }

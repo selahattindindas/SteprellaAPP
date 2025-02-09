@@ -11,7 +11,7 @@
     [defaultSpacing]="24">
     @for(product of listProduct(); track product) {
         <div class="keen-slider__slide">
-             <app-card [listProduct]="[product]"></app-card> 
+             <app-card [data]="[product]"></app-card> 
         </div>
     }
 </app-spacing-slider>

@@ -53,15 +53,17 @@ export class SpacingSliderComponent {
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const options: KeenSliderOptions = {
-        slides: {
-          perView: this.defaultPerView(),
-          spacing: this.defaultSpacing(),
-        },
-        breakpoints: this.createBreakpointConfig()
-      };
-
-      this.slider = new KeenSlider(this.sliderRef()!.nativeElement, options);
+      setTimeout(() => {
+        const options: KeenSliderOptions = {
+          slides: {
+            perView: this.defaultPerView(),
+            spacing: this.defaultSpacing(),
+          },
+          breakpoints: this.createBreakpointConfig()
+        };
+  
+        this.slider = new KeenSlider(this.sliderRef()!.nativeElement, options);
+      }, 300);
     }
   }
 

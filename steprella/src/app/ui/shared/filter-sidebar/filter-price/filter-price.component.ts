@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-filter-price',
@@ -11,6 +12,9 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterPriceComponent {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+
   readonly title = input<any>(''); 
   readonly sectionKey = input<string>('');
   readonly expandedSections = input<{ [key: string]: boolean }>({});
@@ -24,6 +28,18 @@ export class FilterPriceComponent {
     currentMax: 5000
   };
 
+  ngOnInit() {
+    // URL'den fiyat parametrelerini al
+    this.route.queryParams.subscribe(params => {
+      if (params['minPrice']) {
+        this.priceRange.currentMin = Number(params['minPrice']);
+      }
+      if (params['maxPrice']) {
+        this.priceRange.currentMax = Number(params['maxPrice']);
+      }
+    });
+  }
+
   toggle(){
     this.toggleSection.emit(this.sectionKey());
   }
@@ -35,11 +51,50 @@ export class FilterPriceComponent {
       this.priceRange.currentMax = Math.max(value, this.priceRange.currentMin);
     }
 
+    // URL'yi güncelle
+    const queryParams: any = {};
+    if (this.priceRange.currentMin > 0) {
+      queryParams.minPrice = this.priceRange.currentMin;
+    }
+    if (this.priceRange.currentMax < this.priceRange.max) {
+      queryParams.maxPrice = this.priceRange.currentMax;
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
+
     this.filterChange.emit({
       type: 'price',
       value: {
         min: this.priceRange.currentMin,
         max: this.priceRange.currentMax
+      }
+    });
+  }
+
+  // Fiyat aralığını sıfırla
+  resetPriceRange(): void {
+    this.priceRange.currentMin = this.priceRange.min;
+    this.priceRange.currentMax = this.priceRange.max;
+    
+    // URL'den fiyat parametrelerini kaldır
+    const queryParams = { ...this.route.snapshot.queryParams };
+    delete queryParams['minPrice'];
+    delete queryParams['maxPrice'];
+    
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams
+    });
+
+    this.filterChange.emit({
+      type: 'price',
+      value: {
+        min: this.priceRange.min,
+        max: this.priceRange.max
       }
     });
   }

@@ -1,0 +1,16 @@
+<div class="section-title">
+    <span>Numara Seç</span>
+    <a class="size-guide">
+      Boyut Kılavuzları</a>
+  </div>
+  <div class="section-options">
+    @for(size of getSelectedVariantSizes(); track size.id) {
+      <button class="size-btn" 
+              [class.out-of-stock]="size.stockQuantity === 0" 
+              [class.active]="selectedSize?.id === size.id"
+              [disabled]="!size.active || size.stockQuantity === 0"
+              (click)="selectSize(size)">
+        {{ size.sizeValue }}
+      </button>
+    }
+  </div>

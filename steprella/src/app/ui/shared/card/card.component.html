@@ -1,45 +1,49 @@
 <div class="card-container">
   <div class="card">
-    @for(product of listProduct(); track product.id){
-    <div class="product-card" [routerLink]="'/detay/' + product.id">
-      <div class="image-container">
-        @if (product.productFiles && product.productFiles.length > 0) {
-        @for(files of product.productFiles; track files) {
-        <img src='assets/images/ui/shoe1.png' [alt]="files.fileName" class="product-image">
-        }
-        } @else {
-        <img src='assets/images/ui/shoe1.png' alt="Default product image" class="product-image">
-        }
-
-        <button (click)="toggleFavorite(product)" class="favorite-btn">
-          <i class="fa-regular fa-heart tw-text-xl"></i>
-        </button>
-      </div>
-
-      <div class="product-info">
-        <div class="rating">
-          <i class="fa-solid fa-star tw-text-base tw-text-amber-500"></i>
-          <span>{{product.rating}} ({{product.ratingCount | number}}kişi puanladı)</span>
-        </div>
-
-        <h3 class="product-name">{{product.brandName}} - {{product.shoeModelName}}</h3>
-
-        <div class="product-bottom">
-          <div class="price-container">
-            <span class="price">${{product.price}}</span>
+    @for(product of normalizedData(); track product.id){
+      @for(variant of product.productVariants; track variant.id){
+        <div class="product-card" [routerLink]="['/product', product.id, getFirstActiveVariantId(product, variant)]">
+          <div class="image-container">
+            @if (variant.productFiles && variant.productFiles.length > 0) {
+            @for(files of variant.productFiles; track files) {
+            <img src='assets/images/ui/shoe1.png' [alt]="files.fileName" class="product-image">
+            }
+            } @else {
+            <img src='assets/images/ui/shoe1.png' alt="Default product image" class="product-image">
+            }
+    
+            <button (click)="toggleFavorite(variant)" class="favorite-btn">
+              <i [class]="variant.isFavorite ? 'fa-solid' : 'fa-regular'" class="fa-heart tw-text-xl" [class.favorite-active]="variant.isFavorite"></i>
+            </button>
           </div>
-
-          <button (click)="addToCart(product)" class="cart-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-            </svg>
-          </button>
+    
+          <div class="product-info">
+            <div class="rating">
+              @for(star of [1,2,3,4,5]; track star) {
+                <i [class]="product.rating >= star ? 'fas fa-star' : 'far fa-star'" class="tw-text-base tw-text-amber-500"></i>
+              }
+              <span>({{product.ratingCount | number}} kişi puanladı)</span>
+            </div>
+    
+            <h3 class="product-name">{{product.brandName}} - {{product.shoeModelName}}</h3>
+    
+            <div class="product-bottom">
+              <div class="price-container">
+                <span class="price">₺ {{product.price}}, 00</span>
+              </div>
+    
+              <button (click)="addToCart(variant)" class="cart-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                </svg>
+              </button>
+            </div>
+    
+          </div>
         </div>
-
-      </div>
-    </div>
+      }
     }
   </div>
 
@@ -67,8 +71,6 @@
           <i class="fa-solid fa-chevron-right tw-ml-2"></i>
         </button>
       </div>
-  
-
     </div>
   }
 </div>

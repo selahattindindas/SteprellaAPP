@@ -1,0 +1,11 @@
+@if(loading()) {
+    <div class="loading">Yükleniyor...</div>
+}
+
+@else if(listFavorite().length > 0) {
+    <app-card [data]="listFavorite()" />
+} 
+
+@else {
+    <h1>Beğendiğin ürün bulunmamaktadır.</h1>
+}

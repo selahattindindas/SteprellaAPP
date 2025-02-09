@@ -6,18 +6,18 @@
   <div class="divider"></div>
 
   <div class="comments-list">
-    @for (comment of comments; track comment.id) {
+    @for (comment of listComment(); track comment.id) {
     <div class="comment-card">
       <div class="comment-left">
         <div class="user-avatar">
-          <img src="assets/images/admin/user.png" [alt]="comment.userName">
+          <img src="assets/images/admin/user.png" alt="user-icon">
         </div>
       </div>
       <div class="comment-right">
         <div class="comment-header">
           <div class="user-info">
-            <span class="user-name">{{comment.userName}}</span>
-            <span class="comment-date">{{comment.date | date:'dd MMM yyyy'}}</span>
+            <span class="user-name">{{comment.fullName}}</span>
+            <span class="comment-date">{{comment.createdDate | date:'dd MMM yyyy'}}</span>
           </div>
           <div class="rating-stars">
             @for (star of [1,2,3,4,5]; track $index) {
@@ -25,7 +25,7 @@
             }
           </div>
         </div>
-        <p class="comment-text">{{comment.text}}</p>
+        <p class="comment-text">{{comment.commentText}}</p>
       </div>
     </div>
     }

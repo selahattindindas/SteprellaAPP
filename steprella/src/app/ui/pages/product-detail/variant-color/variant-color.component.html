@@ -1,11 +1,22 @@
-<app-slider-header [title]="'Renk Seç'" (prev)="prevSlide()" (next)="nextSlide()">
+<app-slider-header 
+  [title]="'Renk Seç'" 
+  [icon]="'none'"
+  [size]="'xs'"
+  [margin]="'2'"
+  (prev)="prevSlide()" 
+  (next)="nextSlide()">
 </app-slider-header>
 <app-spacing-slider #slider>
-  @for(image of images; track image.id) {
-  <div class="keen-slider__slide">
-    <div class="product-variant-card">
-      <img width="100" [src]="image.path">
-    </div>
-  </div>
+  @for(productVariant of product()?.productVariants; track productVariant.id) {
+    @if(productVariant.productFiles[0]) {
+      <div class="keen-slider__slide">
+        <div class="product-variant-card" 
+             [class.selected]="productVariant.id === selectedVariantId()"
+             [class.inactive]="!productVariant.active"
+             (click)="productVariant.active && selectVariant(productVariant.id)">
+          <img width="100" [src]="productVariant.productFiles[0] | fileArray">
+        </div>
+      </div>
+    }
   }
 </app-spacing-slider>

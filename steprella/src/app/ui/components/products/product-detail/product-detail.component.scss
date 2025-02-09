@@ -11,52 +11,6 @@
     @apply md:tw-col-span-2 tw-h-fit tw-flex tw-flex-col;
   }
 }
-.product-title {
-  @apply tw-text-3xl tw-font-bold tw-mb-2;
-
-  span {
-    @apply tw-font-normal;
-  }
-}
-
-.product-description {
-  @apply tw-text-gray-600 tw-mb-6;
-}
-
-.section-title {
-  @apply tw-flex tw-justify-between tw-items-center tw-mb-4;
-
-  .size-guide {
-    @apply tw-text-gray-500 tw-text-sm hover:tw-text-gray-700;
-  }
-}
-
-.image-container {
-  @apply tw-w-full tw-h-[500px] tw-flex tw-items-center tw-justify-center tw-cursor-pointer;
-  
-  img {
-    @apply tw-max-w-full tw-max-h-full tw-object-contain;
-  }
-}
-
-.thumbnail {
-  .image-container {
-    @apply tw-p-5 tw-h-[155px];
-  
-  }
-}
-
-.size-options {
-  @apply tw-flex tw-flex-wrap tw-gap-2 tw-mb-3;
-
-  .size-btn {
-    @apply tw-h-12 tw-w-12 tw-font-medium tw-rounded-full tw-border tw-border-gray-300 tw-text-gray-500 hover:tw-border-gray-800 tw-transition-colors;
-
-    &.active {
-      @apply tw-border-ui-bg tw-text-ui-black;
-    }
-  }
-}
 
 .color-selector {
   @apply tw-mb-6;
@@ -77,62 +31,6 @@
   }
 }
 
-.product-purchase {
-  @apply tw-space-y-4 tw-mt-auto;
-
-  .price {
-    @apply tw-text-4xl tw-font-bold;
-  }
-
-  .quantity {
-    @apply tw-flex tw-items-center tw-gap-4;
-
-    .qty-value {
-      @apply tw-w-10 tw-h-10 tw-flex tw-items-center tw-justify-center tw-select-none tw-border tw-border-slate-300 tw-rounded-2xl tw-px-8;
-    }
-
-    .qty-btn {
-      @apply tw-h-10 tw-w-10 tw-rounded-full tw-flex tw-items-center tw-justify-center tw-border tw-border-slate-300 disabled:tw-cursor-not-allowed;
-    }
-
-    i {
-      @apply tw-text-gray-500;
-    }
-  }
-
-  .add-to-cart {
-    @apply tw-flex tw-items-center tw-justify-between tw-gap-4;
-  
-    .add-to-btn {
-      @apply tw-bg-orange-500 tw-text-white tw-text-xl 
-             tw-py-3 tw-px-5 tw-font-medium tw-w-full
-             tw-rounded-3xl hover:tw-bg-orange-600 
-             tw-transition-colors tw-shadow-md hover:tw-shadow-lg;
-    }
-  
-    .action-buttons {
-      @apply tw-flex tw-gap-4; 
-    
-      .action-btn {
-        @apply tw-h-[52px] tw-w-[52px]
-               tw-flex tw-items-center tw-justify-center
-               tw-rounded-full
-               tw-border tw-border-slate-300  
-               hover:tw-bg-gray-50 
-               tw-transition-colors;
-    
-        i {
-          @apply tw-text-gray-600 tw-text-2xl;
-
-
-        }
-        .fa-heart{
-          @apply tw-text-ui-bg;
-        }
-      }
-    }
-  }
-}
 .comment{
   @apply tw-mb-6;
 }

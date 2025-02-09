@@ -1,0 +1,21 @@
+<app-thumbnails-slider>
+  <div class="keen-slider slider" slider>
+    @for(image of getSelectedVariantBanner(); track image.id){
+    <div class="keen-slider__slide">
+      <div class="image-container">
+        <img [src]="image | fileArray" [alt]="'Product image ' + ($index + 1)">
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="keen-slider thumbnail" thumbnailSlider>
+    @for(image of getSelectedVariantBanner(); track image.id){
+    <div class="keen-slider__slide">
+      <div class="image-container">
+        <img [src]="image | fileArray" [alt]="'Product image ' + ($index + 1)">
+      </div>
+    </div>
+    }
+  </div>
+</app-thumbnails-slider>

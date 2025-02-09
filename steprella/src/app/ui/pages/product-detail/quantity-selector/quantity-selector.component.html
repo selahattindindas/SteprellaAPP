@@ -1,0 +1,23 @@
+<div class="product-purchase">
+    <div class="price">₺ {{ product()?.price }}</div>
+    <div class="quantity">
+      <button class="qty-btn" [disabled]="quantity() <= min" (click)="updateQuantity(false)">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <span class="qty-value">{{ quantity() }}</span>
+      <button class="qty-btn" [disabled]="quantity() >= max" (click)="updateQuantity(true)">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+    <div class="add-to-cart">
+      <button class="add-to-btn">Sepete Ekle</button>
+      <div class="action-buttons">
+        <button class="action-btn">
+          <i class="fa-regular fa-heart"></i>
+        </button>
+        <button class="action-btn">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </div>
+    </div>
+  </div>

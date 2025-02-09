@@ -12,6 +12,14 @@ export const userRoutes: Routes = [
                 loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent)
             },
             {
+                path: 'favorites',
+                loadComponent: () => import('./components/favorite/favorite.component').then(m => m.FavoriteComponent)
+            },
+            {
+                path: 'carts',
+                loadComponent: () => import('./components/cart/cart.component').then(m => m.CartComponent)
+            },
+            {
                 path: '',
                 loadComponent: () => import('./components/products/product-main/product-main.component')
                     .then(m => m.ProductMainComponent),
@@ -41,7 +49,7 @@ export const userRoutes: Routes = [
                 ]
             },
             {
-                path: 'detay/:id',
+                path: 'product/:id/:variantId',
                 loadComponent: () => import('./components/products/product-detail/product-detail.component')
                 .then(m => m.ProductDetailComponent)
             }

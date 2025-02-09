@@ -70,7 +70,7 @@ export class ThumbnailsSliderComponent {
           },
           [ThumbnailPlugin(this.slider)]
         );
-      }, 0);
+      }, 200);
     }
   }
 

@@ -6,7 +6,7 @@
       <div class="loading">Yükleniyor...</div>
     } @else if(products().length > 0) {
       <app-card 
-        [listProduct]="products()" 
+        [data]="products()" 
         [currentPage]="currentPage()"
         [pageSize]="pageSize()"
         [totalCount]="totalCount()"

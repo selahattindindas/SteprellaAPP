@@ -1,108 +1,46 @@
-<div class="product-container">
-  <div class="product-gallery">
-    <app-thumbnails-slider>
-      <div class="keen-slider" slider>
-        @for (image of images; track image.id) {
-        <div class="keen-slider__slide">
-          <div class="image-container">
-            <img [src]="image.path" [alt]="'Product image ' + ($index + 1)">
-          </div>
-        </div>
-        }
-      </div>
-
-      <div class="keen-slider thumbnail" thumbnailSlider>
-        @for (image of images; track image.id) {
-        <div class="keen-slider__slide">
-          <div class="image-container">
-            <img [src]="image.path" [alt]="'Product image ' + ($index + 1)">
-          </div>
-        </div>
-        }
-      </div>
-    </app-thumbnails-slider>
-  </div>
-
-  <div class="product-info">
-    <h1 class="product-title">Nike <span>Lebron</span> 16 Low</h1>
-    <p class="product-description">Şıklık, konfor ve performansı bir araya getiren,
-      basketbol tutkunları için tasarlanmış şık ve alçak profilli bir tasarım.</p>
-
-    <div class="size-selector">
-      <div class="section-title">
-        <span>Numara Seç</span>
-        <a class="size-guide">
-          Boyut Kılavuzları</a>
-      </div>
-      <div class="size-options">
-        <button class="size-btn active">30</button>
-        <button class="size-btn">32</button>
-        <button class="size-btn">38</button>
-        <button class="size-btn">40</button>
-        <button class="size-btn">42</button>
-        <button class="size-btn">44</button>
-      </div>
-    </div>
-
-    <div class="color-selector">
-      <app-variant-color />
-    </div>
-
-    <div class="product-details">
-      <div class="detail-column">
-        <span>Açıklama</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </div>
-      <div class="detail-column">
-        <span>Beden ve Uyumluluk</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </div>
-      <div class="detail-column">
-        <span>Ücretsiz Kargo</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </div>
-      <div class="detail-column">
-        <span>Ücretsiz İade</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </div>
-    </div>
-
-    <div class="product-purchase">
-      <div class="price">₺ 350,00</div>
-      <div class="quantity">
-        <button class="qty-btn" [disabled]="quantity <= min" (click)="quantity = quantity - 1">
-          <i class="fa-solid fa-minus"></i>
-        </button>
-        <span class="qty-value"> {{quantity}}</span>
-        <button class="qty-btn" [disabled]="quantity >= max" (click)="quantity = quantity + 1">
-          <i class="fa-solid fa-plus"></i>
-        </button>
-      </div>
-      <div class="add-to-cart">
-        <button class="add-to-btn">Sepete Ekle</button>
-        <div class="action-buttons">
-          <button class="action-btn">
-            <i class="fa-regular fa-heart"></i>
-          </button>
-          <button class="action-btn">
-            <i class="fa-solid fa-rotate"></i>
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 <div>
-<app-description />
-</div>
+  <div class="product-container">
+    <div class="product-gallery">
+      <app-variant-banner [product]="product()" [variantId]="selectedVariantId()" />
+    </div>
 
-<div class="comment">
-  <app-comment />
-</div>
+    <div class="product-info">
+      <div class="product-header">
+        <app-product-header [product]="product()" />
+      </div>
 
+      <div class="size-selector">
+        <app-variant-size [product]="product()" [variantId]="selectedVariantId()" />
+      </div>
 
-<div class="random">
-  <app-random-products />
+      <div class="color-selector">
+        <app-variant-color [product]="product()" [selectedVariantId]="selectedVariantId()" />
+      </div>
+
+      <div class="product-details">
+        @for(detail of productDetails; track detail.title) {
+        <div class="detail-column">
+          <span>{{ detail.title }}</span>
+          <i class="fa-solid {{ detail.icon }}"></i>
+        </div>
+        }
+      </div>
+
+      <div class="product-footer">
+        <app-quantity-selector [product]="product()" />
+      </div>
+    </div>
+  </div>
+
+  <div class="description">
+    <app-description />
+  </div>
+
+  <div class="comment">
+    <app-comment [listComment]="product()?.productComments" />
+  </div>
+
+  <div class="random">
+    <app-random-products />
+  </div>
 </div>

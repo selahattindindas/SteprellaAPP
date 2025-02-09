@@ -1,0 +1,26 @@
+<div class="results-header">
+    <div class="view-options">
+        <button class="view-button" [class.active]="viewMode() === 'grid'" (click)="setViewMode('grid')">
+            <i class="fa-solid fa-grip"></i>
+        </button>
+        <button class="view-button" [class.active]="viewMode() === 'list'" (click)="setViewMode('list')">
+            <i class="fa-solid fa-list"></i>
+        </button>
+        <span class="results-count">{{ totalCount() }} ürün gösteriliyor</span>
+    </div>
+    <div class="sort-options">
+        <span class="sort-label">Sırala:</span>
+        <select class="sort-select">
+            <option value="date_desc">Varsayılan</option>
+            <option value="price_asc">Fiyat (Düşükten Yükseğe)</option>
+            <option value="price_desc">Fiyat (Yüksekten Düşüğe)</option>
+            <option value="name_asc">İsim (A-Z)</option>
+        </select>
+        <select class="per-page-select">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+        </select>
+    </div>
+</div>

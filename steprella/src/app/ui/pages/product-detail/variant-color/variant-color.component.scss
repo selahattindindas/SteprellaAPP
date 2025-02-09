@@ -2,7 +2,25 @@
     @apply tw-border tw-border-slate-300 tw-rounded-lg 
            tw-h-20 tw-w-full
            tw-flex tw-items-center tw-justify-center
-           tw-p-2;  
+           tw-p-2 tw-cursor-pointer
+           hover:tw-border-orange-300 
+           tw-transition-all
+           tw-relative;  
+
+    &.selected {
+      @apply tw-border-2 tw-border-orange-500 
+             tw-shadow-md;
+    }
+
+    &.inactive {
+      @apply tw-opacity-50 tw-cursor-not-allowed hover:tw-border-slate-300;
+      
+      &::before {
+        content: '';
+        @apply tw-absolute tw-w-[140%] tw-h-[1px] tw-bg-gray-400 tw-top-1/2 tw-left-1/2;
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    }
 
     img {
       @apply tw-max-h-full tw-max-w-full 
