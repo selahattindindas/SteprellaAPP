@@ -6,23 +6,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UrlService } from '../../../../core/services/common/url.service';
 import { ProductService } from '../../../../core/services/ui/product.service';
 import { ListProduct } from '../../../../core/models/products/list-product';
-
-interface FilterParams {
-  categoryId?: number;
-  brandId?: number[];
-  colorId?: number[];
-  sizeValue?: number[];
-  materialId?: number[];
-  usageAreaId?: number[];
-  minPrice?: number;
-  maxPrice?: number;
-  genderId?: number[];
-}
+import { ResultToolbarComponent } from '../../../shared/result-toolbar/result-toolbar.component';
+import { NotFoundComponent } from '../../../shared/not-found/not-found.component';
+import { FilterParams } from '../../../../core/models/filters/filter.params';
 
 @Component({
   selector: 'app-product-filter',
   standalone: true,
-  imports: [CommonModule, CardComponent, FilterGroupComponent],
+  imports: [
+    CommonModule, 
+    CardComponent, 
+    FilterGroupComponent, 
+    ResultToolbarComponent,
+    NotFoundComponent
+  ],
   templateUrl: './product-filter.component.html',
   styleUrl: './product-filter.component.scss'
 })
@@ -33,7 +30,6 @@ export class ProductFilterComponent implements OnInit {
   private router = inject(Router);
 
   readonly products = signal<ListProduct[]>([]);
-  readonly loading = signal(false);
   readonly currentPage = signal(1);
   readonly pageSize = signal(10);
   readonly totalCount = signal(0);
@@ -45,6 +41,23 @@ export class ProductFilterComponent implements OnInit {
         this.currentPage.set(Number(params['page']));
       }
       this.fetchProducts(filters);
+    });
+  }
+
+  fetchProducts(filters: FilterParams) {
+    this.productService.filter(
+      this.currentPage() - 1,
+      this.pageSize(),
+      filters
+    ).subscribe({
+      next: (response) => {
+        this.products.set(response.data);
+        this.totalCount.set(response.totalCount);
+      },
+      error: () => {
+        this.products.set([]);
+        this.totalCount.set(0);
+      }
     });
   }
 
@@ -63,34 +76,6 @@ export class ProductFilterComponent implements OnInit {
       relativeTo: this.route,
       queryParams: { page },
       queryParamsHandling: 'merge'
-    });
-  }
-
-  private fetchProducts(filters: FilterParams) {
-    this.loading.set(true);
-    this.productService.filter(
-      this.currentPage() - 1,
-      this.pageSize(),
-      filters.brandId?.[0],
-      filters.colorId?.[0],
-      filters.categoryId,
-      filters.sizeValue?.[0],
-      filters.minPrice,
-      filters.maxPrice,
-      filters.materialId?.[0],
-      filters.usageAreaId?.[0],
-      filters.genderId,
-    ).subscribe({
-      next: (response) => {
-        this.products.set(response.data);
-        this.totalCount.set(response.totalCount);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.products.set([]);
-        this.totalCount.set(0);
-        this.loading.set(false);
-      }
     });
   }
 

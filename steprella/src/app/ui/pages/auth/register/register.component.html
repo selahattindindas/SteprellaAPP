@@ -1,0 +1,59 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>E-posta</label>
+    <input 
+      type="email" 
+      formControlName="email"
+      placeholder="E-posta adresinizi giriniz">
+  </div>
+
+  <div class="form-group">
+    <label>Şifre</label>
+    <div class="password-field">
+      <input 
+        [type]="showPassword() ? 'text' : 'password'"
+        formControlName="password"
+        placeholder="Şifrenizi giriniz">
+      <button 
+        type="button" 
+        class="password-toggle" 
+        (click)="showPassword.set(!showPassword())">
+        <i class="fas" [class.fa-eye]="!showPassword()" [class.fa-eye-slash]="showPassword()"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Ad Soyad</label>
+    <input 
+      type="text" 
+      formControlName="fullName"
+      placeholder="Ad ve soyadınızı giriniz">
+  </div>
+
+  <div class="form-group">
+    <label>Telefon</label>
+    <input 
+      type="tel" 
+      formControlName="phone"
+      placeholder="Telefon numaranızı giriniz">
+  </div>
+
+  <div class="form-group">
+    <label>Cinsiyet</label>
+    <div class="gender-group">
+      <label class="radio-label">
+        <input type="radio" formControlName="gender" value="male">
+        <span>Erkek</span>
+      </label>
+      <label class="radio-label">
+        <input type="radio" formControlName="gender" value="female">
+        <span>Kadın</span>
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" class="submit-btn">
+    Üye Ol
+  </button>
+</form>

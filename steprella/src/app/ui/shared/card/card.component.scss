@@ -7,7 +7,7 @@
     width: 100%;
 
     .image-container {
-      @apply tw-relative tw-w-full tw-h-64 tw-bg-[#f7f7f7];
+      @apply tw-relative tw-w-full tw-h-64 tw-bg-ui-lightGray;
 
       .product-image {
         @apply tw-w-48 tw-h-48 tw-object-contain tw-absolute tw-left-1/2 tw-top-1/2 tw-transform tw--translate-x-1/2 tw--translate-y-1/2;

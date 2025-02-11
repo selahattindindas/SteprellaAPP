@@ -16,6 +16,10 @@ export const userRoutes: Routes = [
                 loadComponent: () => import('./components/favorite/favorite.component').then(m => m.FavoriteComponent)
             },
             {
+                path: 'auth',
+                loadComponent: () => import('./components/auth/auth.component').then(m => m.AuthComponent)
+            },
+            {
                 path: 'carts',
                 loadComponent: () => import('./components/cart/cart.component').then(m => m.CartComponent)
             },

@@ -5,10 +5,16 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../core/services/ui/product.service';
 import { ListProduct } from '../../../core/models/products/list-product';
 import { ResultToolbarComponent } from '../../shared/result-toolbar/result-toolbar.component';
+import { NotFoundComponent } from '../../shared/not-found/not-found.component';
 
 @Component({
   selector: 'app-search',
-  imports: [CardComponent, FormsModule, ResultToolbarComponent],
+  imports: [
+    CardComponent, 
+    FormsModule, 
+    ResultToolbarComponent,
+    NotFoundComponent
+  ],
   standalone: true,
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',

@@ -1,22 +1,30 @@
 .search-container {
-    @apply tw-w-full  tw-mx-auto;
+    @apply tw-w-full tw-mx-auto;
 
+    .search-toolbar {
+        @apply tw-container tw-mx-auto tw-px-4 tw-py-8 
+        tw-grid tw-grid-cols-1 
+        md:tw-grid-cols-3 tw-gap-8;
+    }
+      
     .search-input-container {
-        @apply tw-relative tw-flex tw-items-center tw-mb-6 tw-gap-2;
+        @apply tw-relative tw-flex tw-items-center tw-flex-1 tw-w-full md:tw-col-span-1 tw-h-fit;;
 
         .search-input {
-            @apply tw-flex-1 tw-text-xl tw-text-ui-customGray tw-px-8 tw-py-4 tw-border tw-rounded-l-lg 
-            tw-border-gray-300 focus:tw-outline-none focus:tw-border-ui-customGray;
+            @apply tw-flex-1 tw-text-xl tw-text-ui-customGray tw-px-8 tw-py-3 tw-border tw-rounded-full tw-border-gray-200 focus:tw-outline-none  tw-pr-16;
         }
 
         .search-button {
-            @apply tw-bg-orange-500 tw-text-white tw-px-8 tw-py-4 tw-h-[60px] tw-rounded-r-lg tw-flex tw-items-center 
-            tw-gap-3 hover:tw-bg-orange-600 tw-transition-colors tw-text-xl;
-
+            @apply tw-absolute tw-right-2 tw-w-10 tw-h-10 tw-text-white tw-bg-orange-500 hover:tw-bg-orange-600 tw-rounded-full tw-transition-colors;
+            
             i {
                 @apply tw-text-lg;
             }
         }
+    }
+
+    .toolbar{
+        @apply md:tw-col-span-2 tw-h-fit tw-flex tw-flex-col;
     }
 
     .search-results-title {
@@ -24,7 +32,7 @@
     }
 
     .no-results {
-        @apply tw-flex tw-flex-col tw-justify-center tw-items-center  tw-w-full tw-mt-8;
+        @apply tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-full tw-mt-8;
 
         img {
             @apply tw-mb-4;

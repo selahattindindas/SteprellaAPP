@@ -20,7 +20,8 @@ module.exports = {
           bg: '#ed5221',
           customGray: '#666565',
           black: '#1c1e25',
-          slateGray: '#525456'
+          slateGray: '#525456',
+          lightGray: '#f7f7f7',
         }
       },
       screens: {

@@ -1,24 +1,27 @@
 <div class="search-container">
-    <div class="search-input-container">
-        <input class="search-input" placeholder="Ürün ara..." [(ngModel)]="searchText" (keyup.enter)="searchProducts()">
-        <button class="search-button" (click)="searchProducts()">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            Ara
-        </button>
+    <div class="search-toolbar">
+        <div class="search-input-container">
+            <input class="search-input" placeholder="Ürün ara..." [(ngModel)]="searchText" (keyup.enter)="searchProducts()">
+            <button class="search-button" (click)="searchProducts()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
+        <div class="toolbar">
+            <app-result-toolbar [totalCount]="totalCount()" />
+        </div>
+
     </div>
 
     @if (hasSearched()) {
-        <app-result-toolbar [totalCount]="totalCount()"/>
-
     @if (products().length > 0) {
     <div class="product-grid" [class.list-view]="viewMode() === 'list'">
         <app-card [data]="products()" [currentPage]="currentPage()" [pageSize]="pageSize()" [totalCount]="totalCount()"
             (onPageChange)="handlePageChange($event)" />
     </div>
     } @else {
-    <div class="no-results flex flex-col items-center">
-        <img src="https://image.useinsider.com/default/action-builder/no-result.png" width="200" alt="No results">
-        <p class="no-results-text mt-4">Aradığınız ürün bulunamadı</p>
+    <div class="not-found">
+        <app-not-found />
     </div>
     }
     }

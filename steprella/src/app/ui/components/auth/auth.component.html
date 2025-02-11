@@ -1,0 +1,24 @@
+<div class="auth-container">
+  <div class="auth-content">
+    <h2>Merhaba,</h2>
+    <p>Steprella'ya giriş yap veya hesap oluştur, indirimleri kaçırma!</p>
+    
+    <div class="auth-box">
+      <div class="auth-tabs">
+        <button 
+          [class.active]="(authType$ | async) === 'login'"
+          (click)="switchAuth('login')">
+          Giriş Yap
+        </button>
+        <button 
+          [class.active]="(authType$ | async) === 'register'"
+          (click)="switchAuth('register')">
+          Üye Ol
+        </button>
+      </div>
+
+      <app-login *ngIf="(authType$ | async) === 'login'" />
+      <app-register *ngIf="(authType$ | async) === 'register'" />
+    </div>
+  </div>
+</div>

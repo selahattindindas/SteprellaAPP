@@ -1,0 +1,16 @@
+<div class="dropdown-container">
+    <div class="dropdown-header" (click)="toggleDropdown()">
+        <span class="selected-value">{{ selectedLabel() }}</span>
+        <i class="fa-solid fa-chevron-down" [class.open]="isOpen()"></i>
+    </div>
+    @if (isOpen()) {
+        <ul class="dropdown-list">
+            @for (option of options(); track option.value) {
+                <li (click)="selectOption(option.value)"
+                    [class.active]="option.value === value()">
+                    {{ option.label }}
+                </li>
+            }
+        </ul>
+    }
+</div>

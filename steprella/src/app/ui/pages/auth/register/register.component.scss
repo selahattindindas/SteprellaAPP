@@ -1,0 +1,60 @@
+.form-group {
+  @apply tw-mb-4;
+
+  label {
+    @apply tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-700;
+  }
+
+  input {
+    @apply tw-w-full tw-p-3 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm;
+    
+    &:focus {
+      @apply tw-outline-none tw-ring-2 tw-ring-ui-bg tw-border-transparent;
+    }
+  }
+}
+
+.gender-group {
+  @apply tw-flex tw-gap-4;
+
+  .radio-label {
+    @apply tw-flex tw-items-center tw-gap-2 tw-cursor-pointer;
+
+    input[type="radio"] {
+      @apply tw-w-4 tw-h-4 tw-ring-transparent tw-accent-ui-bg tw-cursor-pointer;
+    }
+
+    span {
+      @apply tw-text-sm tw-text-gray-700;
+    }
+  }
+}
+
+.submit-btn {
+  @apply tw-w-full tw-bg-ui-bg tw-text-white tw-py-3 tw-px-4 tw-rounded-md tw-font-medium;
+
+  &:hover {
+    @apply tw-bg-orange-600;
+  }
+}
+
+.password-field {
+  @apply tw-relative;
+
+  input {
+    @apply tw-pr-10;
+  }
+
+  .password-toggle {
+    @apply tw-absolute tw-right-3 tw-top-1/2 tw-transform tw--translate-y-1/2 
+           tw-text-gray-500 tw-cursor-pointer tw-border-none tw-bg-transparent;
+
+    &:hover {
+      @apply tw-text-gray-700;
+    }
+
+    i {
+      @apply tw-text-lg;
+    }
+  }
+}

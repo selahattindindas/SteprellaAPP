@@ -2,30 +2,22 @@
   <app-filter-group (applyFilters)="handleFilters($event)" (clearFilters)="clearFilters()" />
 
   <div class="products-grid">
-    @if(loading()) {
-      <div class="loading">Yükleniyor...</div>
-    } @else if(products().length > 0) {
-      <app-card 
-        [data]="products()" 
-        [currentPage]="currentPage()"
-        [pageSize]="pageSize()"
-        [totalCount]="totalCount()"
+    @if(products().length > 0) {
+
+    <div class="result-toolbar">
+      <app-result-toolbar [totalCount]="totalCount()" />
+    </div>
+
+    <div class="product-card">
+      <app-card [data]="products()" [currentPage]="currentPage()" [pageSize]="pageSize()" [totalCount]="totalCount()"
         (onPageChange)="handlePageChange($event)" />
-    } @else {
-      <div class="no-results">
-        <div class="no-results-content">
-          <div class="icon-container">
-            <i class="fa-solid fa-box-open tw-text-5xl tw-text-gray-400"></i>
-          </div>
-          <h2 class="title">Üzgünüz, aradığınız kriterlere uygun ürün bulunamadı</h2>
-          <p class="description">Daha iyi sonuçlar için şunları deneyebilirsiniz:</p>
-          <ul class="suggestions">
-            <li><i class="fa-solid fa-circle-check"></i> Farklı filtreler kullanın</li>
-            <li><i class="fa-solid fa-circle-check"></i> Fiyat aralığını genişletin</li>
-            <li><i class="fa-solid fa-circle-check"></i> Daha az filtre seçin</li>
-          </ul>
-        </div>
-      </div>
+    </div>
+
+    }
+    @else {
+    <div class="not-found">
+      <app-not-found />
+    </div>
     }
   </div>
 </div>

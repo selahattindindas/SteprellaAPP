@@ -3,6 +3,7 @@ import { HttpClientService } from '../common/http-client.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { BaseResponse } from '../../models/base-responses/base-response';
 import { ListProduct } from '../../models/products/list-product';
+import { FilterParams } from '../../models/filters/filter.params';
 
 @Injectable({
   providedIn: 'root'
@@ -41,23 +42,19 @@ export class ProductService {
   filter(
     page: number,
     size: number,
-    brandId?: number,
-    colorId?: number,
-    categoryId?: number,
-    sizeValue?: number,
-    minPrice?: number,
-    maxPrice?: number,
-    materialId?: number,
-    usageAreaId?: number,
-    featureId?: number[]
+    filters: FilterParams,
   ): Observable<BaseResponse<ListProduct[]>> {
   
-    let queryParams = Object.entries({ brandId, colorId, categoryId, sizeValue, minPrice, maxPrice, materialId, usageAreaId, featureId })
+    const allParams = {
+      ...filters,
+      page,
+      size
+    };
+  
+    const queryParams = Object.entries(allParams)
       .filter(([_, value]) => value !== undefined)
       .map(([key, value]) => `${key}=${value}`)
       .join('&');
-  
-    queryParams += queryParams ? `&page=${page}&size=${size}` : `page=${page}&size=${size}`;
   
     return this.httpClientService.get<BaseResponse<ListProduct[]>>({
       controller: "products",
@@ -67,8 +64,8 @@ export class ProductService {
       map(response => ({
         totalCount: response.totalCount,
         data: response.data.length > 0 ? response.data : []
-      })
-      ));
+      }))
+    );
   }
 
   search(searchTerm:string, page: number, size: number,): Observable<BaseResponse<ListProduct[]>>{
