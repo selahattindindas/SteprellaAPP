@@ -7,11 +7,15 @@ export const isNotAuthenticatedGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
 
   const { isAuthenticated, isVerified } = authService.checkAuthAndVerification();
+  const isAdminPath = state.url.startsWith('/admin');
 
   if (isAuthenticated) {
-
     if (isVerified) {
-      router.navigate(['/admin']);
+      if (isAdminPath) {
+        router.navigate(['/admin']);
+      } else {
+        router.navigate(['/']);
+      }
     } else {
       router.navigate(['/verify-code']);
     }

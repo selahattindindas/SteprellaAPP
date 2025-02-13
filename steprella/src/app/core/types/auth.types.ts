@@ -7,7 +7,7 @@ export interface UserPayload {
   phone: string;
   fullName: string;
   sub: string;
-  role: UserRole | string; // Backend'den string olarak da gelebilir
+  role: UserRole | string;
   iat?: number;
   exp?: number;
 }

@@ -10,12 +10,21 @@ import { ListColor } from '../../models/colors/list-color';
 export class ColorService {
   private readonly httpClientService = inject(HttpClientService);
 
-  getAll(): Observable<ListColor[]> {
+  getAll(page?: number, size?: number): Observable<BaseResponse<ListColor[]>> {
+    let queryString = '';
+    if (page !== undefined && size !== undefined) {
+      queryString = `page=${page}&size=${size}`;
+    }
+
     return this.httpClientService.get<BaseResponse<ListColor[]>>({
       controller: "colors",
-      action: "get-all"
+      action: "get-all",
+      queryString: queryString
     }).pipe(
-      map(response => response.data.length > 0 ? response.data : [])
+      map(response => ({
+        totalCount: response.totalCount,
+        data: response.data.length > 0 ? response.data : []
+      }))
     );
   }
 

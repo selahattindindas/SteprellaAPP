@@ -19,15 +19,11 @@ export class FilterSectionComponent {
   readonly expandedSections = input<{ [key: string]: boolean }>({});
   
   readonly toggleSection = output<any>(); 
-  readonly loadMore = output<void>();
+  readonly loadMore = output<string>();
   readonly filterChange = output<{type: string, value: number, checked: boolean}>();
-  
-  currentPage = signal<number>(0);
-  readonly PAGE_SIZE = 5;
-  
+    
   ngOnInit() {
     if (this.sectionKey() === 'genders') {
-      // URL değişikliklerini dinle
       this.route.queryParams.subscribe(params => {
         const categoryId = params['categoryId'];
         if (categoryId && this.items().length > 0) {
@@ -42,7 +38,6 @@ export class FilterSectionComponent {
     }
   }
 
-  // items değiştiğinde kontrol et
   ngOnChanges() {
     if (this.sectionKey() === 'genders' && this.items().length > 0) {
       const categoryId = this.route.snapshot.queryParams['categoryId'];
@@ -61,17 +56,8 @@ export class FilterSectionComponent {
     this.toggleSection.emit(this.sectionKey());
   }
 
-  showMore() {
-    this.loadMore.emit();
-  }
-
-  hasMoreItems() {
-    return this.items().length > 0 && this.items().length % this.PAGE_SIZE === 0;
-  }
-
   onCheckboxChange(item: any, event: any) {
     if (this.sectionKey() === 'genders') {
-      // Diğer tüm öğelerin seçimini kaldır
       this.items().forEach(i => {
         if (i.id !== item.id) {
           i.selected = false;
@@ -79,7 +65,6 @@ export class FilterSectionComponent {
       });
       item.selected = event.target.checked;
 
-      // URL'yi güncelle
       if (event.target.checked) {
         this.router.navigate([], {
           relativeTo: this.route,

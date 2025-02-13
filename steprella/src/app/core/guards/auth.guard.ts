@@ -9,12 +9,13 @@ export const authGuard: CanActivateFn = (route, state) => {
   const currentPath = route.routeConfig?.path;
   const { isAuthenticated, isVerified } = authService.checkAuthAndVerification();
 
-  const isAuthPage = currentPath === 'admin/login' || currentPath === 'verify-code';
+  const isAuthPage = currentPath === 'admin/login' || currentPath === 'auth' || currentPath === 'verify-code';
+  const isAdminPath = state.url.startsWith('/admin');
 
-  if (currentPath === 'admin/login') {
+  if (currentPath === 'admin/login' || currentPath === 'auth') {
     if (isAuthenticated) {
       if (isVerified) {
-        router.navigate(['/admin']);
+        router.navigate([isAdminPath ? '/admin' : '/']);
       } else {
         router.navigate(['/verify-code']);
       }
@@ -25,18 +26,18 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (currentPath === 'verify-code') {
     if (!isAuthenticated) {
-      router.navigate(['/admin/login']);
+      router.navigate([isAdminPath ? '/admin/login' : '/auth']);
       return false;
     }
     if (isVerified) {
-      router.navigate(['/admin']);
+      router.navigate([isAdminPath ? '/admin' : '/']);
       return false;
     }
     return true;
   }
 
   if (!isAuthenticated) {
-    router.navigate(['/admin/login'], {
+    router.navigate([isAdminPath ? '/admin/login' : '/auth'], {
       queryParams: { returnUrl: state.url }
     });
     return false;

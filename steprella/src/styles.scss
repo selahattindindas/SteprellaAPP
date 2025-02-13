@@ -97,6 +97,26 @@ h6 {
     @include icon-base;
     background-image: url('assets/svg/icons/search.svg');
   }
+
+  &-box {
+    @include icon-base;
+    background-image: url('assets/svg/icons/box.svg');
+  }
+
+  &-location {
+    @include icon-base;
+    background-image: url('assets/svg/icons/location.svg');
+  }
+
+  &-log_out {
+    @include icon-base;
+    background-image: url('assets/svg/icons/log_out.svg');
+  }
+
+  &-message {
+    @include icon-base;
+    background-image: url('assets/svg/icons/message.svg');
+  }
 }
 
 .thumbnail .keen-slider__slide {

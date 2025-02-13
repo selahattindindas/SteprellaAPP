@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from '../layout/default-layout/default-layout.component';
+import { authGuard } from '../core/guards/auth.guard';
+import { isNotAuthenticatedGuard } from '../core/guards/is-not-authenticated.guard';
 
 export const userRoutes: Routes = [
     {
@@ -13,15 +15,18 @@ export const userRoutes: Routes = [
             },
             {
                 path: 'favorites',
-                loadComponent: () => import('./components/favorite/favorite.component').then(m => m.FavoriteComponent)
+                loadComponent: () => import('./components/favorite/favorite.component').then(m => m.FavoriteComponent),
+                canActivate: [authGuard]
             },
             {
                 path: 'auth',
-                loadComponent: () => import('./components/auth/auth.component').then(m => m.AuthComponent)
+                loadComponent: () => import('./components/auth/auth.component').then(m => m.AuthComponent),
+                canActivate: [isNotAuthenticatedGuard]
             },
             {
                 path: 'carts',
-                loadComponent: () => import('./components/cart/cart.component').then(m => m.CartComponent)
+                loadComponent: () => import('./components/cart/cart.component').then(m => m.CartComponent),
+                canActivate: [authGuard]
             },
             {
                 path: '',

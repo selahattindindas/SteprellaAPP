@@ -27,7 +27,17 @@
       </mat-form-field>
     </div>
 
-    <!-- Marka -->
+    <div class="tw-space-y-1">
+      <mat-label class="tw-font-semibold tw-text-slate-800">Kullanım Alanı</mat-label>
+      <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
+        <mat-select formControlName="usageAreaId">
+          @for(usageArea of listUsageArea$ | async; track usageArea) {
+            <mat-option [value]="usageArea.id">{{ usageArea.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <div class="tw-space-y-1">
       <mat-label class="tw-font-semibold tw-text-slate-800">Marka</mat-label>
       <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
@@ -39,7 +49,6 @@
       </mat-form-field>
     </div>
 
-    <!-- Model -->
     <div class="tw-space-y-1">
       <mat-label class="tw-font-semibold tw-text-slate-800">Model</mat-label>
       <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
@@ -51,7 +60,17 @@
       </mat-form-field>
     </div>
 
-    <!-- Fiyat -->
+    <div class="tw-space-y-1">
+      <mat-label class="tw-font-semibold tw-text-slate-800">Materyal</mat-label>
+      <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
+        <mat-select formControlName="materialId">
+          @for(material of listMaterial$ | async; track material) {
+            <mat-option [value]="material.id">{{ material.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <div class="tw-space-y-1">
       <mat-label class="tw-font-semibold tw-text-slate-800">Fiyat</mat-label>
       <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">

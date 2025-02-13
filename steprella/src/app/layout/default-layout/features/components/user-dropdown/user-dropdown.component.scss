@@ -1,0 +1,90 @@
+.user-dropdown {
+  @apply tw-relative;
+
+  .hover-area {
+    @apply tw-relative;
+  }
+
+  .dropdown-trigger {
+    @apply tw-transition-colors tw-w-12 tw-h-12 
+    tw-rounded-full tw-flex tw-justify-center 
+    tw-items-center tw-cursor-pointer;
+
+    &:hover {
+      @apply tw-bg-gray-100;
+    }
+
+    i {
+      @apply tw-text-lg;
+    }
+  }
+
+  .dropdown-menu {
+    @apply tw-absolute tw-left-1/2 tw-transform 
+    tw--translate-x-1/2 tw-mt-3 tw-w-48 tw-border 
+    tw-border-gray-300 tw-bg-white tw-rounded-xl 
+    tw-shadow-md tw-py-3 tw-z-50;
+
+    &:before {
+      content: '';
+      @apply tw-absolute tw-top-[-8px] tw-left-1/2 
+      tw-transform tw--translate-x-1/2 tw-border-t 
+      tw-border-l tw-border-gray-300 tw-w-4 tw-h-4 
+      tw-bg-white tw-rotate-45;
+    }
+  }
+
+  .auth-section {
+    .dropdown-menu {
+      li {
+        @apply tw-px-3;
+
+        &+li {
+          @apply tw-mt-2;
+        }
+
+        a {
+          @apply tw-flex tw-items-center tw-px-4 tw-py-2 
+          tw-text-base tw-font-medium tw-rounded-lg 
+          tw-transition-all tw-duration-200 tw-justify-center;
+
+          &.login-btn {
+            @apply tw-bg-ui-bg tw-text-white;
+          }
+
+          &.register-btn {
+            @apply tw-border tw-border-gray-300 
+            tw-text-gray-800 hover:tw-bg-gray-50;
+          }
+        }
+      }
+    }
+  }
+
+  .profile-section {
+    .dropdown-menu {
+      p {
+        @apply tw-px-3 tw-mb-2 tw-text-sm 
+        tw-text-ui-bg tw-font-semibold tw-truncate;
+      }
+
+      li {
+        @apply tw-px-1;
+
+        &+li {
+          @apply tw-mt-2;
+        }
+
+        a {
+          @apply tw-flex tw-items-center tw-px-2 tw-py-2 
+          tw-text-xs tw-font-medium tw-text-ui-black tw-rounded-lg 
+          hover:tw-bg-orange-50 tw-justify-start;
+
+          i {
+            @apply tw-mr-3 tw-text-gray-500;
+          }
+        }
+      }
+    }
+  }
+}

@@ -31,7 +31,7 @@ export class FavoriteComponent implements OnInit{
 
   getFavorites(){
     this.loading.set(true);
-    this.favoriteService.getFavoritesByUserId(9, this.currentPage() - 1, this.pageSize()).subscribe({
+    this.favoriteService.getFavoritesByUserId(this.currentPage() - 1, this.pageSize()).subscribe({
       next: (response) => {
         this.listFavorite.set(response.data);
         this.totalCount.set(response.totalCount);

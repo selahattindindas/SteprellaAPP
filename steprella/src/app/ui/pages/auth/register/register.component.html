@@ -4,7 +4,7 @@
     <input 
       type="email" 
       formControlName="email"
-      placeholder="E-posta adresinizi giriniz">
+      placeholder="E-posta adresi">
   </div>
 
   <div class="form-group">
@@ -13,7 +13,7 @@
       <input 
         [type]="showPassword() ? 'text' : 'password'"
         formControlName="password"
-        placeholder="Şifrenizi giriniz">
+        placeholder="Şifre">
       <button 
         type="button" 
         class="password-toggle" 
@@ -28,7 +28,7 @@
     <input 
       type="text" 
       formControlName="fullName"
-      placeholder="Ad ve soyadınızı giriniz">
+      placeholder="Ad ve soyad">
   </div>
 
   <div class="form-group">
@@ -36,18 +36,18 @@
     <input 
       type="tel" 
       formControlName="phone"
-      placeholder="Telefon numaranızı giriniz">
+      placeholder="Telefon numarası">
   </div>
 
   <div class="form-group">
     <label>Cinsiyet</label>
     <div class="gender-group">
       <label class="radio-label">
-        <input type="radio" formControlName="gender" value="male">
+        <input type="radio" formControlName="gender" value="M">
         <span>Erkek</span>
       </label>
       <label class="radio-label">
-        <input type="radio" formControlName="gender" value="female">
+        <input type="radio" formControlName="gender" value="F">
         <span>Kadın</span>
       </label>
     </div>

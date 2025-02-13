@@ -3,7 +3,7 @@ export interface CreateProduct {
     description: string;
     categoryId: number;
     brandId: number;
-    featureId: number[];
+    featuresId: number[];
     materialId: number;
     usageAreaId: number;
     shoeModelId: number;

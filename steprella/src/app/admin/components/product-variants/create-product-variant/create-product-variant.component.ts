@@ -45,7 +45,7 @@ export class CreateProductVariantComponent {
 
   private loadColors(): void {
     this.colorService.getAll().subscribe({
-      next: (colors) => this.colors.set(colors)
+      next: (colors) => this.colors.set(colors.data)
     });
   }
 

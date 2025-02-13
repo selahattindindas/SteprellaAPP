@@ -20,6 +20,12 @@ export class StaticDataService {
         if (page !== undefined && size !== undefined) {
           const startIndex = page * size;
           const endIndex = startIndex + size;
+          if (startIndex >= response.data.length) {
+            return {
+              data: [],
+              totalCount: response.data.length
+            };
+          }
           const paginatedData = response.data.slice(startIndex, endIndex);
           
           return {

@@ -11,6 +11,7 @@ import { Icon, SweetAlertService } from '../../../core/services/common/sweet-ale
 import { VerificationService } from '../../../core/services/common/verification-code.service';
 import { Router } from '@angular/router';
 import { interval, Subject, takeUntil } from 'rxjs';
+import { UserRole, UserPayload } from '../../../core/types/auth.types';
 
 @Component({
   selector: 'app-verify-code',
@@ -33,6 +34,18 @@ export class VerifyCodeComponent {
   private readonly router = inject(Router);
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly destroy$ = new Subject<void>();
+
+  private get isAdminPath(): boolean {
+    const token = this.authService.getToken();
+    if (!token) return false;
+    
+    try {
+      const decodedToken = JSON.parse(atob(token.split('.')[1])) as UserPayload;
+      return decodedToken.role === UserRole.ADMIN;
+    } catch {
+      return false;
+    }
+  }
 
   readonly verifyForm = this.buildVerifyForm();
 
@@ -83,7 +96,11 @@ export class VerifyCodeComponent {
 
   private checkVerificationEmail(): void {
     if (!this.authService.getVerificationEmail()) {
-      this.router.navigate(['/admin/login']);
+      if (this.isAdminPath) {
+        this.router.navigate(['/admin/login']);
+      } else {
+        this.router.navigate(['/auth']);
+      }
     }
   }
 
@@ -102,12 +119,22 @@ export class VerifyCodeComponent {
       next: () => {
         this.authService.setVerified(true);
         this.sweetAlertService.showMessage('Doğrulama başarılı!', Icon.SUCCESS);
-        this.router.navigate(['/admin']);
+        
+        if (this.isAdminPath) {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/']);
+        }
       },
       error: () => {
         this.authService.deleteToken();
+        if (this.isAdminPath) {
+          this.router.navigate(['/admin/login']);
+        } else {
+          this.router.navigate(['/auth']);
+        }
       }
-    })
+    });
   }
 
   resendCode() {
@@ -129,8 +156,13 @@ export class VerifyCodeComponent {
     this.sweetAlertService.confirmation().then(result => {
       if (result.isConfirmed) {
         this.authService.deleteToken();
-        this.router.navigate(['/admin/login']);
         this.sweetAlertService.showMessage('İşlem iptal edildi', Icon.INFO);
+        
+        if (this.isAdminPath) {
+          this.router.navigate(['/admin/login']);
+        } else {
+          this.router.navigate(['/auth']);
+        }
       }
     });
   }

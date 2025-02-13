@@ -12,10 +12,10 @@ import { CreateFavorite } from '../../models/favorites/create-favorite';
 export class FavoriteService {
     private readonly httpClientService = inject(HttpClientService);
 
-    getFavoritesByUserId(userId: number, page: number, size: number): Observable<BaseResponse<ListFavorite[]>> {
+    getFavoritesByUserId(page: number, size: number): Observable<BaseResponse<ListFavorite[]>> {
         return this.httpClientService.get<BaseResponse<ListFavorite[]>>({
             controller: 'favorites',
-            action: `by-user-id/${userId}`,
+            action: 'get-favorites',
             queryString: `page=${page}&size=${size}`
         }).pipe(
             map(response => ({

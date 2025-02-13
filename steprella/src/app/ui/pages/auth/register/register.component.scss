@@ -2,14 +2,18 @@
   @apply tw-mb-4;
 
   label {
-    @apply tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-700;
+    @apply tw-block tw-mb-2 tw-ml-1 tw-text-sm tw-font-medium tw-text-gray-600;
   }
 
   input {
-    @apply tw-w-full tw-p-3 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm;
+    @apply tw-w-full tw-p-4 tw-border-none tw-rounded-2xl tw-text-sm tw-bg-gray-100;
     
+    &::placeholder{
+      @apply tw-text-gray-500 tw-font-medium;
+    }
+
     &:focus {
-      @apply tw-outline-none tw-ring-2 tw-ring-ui-bg tw-border-transparent;
+      @apply tw-outline-none tw-ring-1 tw-ring-ui-bg tw-border-transparent;
     }
   }
 }
@@ -31,10 +35,10 @@
 }
 
 .submit-btn {
-  @apply tw-w-full tw-bg-ui-bg tw-text-white tw-py-3 tw-px-4 tw-rounded-md tw-font-medium;
+  @apply tw-w-full tw-bg-ui-bg tw-text-white tw-py-4 tw-rounded-full tw-font-semibold tw-h-[52px];
 
   &:hover {
-    @apply tw-bg-orange-600;
+    @apply tw-bg-orange-700 tw-shadow-md tw-transition-all tw-duration-300;
   }
 }
 

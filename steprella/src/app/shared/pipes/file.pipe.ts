@@ -10,7 +10,7 @@ export class FilePipe implements PipeTransform {
 
   transform(image: ListFile): string {
     if (image && image.path) {
-      return environment.photoUrl + '/' + image.path; // photoUrl ve path'i doğru şekilde birleştiriyoruz
+      return environment.photoUrl + '/' + image.path;
     } else {
       return '';
     }

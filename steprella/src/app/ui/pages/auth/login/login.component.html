@@ -4,7 +4,7 @@
     <input 
       type="email" 
       formControlName="email"
-      placeholder="E-posta adresinizi giriniz">
+      placeholder="E-posta adresi">
   </div>
 
   <div class="form-group">
@@ -13,7 +13,7 @@
       <input 
         [type]="showPassword() ? 'text' : 'password'"
         formControlName="password"
-        placeholder="Şifrenizi giriniz">
+        placeholder="Şifre">
       <button 
         type="button" 
         class="password-toggle" 
@@ -21,7 +21,7 @@
         <i class="fas" [class.fa-eye]="!showPassword()" [class.fa-eye-slash]="showPassword()"></i>
       </button>
     </div>
-    <a class="forgot-password" (click)="forgotPassword()">
+    <a class="forgot-password">
       Şifremi Unuttum
     </a>
   </div>

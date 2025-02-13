@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MainNavComponent } from '../features/components/main-nav/main-nav.component';
 import { MobileSidebarComponent } from '../features/components/mobile-sidebar/mobile-sidebar.component';
 import { RouterLink } from '@angular/router';
+import { UserDropdownComponent } from '../features/components/user-dropdown/user-dropdown.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, MainNavComponent, MobileSidebarComponent, RouterLink],
+  imports: [CommonModule, MainNavComponent, MobileSidebarComponent, RouterLink, UserDropdownComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

@@ -39,7 +39,7 @@ export class FilterGroupComponent {
   readonly sizeList = signal<any[]>([]);
   readonly genderList = signal<any[]>([]);
 
-  readonly selectedFilters = signal<{[key: string]: number[]}>({});
+  readonly selectedFilters = signal<{ [key: string]: number[] }>({});
 
   readonly applyFilters = output<any>();
   readonly clearFilters = output<void>();
@@ -53,27 +53,25 @@ export class FilterGroupComponent {
     usageAreas: true
   };
 
-
-
   constructor() {
     this.loadData();
   }
 
   private loadData(): void {
-    this.brandService.getAll(0,5).subscribe(response => this.brandList.set(response.data));
-    this.featureService.getAll(0,5).subscribe(response => this.featureList.set(response.data));
-    this.colorService.getAll().subscribe(response => this.colorList.set(response));
-    this.materialService.getAll(0,5).subscribe(response => this.materialList.set(response.data));
-    this.usageAreaService.getAll(0,5).subscribe(response => this.usageAreaList.set(response.data));
-    this.staticDataService.getSizes(0,5).subscribe(response => this.sizeList.set(response.data));
-    this.staticDataService.getGenders(0,5).subscribe(response => this.genderList.set(response.data));
+    this.brandService.getAll().subscribe(response => this.brandList.set(response.data));
+    this.featureService.getAll().subscribe(response => this.featureList.set(response.data));
+    this.colorService.getAll().subscribe(response => this.colorList.set(response.data));
+    this.materialService.getAll().subscribe(response => this.materialList.set(response.data));
+    this.usageAreaService.getAll().subscribe(response => this.usageAreaList.set(response.data));
+    this.staticDataService.getSizes().subscribe(response => this.sizeList.set(response.data));
+    this.staticDataService.getGenders().subscribe(response => this.genderList.set(response.data));
   }
 
   toggleSection(section: string): void {
     this.expandedSections[section] = !this.expandedSections[section];
   }
 
-  onFilterChange(event: {type: string, value: any, checked?: boolean}) {
+  onFilterChange(event: { type: string, value: any, checked?: boolean }) {
     this.selectedFilters.update(current => {
       if (event.type === 'price') {
         const priceValue = event.value;
@@ -97,7 +95,7 @@ export class FilterGroupComponent {
     const filters = {
       brandId: this.selectedFilters()['brands'],
       colorId: this.selectedFilters()['colors'],
-      categoryId: this.selectedFilters()['categoryId'], 
+      categoryId: this.selectedFilters()['categoryId'],
       sizeValue: this.selectedFilters()['sizes'],
       materialId: this.selectedFilters()['materials'],
       usageAreaId: this.selectedFilters()['usageAreas'],

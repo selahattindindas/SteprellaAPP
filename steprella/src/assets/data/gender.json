@@ -1,8 +1,8 @@
 {
     "data": [
-      { "id": 12, "name": "Erkek" },
-      { "id": 13, "name": "Kadın" },
-      { "id": 34, "name": "Kız Çocuk" },
-      { "id": 35, "name": "Erkek Çocuk" }
+      { "id": 1, "name": "Erkek" },
+      { "id": 2, "name": "Kadın" },
+      { "id": 3, "name": "Kız Çocuk" },
+      { "id": 4, "name": "Erkek Çocuk" }
     ]
   }
