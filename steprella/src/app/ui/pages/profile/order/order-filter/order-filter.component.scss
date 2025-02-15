@@ -1,0 +1,29 @@
+.order-header {
+    @apply tw-flex tw-items-center tw-justify-between tw-p-4 tw-border tw-border-gray-200 tw-rounded-lg;
+
+    .title {
+        @apply tw-text-lg tw-text-ui-black;
+    }
+
+    .search-container {
+        @apply tw-relative tw-flex tw-items-center;
+
+        .search-input {
+            @apply tw-w-64 tw-px-4 tw-text-xs tw-py-3 tw-border tw-border-gray-200 
+            tw-rounded-lg tw-outline-none tw-text-gray-500 tw-font-semibold;
+
+
+            &:focus {
+                @apply tw-border tw-border-ui-black
+            }
+        }
+
+        .search-icon {
+            @apply tw-absolute tw-right-3 tw-text-ui-bg;
+        }
+    }
+
+    .filter-dropdown {
+        @apply tw-w-32;
+    }
+}

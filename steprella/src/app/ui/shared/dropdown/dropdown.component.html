@@ -1,5 +1,8 @@
 <div class="dropdown-container">
-    <div class="dropdown-header" (click)="toggleDropdown()">
+    <div class="dropdown-header" 
+         [class]="headerBgColor() + ' ' + headerBorderWidth() + ' ' + headerBorderColor() + ' ' 
+         + headerRadius() + ' ' + textSize() + ' ' + fontWeight()"
+         (click)="toggleDropdown()">
         <span class="selected-value">{{ selectedLabel() }}</span>
         <i class="fa-solid fa-chevron-down" [class.open]="isOpen()"></i>
     </div>

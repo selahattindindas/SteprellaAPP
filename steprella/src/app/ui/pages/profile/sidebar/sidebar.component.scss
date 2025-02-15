@@ -1,0 +1,38 @@
+.sidebar-container {
+    @apply tw-w-56;
+  }
+  
+  .email-section, .nav-section {
+    @apply tw-mb-6 tw-border tw-border-gray-300 tw-rounded-xl tw-px-3 tw-py-3;
+  }
+  
+  .email-text {
+    @apply tw-text-ui-black tw-text-sm tw-font-semibold tw-truncate tw-px-2;
+  }
+  
+  .nav-title {
+    @apply tw-text-gray-800 tw-font-semibold tw-text-sm tw-mb-3 tw-relative tw-pb-3 tw-px-2;
+  
+    &::after {
+      content: '';
+      @apply tw-absolute tw-bottom-0 tw-left-[-12px] tw-w-[calc(100%+24px)] tw-h-[1px] tw-bg-gray-200;
+    }
+  }
+  
+  .nav-item {
+    @apply tw-w-full;
+  }
+  
+  .nav-link {
+    @apply tw-flex tw-items-center tw-text-xs tw-gap-3 tw-px-2 tw-py-2 tw-text-ui-black
+    hover:tw-bg-orange-50 tw-rounded-lg 
+    tw-transition-colors tw-duration-300;
+
+    &.active {
+      @apply tw-bg-orange-50 tw-text-ui-bg;
+    }
+  
+    i {
+      @apply tw-w-5 tw-text-lg tw-text-center;
+    }
+  }

@@ -10,4 +10,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class PageBannerComponent {
   readonly title = input.required<string>();
+  readonly height = input<number>(300);
 }

@@ -18,6 +18,13 @@ export class DropdownComponent {
   options = input.required<DropdownOption[]>();
   value = model<string>();
   
+  headerBgColor = input<string>('tw-bg-ui-lightGray');
+  headerBorderWidth = input<string>('tw-border-0');
+  headerBorderColor = input<string>('tw-border-transparent');
+  headerRadius = input<string>('tw-rounded-full');
+  textSize = input<string>('tw-text-sm');
+  fontWeight = input<string>('tw-font-medium');
+  
   isOpen = signal(false);
 
   constructor(private elementRef: ElementRef) {}

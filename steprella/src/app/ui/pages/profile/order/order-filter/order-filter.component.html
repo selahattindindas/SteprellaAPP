@@ -1,0 +1,18 @@
+<div class="order-header">
+    <h2 class="title">Siparişlerim</h2>
+    <div class="search-container">
+        <input class="search-input" placeholder="Ürün ismi veya Marka ara">
+        <i class="search-icon fa-solid fa-magnifying-glass"></i>
+    </div>
+    <div class="filter-dropdown">
+        <app-dropdown
+        [options]="filterOptions"
+        headerBgColor="tw-bg-white"
+        headerBorderWidth="tw-border"
+        textSize="tw-text-xs"
+        fontWeight="tw-font-semibold"
+        headerRadius="tw-rounded-lg"
+        headerBorderColor="tw-border-gray-200">
+    </app-dropdown>
+    </div>
+</div>

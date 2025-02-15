@@ -2,8 +2,8 @@
     @apply tw-relative;
 
     .dropdown-header {
-        @apply tw-px-4 tw-py-2 tw-rounded-full tw-text-gray-500 tw-font-medium
-        tw-bg-ui-lightGray tw-flex tw-items-center tw-justify-between tw-cursor-pointer tw-transition-colors;
+        @apply tw-px-4 tw-py-2 tw-text-gray-500
+        tw-flex tw-items-center tw-justify-between tw-cursor-pointer tw-transition-colors;
 
         .selected-value {
             @apply tw-mr-2;

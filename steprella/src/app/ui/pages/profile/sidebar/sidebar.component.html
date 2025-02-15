@@ -1,0 +1,37 @@
+<div class="sidebar-container">
+
+    <div class="email-section">
+        <p class="email-text">{{ userEmail() }}</p>
+    </div>
+
+    <div class="nav-section">
+        <h3 class="nav-title">İşlemlerim</h3>
+        <ul class="nav-list">
+            @for (item of transactionItems(); track item.id) {
+            <li class="nav-item">
+                <a [routerLink]="item.route" 
+                   routerLinkActive="active"
+                   class="nav-link">
+                    <i class="material-icons-outlined">{{ item.icon }}</i>
+                    {{ item.label }}
+                </a>
+            </li>
+            }
+        </ul>
+    </div>
+
+    <div class="nav-section">
+        <h3 class="nav-title">Sana Özel</h3>
+        <ul class="nav-list">
+            @for (item of specialItems(); track item.id) {
+            <li class="nav-item">
+                <a [routerLink]="item.route" 
+                   class="nav-link">
+                    <i class="material-icons-outlined">{{ item.icon }}</i>
+                    {{ item.label }}
+                </a>
+            </li>
+            }
+        </ul>
+    </div>
+</div>
