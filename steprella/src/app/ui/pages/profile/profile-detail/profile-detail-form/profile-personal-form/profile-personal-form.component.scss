@@ -1,0 +1,61 @@
+.detail-form-container {
+    @apply tw-p-5 tw-h-[475px] tw-border tw-border-gray-200 tw-rounded-s-lg;
+  
+    form {
+      @apply tw-bg-white tw-p-6 tw-rounded-lg;
+    }
+  
+    .form-section {
+      h2 {
+        @apply tw-text-base tw-mb-6 tw-text-ui-bg tw-font-bold;
+      }
+    }
+  
+    .form-row {
+      @apply tw-flex tw-gap-5 tw-mb-4;
+    }
+  
+    .form-group {
+      @apply tw-flex-1;
+  
+      label {
+        @apply tw-block tw-mb-2 tw-text-gray-600 tw-font-semibold tw-text-sm;
+      }
+  
+      input, select {
+        @apply tw-w-full tw-p-3 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm;
+  
+        &:focus {
+          @apply tw-outline-none tw-border-ui-bg;
+        }
+      }
+    }
+  
+    .phone-input {
+      @apply tw-flex tw-gap-2.5 tw-mb-4;
+  
+      select {
+        @apply tw-w-[100px];
+      }
+  
+      input {
+        @apply tw-flex-1;
+      }
+    }
+  
+    .date-inputs {
+      @apply tw-flex tw-gap-2.5 tw-mb-4;
+  
+      select {
+        @apply tw-flex-1;
+      }
+    }
+  
+    button {
+      @apply tw-w-full tw-py-3 tw-bg-ui-bg tw-text-white tw-border-none tw-rounded-md tw-text-base tw-cursor-pointer tw-mt-4;
+  
+      &:hover {
+        @apply tw-bg-orange-700;
+      }
+    }
+  }

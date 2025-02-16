@@ -1,0 +1,11 @@
+<div class="order-footer">
+    <div class="shipping-info">
+        <i class="material-icons-outlined">
+            place
+        </i>
+        <div class="shipping-address">
+            {{order().shippingAddress.description}},
+            {{order().shippingAddress.districtName}}/{{order().shippingAddress.cityName}}
+        </div>
+    </div>
+</div>

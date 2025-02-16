@@ -1,0 +1,52 @@
+.order-header {
+    @apply tw-flex tw-justify-between tw-items-center tw-py-4;
+
+    .order-info-group {
+      @apply tw-flex tw-justify-between tw-items-center tw-flex-1;
+
+      .info-item {
+        @apply tw-flex-1 tw-flex tw-flex-col;
+
+        .info-label {
+          @apply tw-text-gray-600 tw-text-sm tw-font-semibold tw-mb-1;
+        }
+
+        .info-value {
+          @apply tw-text-ui-black tw-text-sm;
+
+          &.total-price-value {
+            @apply tw-text-ui-bg;
+          }
+        }
+      }
+    }
+
+    .order-status {
+      @apply tw-text-sm tw-px-3 tw-py-1 tw-rounded-full tw-font-semibold;
+
+      &.completed {
+        @apply tw-text-green-600 tw-bg-green-50;
+      }
+
+      &.pending {
+        @apply tw-text-blue-600 tw-bg-blue-50;
+      }
+
+      &.processing {
+        @apply tw-text-orange-600 tw-bg-orange-50;
+      }
+    }
+
+    
+    .total-info {
+      @apply tw-flex tw-justify-between tw-items-center;
+
+      .total-label {
+        @apply tw-text-sm tw-text-gray-600;
+      }
+
+      .total-price {
+        @apply tw-text-lg tw-font-medium tw-text-gray-800;
+      }
+    }
+}

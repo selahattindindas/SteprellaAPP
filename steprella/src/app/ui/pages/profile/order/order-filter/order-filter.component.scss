@@ -9,12 +9,12 @@
         @apply tw-relative tw-flex tw-items-center;
 
         .search-input {
-            @apply tw-w-64 tw-px-4 tw-text-xs tw-py-3 tw-border tw-border-gray-200 
+            @apply tw-w-64 tw-px-4 tw-text-sm tw-py-3 tw-border tw-border-gray-200 
             tw-rounded-lg tw-outline-none tw-text-gray-500 tw-font-semibold;
 
 
             &:focus {
-                @apply tw-border tw-border-ui-black
+                @apply tw-border tw-border-gray-400;
             }
         }
 

@@ -1,0 +1,22 @@
+.profile-detail-container {
+    @apply tw-mt-5 tw-container tw-mx-auto;
+}
+
+.profile-detail-row {
+    @apply tw-mt-5;
+}
+
+.form-container {
+    @apply tw-grid tw-grid-cols-1 md:tw-grid-cols-2;
+}
+
+.personal-form, 
+.password-form {
+    @apply tw-w-full;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        @apply tw-grid-cols-1 tw-gap-4;
+    }
+}

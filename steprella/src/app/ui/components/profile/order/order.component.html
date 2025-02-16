@@ -1,3 +1,29 @@
 <div class="order-container">
-    <app-order-filter />
+  <app-order-filter />
+</div>
+
+<div class="orders-list">
+  @for (order of orders; track order.id) {
+  <div class="order-card">
+    <div>
+      <app-order-header [order]="order"/>
+    </div>
+
+    <div>
+      <app-order-item [orderItem]="order.items"/>
+    </div>
+
+    <div>
+      <app-order-footer [order]="order"/>
+    </div>
+
+  </div>
+
+  } @empty {
+  <div class="no-orders">
+    <p class="tw-text-center tw-text-gray-500 tw-py-8">
+      Henüz siparişiniz bulunmamaktadır.
+    </p>
+  </div>
+  }
 </div>

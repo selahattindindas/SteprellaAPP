@@ -1,0 +1,51 @@
+<div class="detail-form-container">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="form-section">
+            <h2>Üyelik Bilgilerim</h2>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">Ad</label>
+                    <input id="firstName" type="text" formControlName="firstName">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Soyad</label>
+                    <input id="lastName" type="text" formControlName="lastName">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Cep Telefonu</label>
+                <div class="phone-input">
+                    <select formControlName="phoneCode">
+                        <option value="+90">+90</option>
+                    </select>
+                    <input id="phone" type="tel" formControlName="phone">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Doğum Tarihiniz</label>
+                <div class="date-inputs">
+                    <select formControlName="day">
+                        @for(day of days(); track day) {
+                            <option [value]="day">{{day}}</option>
+                        }
+                    </select>
+                    <select formControlName="month">
+                        @for(month of months(); track month) {
+                            <option [value]="month">{{month}}</option>
+                        }
+                    </select>
+                    <select formControlName="year">
+                        @for(year of years(); track year) {
+                            <option [value]="year">{{year}}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Güncelle</button>
+    </form>
+</div>

@@ -1,3 +1,15 @@
-.order-container{
-    @apply tw-mt-5;
+.order-container {
+  @apply tw-my-5;
+}
+
+.orders-list {
+  @apply tw-space-y-5;
+}
+
+.order-card {
+  @apply tw-bg-white tw-px-6 tw-border tw-border-gray-200 tw-rounded-lg;
+}
+
+.no-orders {
+  @apply tw-bg-white tw-p-8 tw-text-center tw-border tw-border-gray-200;
 }

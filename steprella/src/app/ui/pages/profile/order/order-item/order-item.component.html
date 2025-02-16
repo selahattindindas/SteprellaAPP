@@ -1,0 +1,31 @@
+<div class="order-items">
+  @for (item of orderItem(); track item.id) {
+  <div class="item">
+    <div class="item-image">
+      @if (item.productVariant.productFiles.length > 0) {
+      <img src="assets/images/ui/shoe1.png">
+      }
+    </div>
+
+    <div class="item-details">
+      <h3 class="item-name">
+        {{item.productVariant.brandName}} {{item.productVariant.shoeModelName}}
+      </h3>
+      <p class="item-specs">
+        {{item.productVariant.colorName}} - Beden: {{item.productVariantSizeValue}}
+      </p>
+      <p class="item-specs">
+        {{item.productVariant.materialName}} | {{item.productVariant.usageAreaName}}
+      </p>
+    </div>
+
+    <span class="item-quantity">
+      {{item.quantity}} Adet
+    </span>
+
+    <div class="item-price">
+      {{item.totalPrice | currency:'TRY':'symbol-narrow':'1.2-2'}}
+    </div>
+  </div>
+  }
+</div>

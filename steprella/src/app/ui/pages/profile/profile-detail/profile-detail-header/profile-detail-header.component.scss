@@ -1,0 +1,7 @@
+.detail-header{
+    @apply tw-p-4 tw-border tw-border-gray-200 tw-rounded-lg;
+
+    h1{
+        @apply tw-font-semibold tw-text-ui-black tw-text-lg;
+    }
+}
