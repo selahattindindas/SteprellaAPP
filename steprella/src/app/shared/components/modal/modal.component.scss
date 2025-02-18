@@ -1,0 +1,59 @@
+.modal-backdrop {
+    @apply tw-fixed tw-inset-0 
+           tw-bg-black/50 
+           tw-flex tw-items-center tw-justify-center 
+           tw-z-50;
+  
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+  
+    .modal-container {
+      @apply tw-bg-white tw-rounded-lg tw-shadow-lg 
+             tw-mx-4 tw-max-h-[90vh] tw-flex tw-flex-col;
+  
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: slideIn 0.5s ease 0.2s forwards;
+  
+      .modal-header {
+        @apply tw-flex tw-justify-end tw-p-4 tw-shrink-0;
+  
+        .close-button {
+          @apply tw-text-gray-500 hover:tw-text-gray-700 
+                 tw-transition-colors;
+        }
+      }
+  
+      .modal-content {
+        @apply tw-px-6 tw-pb-6 tw-overflow-y-auto;
+      }
+    }
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .animate-slideIn {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { 
+      opacity: 0; 
+    }
+    to { 
+      opacity: 1; 
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

@@ -28,7 +28,7 @@
         </a>
       </li>
       <li class="action-menu__item">
-        <a routerLink="/carts">
+        <a (click)="toggleCart()">
           <i class="icon-cart"></i>
         </a>
       </li>
@@ -44,3 +44,5 @@
 <div class="md:!tw-hidden">
   <app-mobile-sidebar></app-mobile-sidebar>
 </div>
+
+<app-cart #cart></app-cart>

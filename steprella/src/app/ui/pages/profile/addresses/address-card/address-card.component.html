@@ -1,1 +1,19 @@
-<p>address-card works!</p>
+<div class="address-card">
+    <div class="header">
+        <i class="bi bi-geo-alt"></i>
+        <h3 class="title">{{ address().title }}</h3>
+    </div>
+
+    <div class="content">
+        <p class="description">{{ address().description }}</p>
+        <p class="location">{{ address().districtName }}/{{ address().cityName }}</p>
+    </div>
+
+    <div class="actions">
+        <button class="delete" (click)="onDelete(address().id)">
+            <i class="fa-regular fa-trash-can"></i>
+            <span>Sil</span>
+        </button>
+        <button class="edit" (click)="onEdit(address().id)">Adresi Düzenle</button>
+    </div>
+</div>

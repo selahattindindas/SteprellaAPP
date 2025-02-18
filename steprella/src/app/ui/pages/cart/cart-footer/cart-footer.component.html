@@ -1,0 +1,27 @@
+<div class="cart-footer">
+    <div class="cart-bar">
+        <a>
+            <span class="material-icons-outlined">
+                event_note
+            </span>
+            Sipariş Notu
+        </a>
+        <a>
+            <span class="material-icons-outlined">
+                local_offer
+            </span>
+            Kupon
+        </a>
+    </div>
+    <div class="cart-total">
+        <span>Toplam:</span>
+        <span>{{ summary().totalPrice | currency:'TRY':'symbol-narrow':'1.2-2' }}</span>
+    </div>
+    <div class="cart-info">
+        <span>
+            Vergiler ve kargo ücreti, ödeme sırasında hesaplanır.</span>
+    </div>
+    <div class="submit-btn">
+        <button class="checkout-btn">Sepeti Onayla</button>
+    </div>
+</div>

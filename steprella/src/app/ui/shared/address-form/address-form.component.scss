@@ -1,0 +1,38 @@
+.address-form {
+  @apply tw-flex tw-flex-col tw-gap-4;
+
+  .form-group {
+    @apply tw-flex tw-flex-col tw-gap-2;
+
+    label {
+      @apply tw-text-sm tw-font-medium tw-text-gray-700;
+    }
+
+    input, select, textarea {
+      @apply tw-rounded-md tw-border tw-border-gray-300 
+             tw-px-3 tw-py-2 tw-text-sm
+             focus:tw-border-ui-bg focus:tw-ring-1 focus:tw-ring-ui-bg
+             disabled:tw-bg-gray-100;
+    }
+
+    textarea {
+      @apply tw-resize-none;
+    }
+
+    .error {
+      @apply tw-text-xs tw-text-red-500;
+    }
+  }
+
+  .form-actions {
+    @apply tw-flex tw-justify-end tw-mt-6;
+
+    .submit-button {
+      @apply tw-bg-ui-bg tw-text-white 
+             tw-px-4 tw-py-2 tw-rounded-md
+             tw-text-sm tw-font-medium
+             hover:tw-bg-ui-bg/90
+             disabled:tw-opacity-50 disabled:tw-cursor-not-allowed;
+    }
+  }
+}

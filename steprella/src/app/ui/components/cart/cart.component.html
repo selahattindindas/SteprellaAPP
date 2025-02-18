@@ -1,1 +1,21 @@
-<p>cart works!</p>
+<div class="cart-sidebar" [class]="isOpen() ? 'active' : ''">
+
+     <app-cart-header [isOpen]="isOpen"/>
+     <app-cart-item 
+     [data]="cart()" 
+     [selectedItems]="selectedItemIds()"
+     (updateQuantity)="updateQuantity($event.itemId, $event.change)"
+     (removeItem)="removeItem($event)"
+     (toggleSelect)="toggleItemSelection($event)"
+   />
+     <app-cart-footer [summary]="{
+       totalPrice: cart().totalPrice,
+       totalItems: cart().totalItems
+     }"/>
+
+</div>
+
+<div class="cart-overlay" 
+     [class]="isOpen() ? 'active' : ''" 
+     (click)="isOpen.set(false)">
+</div>

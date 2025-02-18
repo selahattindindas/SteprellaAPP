@@ -1,24 +1,8 @@
-<div class="user-dropdown">
-    <div class="hover-area" 
-         (mouseenter)="isOpen.set(true)" 
-         (mouseleave)="isOpen.set(false)">
-      @if (!isLoggedIn()) {
+<div class="user-dropdown" (click)="toggleDropdown($event)">
+    @if (isLoggedIn()) {
+      <div class="hover-area">
         <div class="dropdown-trigger">
-          <i class="icon-user" routerLink="/auth"></i>
-        </div>
-        
-        <div class="auth-section">
-          @if (isOpen()) {
-            <ul class="dropdown-menu">
-                <li><a class="login-btn" routerLink="/auth">Giriş Yap</a></li>
-                <li><a class="register-btn" routerLink="/auth">Kayıt Ol</a></li>
-            </ul>
-          }
-        </div>
-      }
-      @else {
-        <div class="dropdown-trigger">
-          <i class="icon-user" routerLink="/profile"></i>
+          <i class="icon-user profile"></i>
         </div>
 
         @if (isOpen()) {
@@ -26,25 +10,25 @@
             <ul class="dropdown-menu">
               <p>{{ userEmail() }}</p>
               <li>
-                <a routerLink="/orders">
+                <a routerLink="/profile/orders">
                   <i class="icon-shopping"></i>
                   Tüm Siparişlerim
                 </a>
               </li>
               <li>
-                <a routerLink="/rating">
+                <a routerLink="/profile/reviews">
                   <i class="icon-message"></i>
                   Değerlendirmelerim
                 </a>
               </li>
               <li>
-                <a routerLink="/profile">
+                <a routerLink="/profile/info">
                   <i class="icon-user"></i>
                   Kullanıcı Bilgilerim
                 </a>
               </li>
               <li>
-                <a routerLink="/addresses">
+                <a routerLink="/profile/addresses">
                   <i class="icon-location"></i>
                   Adreslerim
                 </a>
@@ -58,7 +42,23 @@
             </ul>
           </div>
         }
-      }
-    </div>
+      </div>
+    }
+    @else {
+      <div class="hover-area">
+        <div class="dropdown-trigger">
+          <i class="icon-user auth"></i>
+        </div>
+        
+        <div class="auth-section">
+          @if (isOpen()) {
+            <ul class="dropdown-menu">
+                <li><a class="login-btn" routerLink="/auth">Giriş Yap</a></li>
+                <li><a class="register-btn" routerLink="/auth">Kayıt Ol</a></li>
+            </ul>
+          }
+        </div>
+      </div>
+    }
 </div>
 

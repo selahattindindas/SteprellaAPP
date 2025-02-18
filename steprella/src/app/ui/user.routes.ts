@@ -14,21 +14,6 @@ export const userRoutes: Routes = [
                 loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent)
             },
             {
-                path: 'auth',
-                loadComponent: () => import('./components/auth/auth.component').then(m => m.AuthComponent),
-                canActivate: [isNotAuthenticatedGuard]
-            },
-            {
-                path: 'favorites',
-                loadComponent: () => import('./components/favorite/favorite.component').then(m => m.FavoriteComponent),
-                canActivate: [authGuard]
-            },
-            {
-                path: 'carts',
-                loadComponent: () => import('./components/cart/cart.component').then(m => m.CartComponent),
-                canActivate: [authGuard]
-            },
-            {
                 path: 'profile',
                 loadComponent: () => import('./components/profile/profile-main/profile-main.component').then(m => m.ProfileMainComponent),
                 // canActivate: [authGuard],
@@ -56,6 +41,21 @@ export const userRoutes: Routes = [
                         loadComponent: () => import('./components/profile/profile-detail/profile-detail.component').then(m => m.ProfileDetailComponent)
                     },
                 ]
+            },
+            {
+                path: 'auth',
+                loadComponent: () => import('./components/auth/auth.component').then(m => m.AuthComponent),
+                canActivate: [isNotAuthenticatedGuard]
+            },
+            {
+                path: 'favorites',
+                loadComponent: () => import('./components/favorite/favorite.component').then(m => m.FavoriteComponent),
+                // canActivate: [authGuard]
+            },
+            {
+                path: 'carts',
+                loadComponent: () => import('./components/cart/cart.component').then(m => m.CartComponent),
+                // canActivate: [authGuard]
             },
             {
                 path: '',

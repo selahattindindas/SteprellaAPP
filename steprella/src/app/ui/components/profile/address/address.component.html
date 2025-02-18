@@ -1,1 +1,14 @@
-<p>address works!</p>
+<div class="address-container">
+    <app-address-header (createClick)="openCreateDialog()" />
+
+    <div class="address-page">
+        <div class="address-list">
+            @for (address of addresses(); track address.id) {
+                <app-address-card [address]="address" (onEdit)="openUpdateDialog(address.id)" />
+            }
+        </div>
+    </div>
+
+    <app-create-address #createAddressComponent />
+    <app-update-address #updateAddressComponent />
+</div>

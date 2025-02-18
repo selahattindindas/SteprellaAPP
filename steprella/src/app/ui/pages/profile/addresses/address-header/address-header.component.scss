@@ -1,0 +1,17 @@
+.address-header{
+    @apply tw-p-4 tw-flex tw-justify-between tw-items-center tw-gap-4 tw-border tw-border-gray-200 tw-rounded-lg;
+
+    h1{
+        @apply tw-font-semibold tw-text-ui-black tw-text-lg;
+    }
+
+    .create-address {
+        button {
+          @apply tw-flex tw-items-center tw-gap-2 tw-text-sm tw-font-medium;
+      
+          i {
+            @apply tw-text-ui-bg tw-text-lg;
+          }
+        }
+      }
+}

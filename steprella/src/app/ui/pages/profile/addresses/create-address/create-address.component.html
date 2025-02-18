@@ -1,1 +1,11 @@
-<p>create-address works!</p>
+<app-modal>
+  <div class="create-address-form">
+    <div class="form-header">
+      <h2 class="title">Adres Ekle</h2>
+    </div>
+
+    <div class="form-content">
+      <app-address-form (itemSubmit)="onSubmit($event)" />
+    </div>
+  </div>
+</app-modal>

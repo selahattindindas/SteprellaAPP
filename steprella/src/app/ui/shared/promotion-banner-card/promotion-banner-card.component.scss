@@ -1,0 +1,63 @@
+.promotion-banner {
+    @apply tw-bg-[#ffe7d9] tw-rounded-lg tw-py-3 tw-px-4 md:tw-px-10;
+  
+    .banner-content {
+      @apply tw-flex tw-flex-col md:tw-flex-row tw-items-center;
+      @apply tw-justify-between;
+      
+      .banner-image, .banner-button {
+        @apply tw-w-[120px] md:tw-w-[150px] tw-flex-shrink-0;
+      }
+  
+      .banner-middle {
+        @apply tw-flex tw-flex-col tw-gap-2;
+        @apply tw-flex-grow tw-mx-6;
+      }
+    }
+  
+    .banner-image {
+      @apply tw-flex-shrink-0;
+  
+      .bank-logo {
+        @apply tw-w-20 md:tw-w-28 tw-h-auto tw-object-contain;
+      }
+    }
+  
+    .banner-title {
+      @apply tw-text-base md:tw-text-lg tw-font-bold tw-text-ui-black;
+    }
+  
+    .banner-features {
+      @apply tw-flex tw-flex-row tw-flex-wrap tw-gap-x-4 tw-gap-y-2;
+    }
+  
+    .feature-item {
+      @apply tw-flex tw-items-center tw-gap-2;
+    
+      .feature-icon {
+        @apply tw-w-4 tw-h-4 tw-bg-ui-bg tw-rounded-full 
+               tw-flex tw-items-center tw-justify-center;
+    
+        i {
+          @apply tw-text-white tw-text-[10px];
+        }
+      }
+    
+      span {
+        @apply tw-text-xs tw-text-ui-black;
+
+        .highlight {
+          @apply tw-text-ui-bg tw-font-medium;
+        }
+      }
+    }
+  
+    .banner-button {
+      @apply tw-flex-shrink-0;
+    }
+  
+    .details-button {
+      @apply tw-bg-ui-bg tw-text-white tw-px-6 tw-py-2 tw-rounded-md tw-w-36 
+             tw-font-medium tw-text-sm hover:tw-bg-orange-700 tw-transition-colors;
+    }
+  }

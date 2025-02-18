@@ -1,1 +1,56 @@
-<p>address-form works!</p>
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()" class="address-form">
+  <div class="form-group">
+    <label for="title">Adres Başlığı</label>
+    <input id="title" type="text" formControlName="title" placeholder="Örn: Evim, İşyeri">
+    @if (addressForm.get('title')?.touched && addressForm.get('title')?.errors?.['required']) {
+    <span class="error">Adres başlığı zorunludur</span>
+    }
+    @if (addressForm.get('title')?.errors?.['minlength']) {
+    <span class="error">En az 3 karakter giriniz</span>
+    }
+  </div>
+
+  <div class="form-group">
+    <label for="cityId">Şehir</label>
+    <select id="cityId" formControlName="cityId">
+      <option value="">Şehir Seçiniz</option>
+      @for (city of listCity$ | async; track city.id) {
+      <option [value]="city.id">{{ city.name }}</option>
+      }
+    </select>
+    @if (addressForm.get('cityId')?.touched && addressForm.get('cityId')?.errors?.['required']) {
+    <span class="error">Şehir seçimi zorunludur</span>
+    }
+  </div>
+
+  <div class="form-group">
+    <label for="districtId">İlçe</label>
+    <select id="districtId" formControlName="districtId">
+      <option value="">İlçe Seçiniz</option>
+      @for (district of listDistrict$ | async; track district.id) {
+      <option [value]="district.id">{{ district.name }}</option>
+      }
+    </select>
+    @if (addressForm.get('districtId')?.touched && addressForm.get('districtId')?.errors?.['required']) {
+    <span class="error">İlçe seçimi zorunludur</span>
+    }
+  </div>
+
+  <div class="form-group">
+    <label for="description">Adres</label>
+    <textarea id="description" formControlName="description" rows="3"
+      placeholder="Sokak, mahalle ve diğer adres detaylarını giriniz"></textarea>
+    @if (addressForm.get('description')?.touched && addressForm.get('description')?.errors?.['required']) {
+    <span class="error">Adres detayı zorunludur</span>
+    }
+    @if (addressForm.get('description')?.errors?.['minlength']) {
+    <span class="error">En az 10 karakter giriniz</span>
+    }
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" [disabled]="!addressForm.valid" class="submit-button">
+      Kaydet
+    </button>
+  </div>
+</form>

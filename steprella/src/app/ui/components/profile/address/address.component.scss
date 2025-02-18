@@ -1,0 +1,12 @@
+.address-container {
+    @apply tw-pt-5;
+
+    .address-page {
+        @apply tw-mt-5 tw-border tw-border-gray-200 tw-rounded-lg tw-p-6;
+    }
+
+    .address-list {
+        @apply tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-6;
+    }
+}
+

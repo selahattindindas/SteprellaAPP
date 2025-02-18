@@ -1,1 +1,11 @@
-<p>update-address works!</p>
+<app-modal>
+    <div class="create-address-form">
+        <div class="form-header">
+            <h2 class="title">Adres Düzenle</h2>
+        </div>
+
+        <div class="form-content">
+            <app-address-form [listAddress$]="listAddress$" (itemSubmit)="onSubmit($event)" />
+        </div>
+    </div>
+</app-modal>

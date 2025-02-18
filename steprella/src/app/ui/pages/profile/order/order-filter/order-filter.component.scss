@@ -2,7 +2,7 @@
     @apply tw-flex tw-items-center tw-justify-between tw-p-4 tw-border tw-border-gray-200 tw-rounded-lg;
 
     .title {
-        @apply tw-text-lg tw-text-ui-black;
+        @apply tw-font-semibold tw-text-ui-black tw-text-lg
     }
 
     .search-container {

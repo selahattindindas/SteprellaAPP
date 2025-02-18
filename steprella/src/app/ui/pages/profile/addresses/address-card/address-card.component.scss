@@ -1,0 +1,54 @@
+.address-card {
+    @apply tw-bg-white tw-p-4 tw-border 
+    tw-border-gray-200 tw-rounded-lg;
+
+    .header {
+        @apply tw-flex tw-items-center 
+        tw-gap-1 tw-mb-2 tw-text-ui-black;
+        span{
+            @apply tw-font-light
+        }
+        .title {
+            @apply tw-text-base tw-font-semibold;
+        }
+    }
+
+    .content {
+        @apply tw-mb-4;
+
+        p {
+            @apply tw-text-sm tw-text-gray-600 tw-mb-1;
+        }
+    }
+
+    .actions {
+        @apply tw-flex tw-items-center tw-justify-between 
+        tw-pt-4 tw-border-t tw-border-gray-200;
+
+        .delete {
+            @apply tw-flex tw-items-center tw-gap-2 tw-text-sm 
+            tw-text-ui-slateGray tw-font-semibold;
+
+            i {
+                @apply tw-text-ui-customGray;
+            }
+
+            &:hover{
+                span{
+                    @apply tw-border-b tw-border-ui-slateGray;
+                }
+            }
+        }
+
+        .edit {
+            @apply tw-text-sm tw-font-medium tw-text-ui-bg tw-border 
+            tw-w-32 tw-py-2 tw-border-ui-bg tw-transition-colors 
+            tw-duration-300;
+
+            &:hover {
+                @apply tw-bg-ui-bg tw-text-white;
+            }
+        }
+
+    }
+}

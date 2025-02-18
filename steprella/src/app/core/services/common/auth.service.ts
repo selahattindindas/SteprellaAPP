@@ -25,17 +25,14 @@ export class AuthService {
     domain: 'localhost'
   };
 
-  // Auth state signals
   private readonly currentUser = signal<UserPayload | null>(null);
   private readonly isAuthenticated = signal(false);
   private readonly isVerified = signal(false);
 
-  // Public observables
   readonly currentUser$ = toObservable(this.currentUser);
   readonly isAuthenticated$ = toObservable(this.isAuthenticated);
   readonly isVerified$ = toObservable(this.isVerified);
 
-  // Computed states
   readonly authState = computed(() => ({
     isAuthenticated: this.isAuthenticated(),
     isVerified: this.isVerified(),
@@ -78,7 +75,6 @@ export class AuthService {
       this.currentUser.set(payload);
       this.isAuthenticated.set(true);
       
-      // Eğer önceden verify olmuşsa, bu durumu koru
       const isVerified = this.cookieService.get('isVerified') === 'true';
       this.isVerified.set(isVerified);
     }
@@ -123,7 +119,6 @@ export class AuthService {
     const token = this.getToken();
     const isVerified = this.cookieService.get('isVerified') === 'true';
 
-    // Token varsa ve geçerliyse
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return {
         isAuthenticated: true,
@@ -131,7 +126,6 @@ export class AuthService {
       };
     }
 
-    // Token yoksa veya geçersizse
     this.deleteAllTokens();
     return {
       isAuthenticated: false,
@@ -176,7 +170,6 @@ export class AuthService {
     return this.currentUser()?.role === requiredRole;
   }
 
-  // Public getters
   getAuthState() {
     return this.authState();
   }

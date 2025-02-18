@@ -1,0 +1,15 @@
+.cart-sidebar {
+  @apply tw-fixed tw-top-0 tw-right-0 tw-h-full tw-w-[450px] tw-bg-white tw-shadow-lg tw-transform tw-translate-x-full tw-transition-transform tw-duration-300 tw-ease-in-out tw-z-50;
+
+  &.active {
+    @apply tw-translate-x-0;
+  }
+}
+
+.cart-overlay {
+  @apply tw-fixed tw-inset-0 tw-bg-black tw-bg-opacity-50 tw-hidden tw-z-40;
+
+  &.active {
+    @apply tw-block;
+  }
+}
