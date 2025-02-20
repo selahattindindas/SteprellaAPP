@@ -7,6 +7,17 @@
 
     .address-list {
         @apply tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-6;
+
+        .empty-state {
+            @apply tw-col-span-full 
+                   tw-flex tw-items-center tw-justify-center 
+                   tw-min-h-[200px];
+
+            .empty-message {
+                @apply tw-text-gray-500 
+                       tw-text-lg tw-font-medium;
+            }
+        }
     }
 }
 

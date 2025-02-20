@@ -16,8 +16,8 @@ export const userRoutes: Routes = [
             {
                 path: 'profile',
                 loadComponent: () => import('./components/profile/profile-main/profile-main.component').then(m => m.ProfileMainComponent),
-                // canActivate: [authGuard],
-                // canActivateChild: [authGuard],
+                canActivate: [authGuard],
+                canActivateChild: [authGuard],
                 children: [
                     {
                         path: '',
@@ -50,12 +50,7 @@ export const userRoutes: Routes = [
             {
                 path: 'favorites',
                 loadComponent: () => import('./components/favorite/favorite.component').then(m => m.FavoriteComponent),
-                // canActivate: [authGuard]
-            },
-            {
-                path: 'carts',
-                loadComponent: () => import('./components/cart/cart.component').then(m => m.CartComponent),
-                // canActivate: [authGuard]
+                canActivate: [authGuard]
             },
             {
                 path: '',

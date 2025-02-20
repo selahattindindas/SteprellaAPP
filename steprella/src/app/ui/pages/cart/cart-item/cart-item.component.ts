@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ListCart } from '../../../../core/models/carts/list-cart';
+import { ListCartItem } from '../../../../core/models/cart-items/list-cart-item';
 
 @Component({
   selector: 'app-cart-item',
@@ -11,10 +12,9 @@ import { ListCart } from '../../../../core/models/carts/list-cart';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartItemComponent {
-  readonly data = input<ListCart>();
+  readonly data = input.required<ListCartItem>();
   readonly selectedItems = input<number[]>([]);
-  
-  // Output events
+
   updateQuantity = output<{itemId: number, change: number}>();
   removeItem = output<number>();
   toggleSelect = output<number>();

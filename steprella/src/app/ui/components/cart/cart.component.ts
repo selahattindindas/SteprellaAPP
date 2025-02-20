@@ -1,9 +1,14 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListCart } from '../../../core/models/carts/list-cart';
 import { CartHeaderComponent } from '../../pages/cart/cart-header/cart-header.component';
 import { CartItemComponent } from '../../pages/cart/cart-item/cart-item.component';
 import { CartFooterComponent } from '../../pages/cart/cart-footer/cart-footer.component';
+import { SweetAlertService } from '../../../core/services/common/sweet-alert.service';
+import { CartService } from '../../../core/services/ui/cart.service';
+import { CartItemService } from '../../../core/services/ui/cart-item.service';
+import { UpdateCartItem } from '../../../core/models/cart-items/update-cart-item';
+import { AuthService } from '../../../core/services/common/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,144 +21,70 @@ import { CartFooterComponent } from '../../pages/cart/cart-footer/cart-footer.co
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
+  private readonly sweetAlertService = inject(SweetAlertService);
+  private readonly cartService = inject(CartService);
+  private readonly cartItemService = inject(CartItemService);
+  private readonly authService = inject(AuthService);
+
+  listCart = signal<ListCart | null>(null);
+
   isOpen = signal(false);
   selectedItemIds = signal<number[]>([]);
-  cart = signal<ListCart>({
-    id: 1,
-    totalPrice: 46.00,
-    totalItems: 2,
-    cartItems: [
-      {
-        id: 1,
-        cartId: 1,
-        inStock: true,
-        productVariantSizeValue: 38,
-        quantity: 1,
-        unitPrice: 21.00,
-        totalPrice: 21.00,
-        productVariant: {
-          ratingCount: 12,
-          rating: 4.5,
-          description: "Perfect for special occasions",
-          brandName: "Sparkle",
-          shoeModelName: "Party Heels",
-          materialName: "Synthetic",
-          usageAreaName: "Party",
-          colorName: "Red",
-          active: true,
-          productFiles: [
-            {
-              id: 1,
-              fileName: "sparkling-heels.jpg",
-              path: "image/jpeg",
-            }
-          ]
-        }
-      },
-      {
-        id: 2,
-        cartId: 1,
-        inStock: true,
-        productVariantSizeValue: 42,
-        quantity: 1,
-        unitPrice: 25.00,
-        totalPrice: 25.00,
-        productVariant: {
-          ratingCount: 28,
-          rating: 4.8,
-          description: "Waterproof hiking boots",
-          brandName: "TrailMaster",
-          shoeModelName: "Hiking Boots",
-          materialName: "Leather",
-          usageAreaName: "Outdoor",
-          colorName: "Brown",
-          active: true,
-          productFiles: [
-            {
-              id: 2,
-              fileName: "hiking-boots.jpg",
-              path: "image/jpeg",
-            }
-          ]
-        }
-      }
-    ]
-  });
+  isAuthenticated = signal(false);
 
   @HostListener('document:keydown.escape')
   onEscapePressed() {
     this.isOpen.set(false);
   }
 
-  toggleItemSelection(itemId: number) {
-    this.selectedItemIds.update(currentIds => {
-      if (currentIds.includes(itemId)) {
-        // Item zaten seçiliyse, seçimi kaldır
-        return currentIds.filter(id => id !== itemId);
-      } else {
-        // Item seçili değilse, seç
-        return [...currentIds, itemId];
-      }
+  ngOnInit(): void {
+    this.isAuthenticated.set(this.authService.isUserAuthenticated());
+    if (this.isAuthenticated()) {
+      this.loadCart();
+    }
+  }
+
+  loadCart() {
+    this.cartService.getCart().subscribe({
+      next: (response) => {
+        this.listCart.set(response);
+      },
     });
   }
 
-  getSelectedItemsTotal(): number {
-    return this.cart().cartItems
-      .filter(item => this.selectedItemIds().includes(item.id))
-      .reduce((total, item) => total + (item.unitPrice * item.quantity), 0);
+  remove(id: number) {
+    this.sweetAlertService.confirmation().then(result => {
+      if (result.isConfirmed) {
+        this.cartItemService.delete(id).subscribe({
+          next: () => {
+            this.sweetAlertService.showMessage();
+            this.loadCart();
+          }
+        })
+      }
+    })
   }
-
-  selectAllItems() {
-    const allItemIds = this.cart().cartItems.map(item => item.id);
-    this.selectedItemIds.set(allItemIds);
-  }
-
-  clearSelection() {
-    this.selectedItemIds.set([]);
-  }
-
-  removeSelectedItems() {
-    this.cart.update(cart => ({
-      ...cart,
-      cartItems: cart.cartItems.filter(item => !this.selectedItemIds().includes(item.id))
-    }));
-    this.clearSelection();
-    this.updateTotals();
-  }
-
 
   updateQuantity(itemId: number, change: number) {
-    this.cart.update(cart => ({
-      ...cart,
-      cartItems: cart.cartItems.map(item => {
-        if (item.id === itemId) {
-          const newQuantity = Math.max(1, item.quantity + change);
-          return {
-            ...item,
-            quantity: newQuantity,
-            totalPrice: item.unitPrice * newQuantity
-          };
-        }
-        return item;
-      })
-    }));
-    this.updateTotals();
-  }
+    const item = this.listCart()?.cartItems.find(item => item.id === itemId);
+    if (!item) return;
 
-  removeItem(itemId: number) {
-    this.cart.update(cart => ({
-      ...cart,
-      cartItems: cart.cartItems.filter(item => item.id !== itemId)
-    }));
-    this.updateTotals();
-  }
+    const newQuantity = item.quantity + change;
+    if (newQuantity < 1) return;
 
-  private updateTotals() {
-    this.cart.update(cart => ({
-      ...cart,
-      totalItems: cart.cartItems.reduce((sum, item) => sum + item.quantity, 0),
-      totalPrice: cart.cartItems.reduce((sum, item) => sum + item.totalPrice, 0)
-    }));
+    const updateData: UpdateCartItem = {
+      id: item.id,
+      cartId: item.cartId,
+      productVariantId: item.productVariant.id,
+      productVariantSizeId: item.productVariantSizeId, 
+      quantity: newQuantity
+    };
+
+    this.cartItemService.update(updateData).subscribe({
+      next: () => {
+        this.loadCart();
+      }
+    });
   }
 }

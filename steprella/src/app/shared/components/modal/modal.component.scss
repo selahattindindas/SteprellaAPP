@@ -9,14 +9,24 @@
   
     .modal-container {
       @apply tw-bg-white tw-rounded-lg tw-shadow-lg 
-             tw-mx-4 tw-max-h-[90vh] tw-flex tw-flex-col;
+             tw-px-5 tw-max-h-[90vh] tw-flex tw-flex-col;
   
       opacity: 0;
       transform: translateY(-20px);
       animation: slideIn 0.5s ease 0.2s forwards;
   
       .modal-header {
-        @apply tw-flex tw-justify-end tw-p-4 tw-shrink-0;
+        @apply tw-flex tw-justify-between tw-py-3 tw-shrink-0 tw-relative;
+
+        &::before {
+          content: '';
+          @apply tw-absolute tw-bottom-0 tw-left-[-20px] tw-right-[-20px] 
+                 tw-h-[1px] tw-bg-gray-200;
+        }
+
+        h1{
+          @apply tw-text-ui-black tw-text-lg;
+        }
   
         .close-button {
           @apply tw-text-gray-500 hover:tw-text-gray-700 
@@ -25,7 +35,7 @@
       }
   
       .modal-content {
-        @apply tw-px-6 tw-pb-6 tw-overflow-y-auto;
+        @apply tw-py-6 tw-overflow-y-auto;
       }
     }
   }

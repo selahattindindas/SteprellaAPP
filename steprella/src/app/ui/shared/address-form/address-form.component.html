@@ -13,12 +13,12 @@
   <div class="form-group">
     <label for="cityId">Şehir</label>
     <select id="cityId" formControlName="cityId">
-      <option value="">Şehir Seçiniz</option>
+      <option value="0" disabled selected>Şehir Seçiniz</option>
       @for (city of listCity$ | async; track city.id) {
       <option [value]="city.id">{{ city.name }}</option>
       }
     </select>
-    @if (addressForm.get('cityId')?.touched && addressForm.get('cityId')?.errors?.['required']) {
+    @if (addressForm.get('cityId')?.touched && (addressForm.get('cityId')?.errors?.['required'] || addressForm.get('cityId')?.value === 0)) {
     <span class="error">Şehir seçimi zorunludur</span>
     }
   </div>
@@ -26,12 +26,12 @@
   <div class="form-group">
     <label for="districtId">İlçe</label>
     <select id="districtId" formControlName="districtId">
-      <option value="">İlçe Seçiniz</option>
+      <option value="0" disabled selected>İlçe Seçiniz</option>
       @for (district of listDistrict$ | async; track district.id) {
       <option [value]="district.id">{{ district.name }}</option>
       }
     </select>
-    @if (addressForm.get('districtId')?.touched && addressForm.get('districtId')?.errors?.['required']) {
+    @if (addressForm.get('districtId')?.touched && (addressForm.get('districtId')?.errors?.['required'] || addressForm.get('districtId')?.value === 0)) {
     <span class="error">İlçe seçimi zorunludur</span>
     }
   </div>

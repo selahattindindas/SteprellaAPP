@@ -1,29 +1,24 @@
 <div class="cart-items">
-    @for (item of data()?.cartItems; track item.id) {
     <div class="cart-item">
         <button class="select-btn" 
-                [class.selected]="isSelected(item.id)"
-                (click)="onToggleSelect(item.id)">
+                [class.selected]="isSelected(data().id)"
+                (click)="onToggleSelect(data().id)">
             <i class="fa-solid fa-check"></i>
         </button>
         <img [src]="'assets/images/ui/shoe1.png'" 
-             [alt]="item.productVariant.shoeModelName">
+             [alt]="data().productVariant.shoeModelName">
         <div class="item-details">
-            <h3>{{ item.productVariant.shoeModelName }} - {{ item.productVariant.colorName }}</h3>
-            <p>{{ item.unitPrice | currency:'TRY':'symbol-narrow':'1.2-2'}}</p>
+            <h3>{{ data().productVariant.shoeModelName }} - {{ data().productVariant.colorName }}</h3>
+            <p>{{ data().unitPrice | currency:'TRY':'symbol-narrow':'1.2-2'}}</p>
             <div class="quantity-controls">
-                <button (click)="onUpdateQuantity(item.id, -1)">−</button>
-                <div class="quantity-display">{{ item.quantity }}</div>
-                <button (click)="onUpdateQuantity(item.id, 1)">+</button>
+                <button [disabled]="data().quantity <= 1" 
+                        (click)="onUpdateQuantity(data().id, -1)">−</button>
+                <div class="quantity-display">{{ data().quantity }}</div>
+                <button (click)="onUpdateQuantity(data().id, 1)">+</button>
             </div>
         </div>
-        <button class="remove-btn" (click)="onRemoveItem(item.id)">
+        <button class="remove-btn" (click)="onRemoveItem(data().id)">
             <i class="fa-solid fa-trash-can"></i>
         </button>
     </div>
-    } @empty {
-    <div class="empty-cart">
-        <p>Sepetiniz Boş</p>
-    </div>
-    }
 </div>

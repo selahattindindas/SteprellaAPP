@@ -1,12 +1,11 @@
 import { Component, inject, input, OnChanges, OnInit, output, signal, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { filter, map, Observable, switchMap, take } from 'rxjs';
 import { ListAddress } from '../../../core/models/addresses/list-address';
 import { CityService } from '../../../core/services/ui/city.service';
 import { DistrictService } from '../../../core/services/ui/district.service';
 import { ListDistrict } from '../../../core/models/districts/list-district';
-import { ListCity } from '../../../core/models/cities/list-city';
 
 @Component({
   selector: 'app-address-form',
@@ -27,12 +26,20 @@ export class AddressFormComponent implements OnInit, OnChanges {
   readonly listCity$ = this.cityService.getAll().pipe(map(response => response));
   listDistrict$ = new Observable<ListDistrict[]>();
 
+  private nonZeroValidator(control: AbstractControl): ValidationErrors | null {
+    return control.value === 0 ? { required: true } : null;
+  }
+
   readonly addressForm = this.formBuilder.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
-    cityId: [0, Validators.required],
-    districtId: [{value: 0, disabled: true}, Validators.required],
+    cityId: [0, [Validators.required, this.nonZeroValidator]],
+    districtId: [0, [Validators.required, this.nonZeroValidator]],
     description: ['', [Validators.required, Validators.minLength(10)]]
   });
+
+  ngOnInit(): void {
+    this.setupCityIdChanges();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['listAddress$']?.currentValue) {
@@ -44,37 +51,37 @@ export class AddressFormComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit(): void {
-    this.listDistrict$ = this.addressForm.get('cityId')?.valueChanges.pipe(
-      filter(Boolean),
-      switchMap(cityId => this.districtService.getByCityId(cityId)),
-      map(response => response)
-    ) || new Observable<ListDistrict[]>();
-  }
+  private setupCityIdChanges(): void {
+    const cityIdControl = this.addressForm.get('cityId');
+    
+    if (cityIdControl) {
+      this.listDistrict$ = cityIdControl.valueChanges.pipe(
+        filter((cityId): cityId is number => typeof cityId === 'number' && cityId > 0),
+        switchMap(cityId => this.districtService.getByCityId(cityId))
+      );
+    } else {
+      this.listDistrict$ = new Observable<ListDistrict[]>();
+    }
+}
 
-  populateForm(address: ListAddress): void {
+  private populateForm(address: ListAddress): void {
     this.listCity$.pipe(take(1)).subscribe(cities => {
-      const city = cities.find(c => c.name === address.cityName) || null;
-      
+      const city = cities.find(c => c.name === address.cityName);
       if (city) {
         this.districtService.getByCityId(city.id).pipe(take(1))
           .subscribe(districts => {
-            const district = districts.find(d => d.name === address.districtName) || null;
-            this.updateForm(city, district, address);
+            const district = districts.find(d => d.name === address.districtName);
+            this.updateForm(address, city.id, district?.id);
           });
       }
     });
   }
 
-  private updateForm(
-    city: ListCity | null,
-    district: ListDistrict | null,
-    address: ListAddress
-  ): void {
+  private updateForm(address: ListAddress, cityId?: number, districtId?: number): void {
     this.addressForm.patchValue({
       title: address.title || '',
-      cityId: city?.id || 0,
-      districtId: district?.id || 0,
+      cityId: cityId || 0,
+      districtId: districtId || 0,
       description: address.description || ''
     });
   }

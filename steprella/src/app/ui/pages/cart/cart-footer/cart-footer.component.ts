@@ -1,11 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-interface CartSummary {
-  totalPrice: number;
-  totalItems: number;
-}
-
 @Component({
   selector: 'app-cart-footer',
   standalone: true,
@@ -15,5 +10,5 @@ interface CartSummary {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartFooterComponent {
-  summary = input.required<CartSummary>();
+  totalPrice = input<number>();
 }

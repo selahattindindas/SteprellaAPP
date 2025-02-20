@@ -1,3 +1,6 @@
-export interface CreateAddress{
-    
+export interface CreateAddress {
+    title: string;
+    description: string;
+    cityId: string;
+    districtId: string;
 }

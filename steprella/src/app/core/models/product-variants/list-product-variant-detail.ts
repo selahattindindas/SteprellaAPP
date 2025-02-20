@@ -1,6 +1,7 @@
 import { ListFile } from "../files/list-file";
 
 export interface ListProductVariantDetail {
+    id: number;
     ratingCount: number;
     rating: number;
     description: string;

@@ -4,6 +4,7 @@ import { ListAddress } from "../../models/addresses/list-address";
 import { BaseResponse } from "../../models/base-responses/base-response";
 import { map, Observable } from "rxjs";
 import { CreateAddress } from "../../models/addresses/create-address";
+import { UpdateAddress } from "../../models/addresses/update-address";
 
 @Injectable({
     providedIn: 'root'
@@ -30,16 +31,23 @@ export class AddressService {
         );
     }
 
-//     create(body: CreateAddress, successCallBack: () => void): Observable<void> {
-//         const observable = this.httpClientService.post({
-//           controller: "addresses",
-//           action: "create-address"
-//         }, body);
-    
-//         return await firstValueFrom(observable)
-//           .then(response => {
-//             successCallBack();
-//             return response;
-//           });
-//       }
+    create(body: CreateAddress): Observable<CreateAddress> {
+        return this.httpClientService.post<CreateAddress>({
+          controller: "addresses",
+          action: "create-address"
+        }, body);
+    }
+
+    update(body: UpdateAddress): Observable<UpdateAddress> {
+        return this.httpClientService.put<UpdateAddress>({
+          controller: "addresses",
+          action: "update-address"
+        }, body);
+    }
+
+    delete(id:number): Observable<ListAddress> {
+        return this.httpClientService.delete<ListAddress>({
+          controller: "addresses"
+        }, id);
+    }
  }

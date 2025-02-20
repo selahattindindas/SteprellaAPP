@@ -10,10 +10,10 @@
     </div>
 
     <div class="actions">
-        <button class="delete" (click)="onDelete(address().id)">
+        <button class="delete" (click)="deleteClick.emit(address().id)">
             <i class="fa-regular fa-trash-can"></i>
             <span>Sil</span>
         </button>
-        <button class="edit" (click)="onEdit(address().id)">Adresi Düzenle</button>
+        <button class="edit" (click)="updateClick.emit(address().id)">Adresi Düzenle</button>
     </div>
 </div>

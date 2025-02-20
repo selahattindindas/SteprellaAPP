@@ -3,12 +3,13 @@
 
     <div class="address-page">
         <div class="address-list">
-            @for (address of addresses(); track address.id) {
-                <app-address-card [address]="address" (onEdit)="openUpdateDialog(address.id)" />
+            @for (address of listAddress(); track address.id) {
+                <app-address-card [address]="address" (updateClick)="openUpdateDialog(address.id)" (deleteClick)="deleteAddress(address.id)" />
+            } @empty {
+                <div class="empty-state">
+                    <p class="empty-message">Kayıtlı adres bulunmamaktadır.</p>
+                </div>
             }
         </div>
     </div>
-
-    <app-create-address #createAddressComponent />
-    <app-update-address #updateAddressComponent />
 </div>

@@ -48,7 +48,7 @@ export class ListOrderComponent {
     const pageIndex = currentPaginator?.pageIndex ?? 0;
     const pageSize = currentPaginator?.pageSize ?? 5;
 
-    this.orderService.getByUserId(this.dialogData.userId, pageIndex, pageSize)
+    this.orderService.getOrders(pageIndex, pageSize)
       .subscribe({
         next: (response) => {
           this.dataSource().data = response.data;

@@ -6,6 +6,7 @@ import { Injectable, Type, signal } from '@angular/core';
 export class ModalService {
     private state = signal<ModalState>({
         isOpen: false,
+        title: '',
         config: {
             width: ModalWidth.MD,
             height: 'tw-h-auto'
@@ -19,10 +20,12 @@ export class ModalService {
     open<T, R = any>(config: ModalConfig<T, R>) {
         this.state.set({
             isOpen: true,
+            title: config.title,
             component: config.component,
             config: {
                 width: config.width || ModalWidth.MD,
                 height: config.height,
+                onClose: config.onClose
             },
             data: config.data
         });
@@ -30,13 +33,18 @@ export class ModalService {
 
     close(result?: any) {
         const currentState = this.state();
-        if (currentState.config.onClose) {
+        
+        if (currentState.config?.onClose) {
             currentState.config.onClose(result);
         }
 
         this.state.set({
-            ...currentState,
-            isOpen: false
+            isOpen: false,
+            title: '',
+            config: {
+                width: ModalWidth.MD,
+                height: 'tw-h-auto'
+            }
         });
     }
 }
@@ -50,6 +58,7 @@ export enum ModalWidth {
 
 export interface ModalConfig<T = any, R = any> {
     component: Type<T>;
+    title: string;
     width?: string;
     height?: string;
     data?: R;
@@ -58,6 +67,7 @@ export interface ModalConfig<T = any, R = any> {
 
 export interface ModalState {
     isOpen: boolean;
+    title: string;
     component?: Type<any>;
     config: Partial<ModalConfig>;
     data?: any;

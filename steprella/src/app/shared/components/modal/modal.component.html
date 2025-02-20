@@ -4,13 +4,14 @@
          [class]="modalState().config.width"
          [style.max-height]="modalState().config.height">
       <div class="modal-header">
+        <h1>{{modalState().title}}</h1>
         <button class="close-button" (click)="close()">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      
+
       <div class="modal-content">
-        <ng-content></ng-content>
+        <ng-container *ngIf="component" [ngComponentOutlet]="component"></ng-container>
       </div>
     </div>
   </div>

@@ -12,7 +12,7 @@ export class DistrictService {
 
     getByCityId(cityId: number): Observable<ListDistrict[]> {
         return this.httpClientService.get<BaseResponse<ListDistrict[]>>({
-            controller: 'cities',
+            controller: 'districts',
             action: 'by-city-id',
         }, cityId).pipe(
             map(response => {

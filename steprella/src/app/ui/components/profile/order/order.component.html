@@ -3,7 +3,7 @@
 </div>
 
 <div class="orders-list">
-  @for (order of orders; track order.id) {
+  @for (order of listOrder(); track order.id) {
   <div class="order-card">
     <div>
       <app-order-header [order]="order"/>

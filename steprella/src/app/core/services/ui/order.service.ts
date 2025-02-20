@@ -10,11 +10,11 @@ import { ListOrder } from '../../models/orders/list-order';
 export class OrderService {
   private readonly httpClientService = inject(HttpClientService);
 
-  getByUserId(userId: number, page: number, size: number): Observable<BaseResponse<ListOrder[]>> {
+  getOrders(page: number, size: number): Observable<BaseResponse<ListOrder[]>> {
 
     return this.httpClientService.get<BaseResponse<ListOrder[]>>({
       controller: 'orders',
-      action: `by-user-id/${userId}`,
+      action: 'get-orders',
       queryString: `page=${page}&size=${size}`
     }).pipe(
       map(response => ({

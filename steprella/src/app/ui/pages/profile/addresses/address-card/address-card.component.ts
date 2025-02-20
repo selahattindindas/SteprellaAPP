@@ -10,14 +10,6 @@ import { ListAddress } from '../../../../../core/models/addresses/list-address';
 export class AddressCardComponent {
   readonly address = input.required<ListAddress>();
 
-  editAddress = output<number>();
-  deleteAddress = output<number>();
-
-  onEdit(id: number) {
-    this.editAddress.emit(id);
-  }
-
-  onDelete(id: number) {
-    this.deleteAddress.emit(id);
-  }
+  updateClick = output<number>();
+  deleteClick = output<number>();
 }
