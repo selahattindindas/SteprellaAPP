@@ -10,7 +10,7 @@
       </div>
 
       <div class="size-selector">
-        <app-variant-size [product]="product()" [variantId]="selectedVariantId()" />
+        <app-variant-size [product]="product()" [variantId]="selectedVariantId()" (sizeSelected)="onSizeSelected($event)" />
       </div>
 
       <div class="color-selector">
@@ -27,7 +27,7 @@
       </div>
 
       <div class="product-footer">
-        <app-quantity-selector [product]="product()" />
+        <app-quantity-selector [product]="product()" (submit)="onSubmit()" (quantityChange)="onQuantityChange($event)" />
       </div>
     </div>
   </div>

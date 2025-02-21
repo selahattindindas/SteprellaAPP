@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { DefaultLayoutComponent } from '../layout/default-layout/default-layout.component';
 import { authGuard } from '../core/guards/auth.guard';
-import { isNotAuthenticatedGuard } from '../core/guards/is-not-authenticated.guard';
 
 export const userRoutes: Routes = [
     {
@@ -45,7 +44,6 @@ export const userRoutes: Routes = [
             {
                 path: 'auth',
                 loadComponent: () => import('./components/auth/auth.component').then(m => m.AuthComponent),
-                canActivate: [isNotAuthenticatedGuard]
             },
             {
                 path: 'favorites',

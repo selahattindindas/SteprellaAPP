@@ -12,4 +12,5 @@ import { WritableSignal } from '@angular/core';
 })
 export class CartHeaderComponent {
   isOpen = input.required<WritableSignal<boolean>>();
+  totalCount = input<number>();
 }

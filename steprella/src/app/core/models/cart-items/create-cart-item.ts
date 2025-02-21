@@ -1,6 +1,5 @@
 export interface CreateCartItem{
-    cartId: number;
-    productVariantId: number;
-    productVariantSizeId: number;
+    productVariantId: number | null;
+    productVariantSizeId: number | null;
     quantity: number;
 }

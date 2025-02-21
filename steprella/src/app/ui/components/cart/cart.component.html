@@ -1,6 +1,6 @@
 <div class="cart-sidebar" [class]="isOpen() ? 'active' : ''">
 
-     <app-cart-header [isOpen]="isOpen"/>
+     <app-cart-header [isOpen]="isOpen" [totalCount]="listCart()?.totalItems"/>
 
      @if (!isAuthenticated()) {
        <div class="auth-warning">

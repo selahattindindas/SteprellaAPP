@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal, HostListener } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../../core/services/common/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -12,7 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class UserDropdownComponent {
   private readonly authService = inject(AuthService);
-  
+  private readonly router = inject(Router); 
+
   isOpen = signal(false);
   isLoggedIn = computed(() => {
     return this.authService.isUserAuthenticated();
@@ -21,7 +22,8 @@ export class UserDropdownComponent {
   userEmail = computed(() => this.authService.getAuthState().currentUser?.fullName || '');
 
   logout() {
-    this.authService.deleteToken();
+    this.authService.deleteToken(); 
+    this.router.navigate(['/']);
   }
 
   @HostListener('document:keydown.escape')

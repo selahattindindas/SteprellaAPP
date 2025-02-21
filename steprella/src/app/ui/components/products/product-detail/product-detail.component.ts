@@ -10,6 +10,10 @@ import { VariantSizeComponent } from "../../../pages/product-detail/variant-size
 import { VariantBannerComponent } from "../../../pages/product-detail/variant-banner/variant-banner.component";
 import { QuantitySelectorComponent } from "../../../pages/product-detail/quantity-selector/quantity-selector.component";
 import { ProductHeaderComponent } from "../../../pages/product-detail/product-header/product-header.component";
+import { CartItemService } from "../../../../core/services/ui/cart-item.service";
+import { CreateCartItem } from "../../../../core/models/cart-items/create-cart-item";
+import { Icon, SweetAlertService } from "../../../../core/services/common/sweet-alert.service";
+import { AuthService } from "../../../../core/services/common/auth.service";
 
 interface ProductDetail {
   title: string;
@@ -35,7 +39,10 @@ interface ProductDetail {
 })
 export class ProductDetailComponent {
   private readonly productService = inject(ProductService);
+  private readonly cartItemService = inject(CartItemService);
   private readonly route = inject(ActivatedRoute);
+  private readonly sweetAlertService = inject(SweetAlertService);
+  private readonly authService = inject(AuthService);
   
   readonly product = signal<ListProduct | null>(null);
   readonly selectedVariantId = signal<number | null>(null);
@@ -46,6 +53,9 @@ export class ProductDetailComponent {
     { title: 'Ücretsiz Kargo', icon: 'fa-arrow-right' },
     { title: 'Ücretsiz İade', icon: 'fa-arrow-right' }
   ];
+
+  selectedSizeId: number | null = null;
+  selectedQuantity: number = 1;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -63,6 +73,41 @@ export class ProductDetailComponent {
       },
       error: (error) => {
         this.product.set(null);
+      }
+    });
+  }
+
+  onQuantityChange(quantity: number) {
+    this.selectedQuantity = quantity;
+  }
+
+  onSizeSelected(sizeId: number) {
+    this.selectedSizeId = sizeId;
+  }
+
+  onSubmit() {
+    if (!this.authService.isUserAuthenticated()) {
+      this.sweetAlertService.showMessage("Lütfen önce giriş yapın.", Icon.WARNING);
+      return;
+    }
+
+    if (!this.selectedVariantId() || !this.selectedSizeId) {
+      this.sweetAlertService.showMessage("Lütfen bir varyant ve beden seçiniz.", Icon.WARNING);
+      return;
+    }
+
+    const cartItem: CreateCartItem = {
+      productVariantId: this.selectedVariantId(),
+      productVariantSizeId: this.selectedSizeId,
+      quantity: this.selectedQuantity,
+    };
+
+    this.cartItemService.create(cartItem).subscribe({
+      next: () => {
+        this.sweetAlertService.showMessage("Ürün sepete eklendi.");
+      },
+      error: () => {
+        this.sweetAlertService.showMessage("Bir hata oluştu", Icon.ERROR);
       }
     });
   }

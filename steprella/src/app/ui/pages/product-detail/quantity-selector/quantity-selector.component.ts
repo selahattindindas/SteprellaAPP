@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { ListProduct } from '../../../../core/models/products/list-product';
 
 @Component({
@@ -12,6 +12,10 @@ import { ListProduct } from '../../../../core/models/products/list-product';
 })
 export class QuantitySelectorComponent {
   readonly product = input<ListProduct | null>(null);
+
+  readonly submit = output<void>();
+  
+  readonly quantityChange = output<number>();
   
   protected readonly min = 1;
   protected readonly max = 5;
@@ -25,5 +29,6 @@ export class QuantitySelectorComponent {
     } else if (!increment && current > this.min) {
       this.quantity.set(current - 1);
     }
+    this.quantityChange.emit(this.quantity());
   }
 }

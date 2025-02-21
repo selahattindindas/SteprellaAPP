@@ -2,7 +2,6 @@ import { ListProductVariantDetail } from "../product-variants/list-product-varia
 
 export interface ListCartItem {
     id: number;
-    cartId: number;
     inStock: boolean;
     productVariantSizeId: number;
     productVariantSizeValue: number;

@@ -1,0 +1,42 @@
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; // Ekranın ortasında konumlandırmak için
+    background-color: white; // Beyaz arka plan
+}
+
+.spinner-logo {
+    animation: spin 1s linear infinite; // Logo döngüsel olarak dönecek
+}
+
+.loading-text {
+    margin-top: 10px; // Metin ile logo arasında boşluk
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px; // Metin ile noktalar arasında boşluk
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    border-radius: 50%;
+    background-color: black; // Noktaların rengi
+    animation: blink 1.4s infinite both; // Noktaların animasyonu
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes blink {
+    0%, 20% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}

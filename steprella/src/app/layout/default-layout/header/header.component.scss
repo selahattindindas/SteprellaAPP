@@ -34,3 +34,7 @@
   }
 }
 
+.cart-count {
+  @apply tw-bg-ui-bg tw-text-white tw-rounded-full tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-text-xs tw-absolute tw-top-[-2px] tw-right-[-2px];
+}
+

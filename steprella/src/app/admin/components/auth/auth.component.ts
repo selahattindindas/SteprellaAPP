@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, computed, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,7 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit{
   private readonly formBuilder = inject(FormBuilder);
   private readonly adminUserAuthService = inject(AdminUserAuthService);
   private readonly authService = inject(AuthService);
@@ -53,6 +53,12 @@ export class AuthComponent {
   });
 
   readonly hide = signal(true);
+
+  ngOnInit(): void {
+    if (this.authService.isUserAuthenticated()) {
+      void this.router.navigate(['/']);
+    }
+  }
 
   togglePassword(event: MouseEvent): void {
     this.hide.update(state => !state);

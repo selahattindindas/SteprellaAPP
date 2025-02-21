@@ -9,12 +9,14 @@ import { CartService } from '../../../core/services/ui/cart.service';
 import { CartItemService } from '../../../core/services/ui/cart-item.service';
 import { UpdateCartItem } from '../../../core/models/cart-items/update-cart-item';
 import { AuthService } from '../../../core/services/common/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
   imports: [
     CommonModule,
+    RouterLink,
     CartHeaderComponent,
     CartItemComponent,
     CartFooterComponent],
@@ -75,7 +77,6 @@ export class CartComponent implements OnInit {
 
     const updateData: UpdateCartItem = {
       id: item.id,
-      cartId: item.cartId,
       productVariantId: item.productVariant.id,
       productVariantSizeId: item.productVariantSizeId, 
       quantity: newQuantity

@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainNavComponent } from '../features/components/main-nav/main-nav.component';
 import { MobileSidebarComponent } from '../features/components/mobile-sidebar/mobile-sidebar.component';
 import { RouterLink } from '@angular/router';
 import { UserDropdownComponent } from '../features/components/user-dropdown/user-dropdown.component';
 import { CartComponent } from '../../../ui/components/cart/cart.component';
+import { CartService } from '../../../core/services/ui/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -21,21 +22,17 @@ import { CartComponent } from '../../../ui/components/cart/cart.component';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  @ViewChild(MobileSidebarComponent) mobileSidebar!: MobileSidebarComponent;
-  @ViewChild('cart') cart!: CartComponent;
+  mobileSidebar = viewChild<MobileSidebarComponent>(MobileSidebarComponent);
+  cart = viewChild<CartComponent>(CartComponent);
 
-  isMobileMenuOpen = false;
-  isSubmenuOpen = false;
+  isMobileMenuOpen = signal<boolean>(false);
+  isSubmenuOpen = signal<boolean>(false);
 
   toggleMobileMenu() {
-    this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    if (!this.isMobileMenuOpen) {
-      this.isSubmenuOpen = false;
+    this.isMobileMenuOpen.set(!this.isMobileMenuOpen());
+    if (!this.isMobileMenuOpen()) {
+      this.isSubmenuOpen.set(false);
     }
-  }
-
-  toggleSubmenu() {
-    this.isSubmenuOpen = !this.isSubmenuOpen;
   }
 
   toggleSidebar() {
@@ -49,10 +46,14 @@ export class HeaderComponent {
   }
 
   toggleMobileSidebar() {
-    this.mobileSidebar.toggleSidebar();
+    this.mobileSidebar()?.toggleSidebar();
   }
 
   toggleCart() {
-    this.cart.isOpen.set(!this.cart.isOpen());
+    this.cart()?.isOpen.set(!this.cart()?.isOpen());
+  }
+
+  get totalCount() {
+    return this.cart()?.listCart()?.totalItems || 0;
   }
 }

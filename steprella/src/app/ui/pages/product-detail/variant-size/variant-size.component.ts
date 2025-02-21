@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, EventEmitter, Output } from '@angular/core';
 import { ListProduct } from '../../../../core/models/products/list-product';
 import { CommonModule } from '@angular/common';
 import { ListSize } from '../../../../core/models/sizes/list-size';
@@ -14,14 +14,17 @@ import { ListSize } from '../../../../core/models/sizes/list-size';
 export class VariantSizeComponent {
   readonly product = input<ListProduct | null>(null);
   readonly variantId = input<number | null>(null);
+  readonly sizeSelected = output<number>();
   
   selectedSize: ListSize | null = null;
+  selectedSizeId: number | null = null;
 
   getSelectedVariantSizes() {
     return this.product()?.productVariants.find(v => v.id === this.variantId())?.productSizes || [];
   }
 
-  selectSize(size: ListSize) {
-    this.selectedSize = size;
+  onSizeSelect(sizeId: number) {
+    this.selectedSizeId = sizeId;
+    this.sizeSelected.emit(sizeId);
   }
 }
