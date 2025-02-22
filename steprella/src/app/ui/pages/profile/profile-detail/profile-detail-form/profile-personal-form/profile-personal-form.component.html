@@ -5,19 +5,15 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="firstName">Ad</label>
-                    <input id="firstName" type="text" formControlName="firstName">
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Soyad</label>
-                    <input id="lastName" type="text" formControlName="lastName">
+                    <label for="fullName">Ad Soyad</label>
+                    <input id="fullName" type="text" formControlName="fullName">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="phone">Cep Telefonu</label>
                 <div class="phone-input">
-                    <select formControlName="phoneCode">
+                    <select>
                         <option value="+90">+90</option>
                     </select>
                     <input id="phone" type="tel" formControlName="phone">
@@ -25,23 +21,18 @@
             </div>
 
             <div class="form-group">
-                <label>Doğum Tarihiniz</label>
-                <div class="date-inputs">
-                    <select formControlName="day">
-                        @for(day of days(); track day) {
-                            <option [value]="day">{{day}}</option>
-                        }
-                    </select>
-                    <select formControlName="month">
-                        @for(month of months(); track month) {
-                            <option [value]="month">{{month}}</option>
-                        }
-                    </select>
-                    <select formControlName="year">
-                        @for(year of years(); track year) {
-                            <option [value]="year">{{year}}</option>
-                        }
-                    </select>
+                <label>Cinsiyet</label>
+                <div class="gender-group">
+                    <div class="gender-box" 
+                         [class.active]="profileForm.get('gender')?.value === 'M'"
+                         (click)="selectGender('M')">
+                        Erkek
+                    </div>
+                    <div class="gender-box" 
+                         [class.active]="profileForm.get('gender')?.value === 'F'"
+                         (click)="selectGender('F')">
+                        Kadın
+                    </div>
                 </div>
             </div>
         </div>

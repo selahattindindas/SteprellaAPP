@@ -4,7 +4,7 @@
     <div class="profile-detail-row">
         <div class="form-container">
             <div class="personal-form">
-                <app-profile-personal-form />
+                <app-profile-personal-form [userData]="userData()" (itemSubmit)="onSubmit($event)"/>
             </div>
             <div class="password-form">
                 <app-profile-password-form />

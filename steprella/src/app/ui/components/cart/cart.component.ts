@@ -44,6 +44,14 @@ export class CartComponent implements OnInit {
     this.isAuthenticated.set(this.authService.isUserAuthenticated());
     if (this.isAuthenticated()) {
       this.loadCart();
+
+      this.cartService.cartUpdate$.subscribe(() => {
+        this.loadCart();
+      });
+
+      this.cartService.cartOpen$.subscribe(isOpen => {
+        this.isOpen.set(isOpen);
+      });
     }
   }
 
@@ -77,8 +85,8 @@ export class CartComponent implements OnInit {
 
     const updateData: UpdateCartItem = {
       id: item.id,
-      productVariantId: item.productVariant.id,
-      productVariantSizeId: item.productVariantSizeId, 
+      productVariantId: item.variant.variantId,
+      productVariantSizeId: item.sizeId, 
       quantity: newQuantity
     };
 

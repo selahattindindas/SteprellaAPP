@@ -40,7 +40,7 @@ export class CardComponent {
   }
 
   private transformToListProduct(item: any): ListProduct {
-    if (!('productVariant' in item)) return item as ListProduct;
+    if (!('variant' in item)) return item as ListProduct;
   
     const { id, price, productVariant } = item;
     return {
@@ -65,10 +65,6 @@ export class CardComponent {
       ...Array.from({ length: 3 }, (_, i) => current - 1 + i).filter(n => n > 1 && n < total),
       ...(total > 1 ? [total] : [])
     ])].sort((a, b) => a - b);
-  }
-
-  addToCart(product: ListProductVariant): void {
-    console.log('Added to cart:', product);
   }
 
   toggleFavorite(product: ListProductVariant): void {

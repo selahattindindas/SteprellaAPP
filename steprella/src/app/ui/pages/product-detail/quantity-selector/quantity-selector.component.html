@@ -1,5 +1,5 @@
 <div class="product-purchase">
-    <div class="price">₺ {{ product()?.price }}</div>
+    <div class="price">{{ product()?.price | currency:'TRY':'symbol-narrow':'1.2-2'}}</div>
     <div class="quantity">
       <button class="qty-btn" [disabled]="quantity() <= min" (click)="updateQuantity(false)">
         <i class="fa-solid fa-minus"></i>

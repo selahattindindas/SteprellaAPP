@@ -5,10 +5,9 @@
                 (click)="onToggleSelect(data().id)">
             <i class="fa-solid fa-check"></i>
         </button>
-        <img [src]="'assets/images/ui/shoe1.png'" 
-             [alt]="data().productVariant.shoeModelName">
+        <img [src]="'assets/images/ui/shoe1.png'">
         <div class="item-details">
-            <h3>{{ data().productVariant.shoeModelName }} - {{ data().productVariant.colorName }}</h3>
+            <h3>{{ data().variant.shoeModelName }} - {{ data().variant.colorName }}</h3>
             <p>{{ data().unitPrice | currency:'TRY':'symbol-narrow':'1.2-2'}}</p>
             <div class="quantity-controls">
                 <button [disabled]="data().quantity <= 1" 

@@ -36,6 +36,7 @@ export class FavoriteComponent implements OnInit{
         this.listFavorite.set(response.data);
         this.totalCount.set(response.totalCount);
         this.loading.set(false);
+        console.log(response.data);
       },
       error: () => {
         this.listFavorite.set([]);

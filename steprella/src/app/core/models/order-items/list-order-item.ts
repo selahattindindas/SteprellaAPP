@@ -3,9 +3,9 @@ import { ListProductVariantDetail } from "../product-variants/list-product-varia
 export interface ListOrderItem{
     id: number;
     orderId: number;
-    productVariantSizeValue: string;
+    sizeValue: string;
     quantity: number;
     unitPrice: number;
     totalPrice: number;
-    productVariant: ListProductVariantDetail;
+    variant: ListProductVariantDetail;
 }

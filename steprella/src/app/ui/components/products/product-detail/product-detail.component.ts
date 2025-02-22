@@ -14,6 +14,7 @@ import { CartItemService } from "../../../../core/services/ui/cart-item.service"
 import { CreateCartItem } from "../../../../core/models/cart-items/create-cart-item";
 import { Icon, SweetAlertService } from "../../../../core/services/common/sweet-alert.service";
 import { AuthService } from "../../../../core/services/common/auth.service";
+import { CartService } from "../../../../core/services/ui/cart.service";
 
 interface ProductDetail {
   title: string;
@@ -40,6 +41,7 @@ interface ProductDetail {
 export class ProductDetailComponent {
   private readonly productService = inject(ProductService);
   private readonly cartItemService = inject(CartItemService);
+  private readonly cartService = inject(CartService);
   private readonly route = inject(ActivatedRoute);
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly authService = inject(AuthService);
@@ -70,6 +72,7 @@ export class ProductDetailComponent {
     this.productService.getById(id).subscribe({
       next: (product) => {
         this.product.set(product);
+        this.cartService.notifyCartUpdate();
       },
       error: (error) => {
         this.product.set(null);
@@ -105,6 +108,8 @@ export class ProductDetailComponent {
     this.cartItemService.create(cartItem).subscribe({
       next: () => {
         this.sweetAlertService.showMessage("Ürün sepete eklendi.");
+        this.cartService.notifyCartUpdate();
+        this.cartService.setCartOpen(true);
       },
       error: () => {
         this.sweetAlertService.showMessage("Bir hata oluştu", Icon.ERROR);

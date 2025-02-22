@@ -6,6 +6,7 @@ import { Token } from '../../models/auth/token';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { Register } from '../../models/auth/register';
 import { BaseResponse } from '../../models/base-responses/base-response';
+import { UpdateUser } from '../../models/users/update-user-';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,14 @@ export class UserAuthService {
         return this.httpClientService.post<Register>({
             controller: 'auth',
             action: 'register',
+            withCredentials: true
+        }, body);
+    }
+
+    update(body: UpdateUser):Observable<UpdateUser>{
+        return this.httpClientService.post<UpdateUser>({
+            controller: 'auth',
+            action: 'update',
             withCredentials: true
         }, body);
     }

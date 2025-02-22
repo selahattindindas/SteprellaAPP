@@ -1,15 +1,14 @@
 import { ListFile } from "../files/list-file";
 
 export interface ListProductVariantDetail {
-    id: number;
-    ratingCount: number;
+    variantId: number;
+    colorName: string;
     rating: number;
+    ratingCount: number;
     description: string;
     brandName: string;
     shoeModelName: string;
     materialName: string;
     usageAreaName: string;
-    colorName: string;
-    active: boolean;
-    productFiles: ListFile[];
+    productImages: ListFile[];
 }
