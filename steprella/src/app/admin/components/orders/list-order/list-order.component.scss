@@ -1,0 +1,35 @@
+.dialog-header {
+  @apply tw-text-2xl tw-font-medium tw-text-gray-800 tw-text-center;
+}
+
+.table-container {
+  @apply tw-overflow-x-auto;
+}
+
+th {
+  @apply tw-text-base;
+}
+
+.status-badge {
+  @apply tw-px-3 tw-py-1 tw-rounded-full tw-text-sm;
+}
+
+.edit-section {
+  @apply tw-pt-2;
+}
+
+.action-buttons {
+  @apply tw-flex tw-items-center tw-gap-2;
+}
+
+.edit-button {
+  @apply tw-pl-3;
+}
+
+.action-icon {
+  @apply tw-text-teal;
+}
+
+.table-section {
+  @apply tw-rounded-xl tw-bg-white tw-shadow-lg tw-p-4;
+}

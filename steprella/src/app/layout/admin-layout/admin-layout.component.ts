@@ -19,6 +19,7 @@ import { MatListModule } from '@angular/material/list';
     HeaderComponent, 
     SidebarComponent],
   templateUrl: './admin-layout.component.html',
+  styleUrl: './admin-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminLayoutComponent implements OnInit {

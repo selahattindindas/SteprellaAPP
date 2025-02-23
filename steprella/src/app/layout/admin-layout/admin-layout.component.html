@@ -1,14 +1,14 @@
 @if (isLoading()) {
   <!-- Loading Screen -->
-  <div class="tw-fixed tw-inset-0 tw-bg-white" 
+  <div class="progressbar" 
        role="progressbar"
        aria-label="Loading content">
   </div>
 } @else {
   <!-- Main Layout -->
-  <div class="tw-flex tw-min-h-screen">
+  <div class="layout-container">
     <!-- Sidenav Container -->
-    <mat-sidenav-container class="tw-h-screen tw-w-full" 
+    <mat-sidenav-container class="sidenav-container" 
                           role="navigation"
                           aria-label="Main navigation">
       
@@ -30,9 +30,9 @@
         <app-header (toggleSidebarEvent)="toggleSidebar()" />
 
         <!-- Page Content -->
-        <main class="tw-rounded-3xl tw-mx-5 tw-mb-5 tw-bg-customBackground tw-min-h-[calc(100vh-104px)]">
-          <div class="tw-max-w-7xl tw-mx-auto">
-            <div class="tw-py-14 tw-px-6">
+        <main class="main-content">
+          <div class="content-wrapper">
+            <div class="content-inner">
               <router-outlet />
             </div>
           </div>

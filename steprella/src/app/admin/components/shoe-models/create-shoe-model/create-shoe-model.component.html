@@ -2,10 +2,10 @@
       (ngSubmit)="onSubmit()"
       aria-label="Model oluşturma formu">
       
-    <div class="tw-flex tw-justify-between tw-items-center tw-pt-6 max-450:tw-block max-450:tw-space-y-4 tw-pb-6">
+    <div class="form-container">
         <!-- Form Field Group -->
-        <fieldset class="tw-mx-5 max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto">
-            <legend class="tw-font-semibold tw-text-slate-800">Model Adı</legend>
+        <fieldset class="form-field-group">
+            <legend class="legend-text">Model Adı</legend>
             <input [(ngModel)]="createShoeModel().name" 
                    type="text" 
                    name="name" 
@@ -14,11 +14,11 @@
                    minlength="2" 
                    maxlength="50"
                    aria-required="true"
-                   class="tw-bg-[#f4f7fb] tw-border-none tw-rounded-full tw-px-4 tw-py-3 tw-h-full focus:tw-outline-none tw-w-full">
+                   class="form-input">
             
             <!-- Validation Messages -->
             @if(name.invalid && (name.dirty || name.touched)) {
-              <div role="alert" class="tw-text-red-500">
+              <div role="alert" class="validation-message">
                  @if(name.errors?.['minlength']) {
                   Marka adı en az 2 karakter olmalıdır
                 } @else if(name.errors?.['maxlength']) {
@@ -29,13 +29,13 @@
         </fieldset>
 
         <!-- Form Actions -->
-        <div class="tw-mx-5 tw-flex tw-justify-end max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto">
+        <div class="form-actions">
             <button type="submit" 
                     [disabled]="!shoeModelForm.valid"
                     aria-label="Model oluştur"
-                    class="tw-flex tw-items-center tw-bg-indigo-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-indigo-500/80 tw-transition-colors min-450:tw-w-auto">
-                <mat-icon class="tw-text-white tw-mr-2" aria-hidden="true">add</mat-icon>
-                <span class="tw-text-white tw-font-medium">Oluştur</span>
+                    class="submit-button min-450:tw-w-auto">
+                <mat-icon class="button-icon" aria-hidden="true">add</mat-icon>
+                <span class="button-text">Oluştur</span>
             </button>
         </div>
     </div>

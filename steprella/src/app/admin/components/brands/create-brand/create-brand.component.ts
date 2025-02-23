@@ -1,4 +1,4 @@
-import { Component, inject, model, output, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, output, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import {  MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDialogTitle, MatDialogContent, MatDialogActions,MatButtonModule],
   standalone: true,
   templateUrl: './create-brand.component.html',
-  styleUrl: './create-brand.component.scss'
+  styleUrl: './create-brand.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateBrandComponent {
   private readonly adminBrandService = inject(AdminBrandService);

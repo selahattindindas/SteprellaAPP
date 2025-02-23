@@ -39,11 +39,11 @@ export class UpdateOrderComponent {
   });
 
   readonly orderStatusList = Object.keys(OrderStatus)
-  .filter((key) => isNaN(Number(key)) && key !== 'PENDING')
-  .map((key) => ({
-    label: key,
-    value: OrderStatus[key as keyof typeof OrderStatus]
-  }));
+    .filter((key) => isNaN(Number(key)) && key !== 'PENDING')
+    .map((key) => ({
+      label: key,
+      value: key
+    }));
 
   constructor() {
     effect(() => {

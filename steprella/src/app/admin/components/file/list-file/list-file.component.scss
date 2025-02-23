@@ -1,0 +1,47 @@
+.dialog-title {
+  @apply tw-text-2xl tw-font-bold tw-mb-6 tw-text-center tw-text-gray-800;
+}
+
+.file-grid {
+  @apply tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6 tw-justify-items-center;
+}
+
+.file-card {
+  @apply tw-bg-white tw-rounded-lg tw-shadow-md tw-max-w-72 tw-overflow-hidden tw-relative tw-mb-4;
+}
+
+.image-container {
+  @apply tw-aspect-square tw-overflow-hidden;
+}
+
+.file-image {
+  @apply tw-w-full tw-h-full tw-object-cover tw-transition-transform tw-duration-300 group-hover:tw-scale-105;
+}
+
+.file-content {
+  @apply tw-p-4;
+}
+
+.file-header {
+  @apply tw-flex tw-items-center tw-justify-between;
+}
+
+.file-title {
+  @apply tw-font-medium tw-text-gray-800 tw-max-w-[150px] sm:tw-max-w-[75%] tw-truncate;
+}
+
+.delete-icon {
+  @apply tw-text-gray-400 hover:tw-text-red-500 tw-transition-colors;
+}
+
+.empty-state {
+  @apply tw-text-center tw-py-12 tw-text-gray-500;
+}
+
+.empty-state-icon {
+  @apply tw-text-6xl tw-mb-4;
+}
+
+.empty-state-text {
+  @apply tw-text-lg;
+}

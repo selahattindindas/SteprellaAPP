@@ -1,4 +1,4 @@
 export interface UpdateFeature{
-    id: number;
+    id: number | null;
     name: string;
 }

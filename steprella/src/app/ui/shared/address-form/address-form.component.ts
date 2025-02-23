@@ -38,6 +38,7 @@ export class AddressFormComponent implements OnInit, OnChanges {
   });
 
   ngOnInit(): void {
+    this.listDistrict$ = this.getDistrict();
     this.setupCityIdChanges();
   }
 
@@ -51,18 +52,21 @@ export class AddressFormComponent implements OnInit, OnChanges {
     }
   }
 
-  private setupCityIdChanges(): void {
-    const cityIdControl = this.addressForm.get('cityId');
-    
-    if (cityIdControl) {
-      this.listDistrict$ = cityIdControl.valueChanges.pipe(
-        filter((cityId): cityId is number => typeof cityId === 'number' && cityId > 0),
-        switchMap(cityId => this.districtService.getByCityId(cityId))
-      );
-    } else {
-      this.listDistrict$ = new Observable<ListDistrict[]>();
-    }
-}
+  getDistrict() {
+    return this.addressForm.get('cityId')?.valueChanges.pipe(
+      filter(Boolean),
+      switchMap(cityId => this.districtService.getByCityId(cityId)),
+      map(response => response)
+    ) || new Observable<ListDistrict[]>();
+  }
+
+  setupCityIdChanges(): void {
+    this.addressForm.get('cityId')?.valueChanges.pipe(
+      filter(Boolean),
+      switchMap(cityId => this.districtService.getByCityId(cityId)),
+      map(response => response)
+    ).subscribe();
+  }
 
   private populateForm(address: ListAddress): void {
     this.listCity$.pipe(take(1)).subscribe(cities => {
@@ -90,7 +94,7 @@ export class AddressFormComponent implements OnInit, OnChanges {
     if (!this.addressForm.valid) return;
 
     const formData = this.addressForm.value;
-    
+
     if (this.isEditMode()) {
       this.listAddress$()?.pipe(take(1)).subscribe(address => {
         if (address) {

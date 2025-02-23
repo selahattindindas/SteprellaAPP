@@ -1,3 +1,35 @@
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     --mdc-filled-text-field-container-color: red !important;
 }
+
+.form-container {
+  @apply tw-flex tw-justify-between tw-items-center tw-pt-6 max-450:tw-block max-450:tw-space-y-4 tw-pb-6;
+}
+
+.form-field-group {
+  @apply tw-mx-5 max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto;
+}
+
+.form-input {
+  @apply tw-bg-[#f4f7fb] tw-border-none tw-rounded-full tw-px-4 tw-py-3 tw-h-full focus:tw-outline-none tw-w-full;
+}
+
+.validation-message {
+  @apply tw-text-red-500;
+}
+
+.form-actions {
+  @apply tw-mx-5 tw-flex tw-justify-end max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto;
+}
+
+.submit-button {
+  @apply tw-flex tw-items-center tw-bg-indigo-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-indigo-500/80 tw-transition-colors ;
+}
+
+.button-icon {
+  @apply tw-text-white tw-mr-2;
+}
+
+.button-text {
+  @apply tw-text-white tw-font-medium;
+}

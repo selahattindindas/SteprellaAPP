@@ -4,6 +4,83 @@
   --mdc-outlined-text-field-focus-outline-color: transparent;
 }
 
-.mat.table-overrides{
+.mat.table-overrides {
   --mat-sys-surface: red;
+}
+
+.brand-section {
+  @apply tw-bg-white tw-rounded-xl;
+}
+
+.header {
+  @apply tw-flex tw-justify-between tw-items-center tw-pt-6 tw-pb-6;
+}
+
+.search-container {
+  @apply tw-mx-5 tw-h-[40px];
+}
+
+.search-input {
+  @apply tw-bg-slate-200 tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full;
+}
+
+.create-button-container {
+  @apply tw-mx-5 tw-flex tw-justify-end;
+}
+
+.create-button {
+  @apply tw-flex tw-items-center tw-bg-indigo-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-indigo-500/80 tw-transition-colors;
+}
+
+.create-button-icon {
+  @apply tw-text-white tw-mr-2;
+}
+
+.create-button-text {
+  @apply tw-text-white tw-font-medium;
+}
+
+.table-section {
+  @apply tw-shadow-lg tw-px-4 tw-pb-4;
+}
+
+.table-container {
+  @apply tw-overflow-x-auto;
+}
+
+.edit-section {
+  @apply tw-pt-2;
+}
+
+.action-buttons {
+  @apply tw-flex tw-items-center tw-gap-2;
+}
+
+.action-icon {
+  @apply tw-text-teal;
+}
+
+.no-data {
+  @apply tw-py-5 tw-text-center tw-font-medium tw-text-lg tw-text-gray-600;
+}
+
+// Responsive styles
+@media (max-width: 450px) {
+  .header {
+    @apply tw-block tw-space-y-4;
+  }
+
+  .search-container {
+    @apply tw-w-[calc(100%-40px)] tw-mx-auto;
+  }
+
+  .create-button-container {
+    @apply tw-w-[calc(100%-40px)] tw-mx-auto;
+  }
+}
+
+@media (min-width: 450px) {
+  .create-button {
+    @apply tw-w-auto;
+  }
 }

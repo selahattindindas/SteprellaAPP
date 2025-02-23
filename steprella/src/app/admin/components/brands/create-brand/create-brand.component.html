@@ -1,22 +1,16 @@
-<!-- Dialog Header -->
-<h1 class="tw-text-2xl tw-font-medium tw-text-gray-800" mat-dialog-title id="create-brand-dialog-title">
+<h1 class="dialog-title" mat-dialog-title id="create-brand-dialog-title">
     Marka Ekle
 </h1>
 
-<!-- Dialog Content -->
 <mat-dialog-content>
-    <form #brandForm="ngForm" (ngSubmit)="onSubmit()" class="tw-space-y-4" aria-labelledby="create-brand-dialog-title">
+    <form #brandForm="ngForm" (ngSubmit)="onSubmit()" class="dialog-content" aria-labelledby="create-brand-dialog-title">
+        <p class="description">Lütfen marka adını giriniz</p>
 
-        <!-- Form Description -->
-        <p class="tw-text-gray-600">Lütfen marka adını giriniz</p>
-
-        <!-- Brand Name Input -->
-        <mat-form-field appearance="outline" class="tw-w-full">
+        <mat-form-field appearance="outline" class="form-field">
             <mat-label>Marka</mat-label>
             <input matInput type="text" name="name" [(ngModel)]="createBrand().name" #name="ngModel" required
                 minlength="2" maxlength="50" placeholder="Marka adı giriniz..." aria-required="true">
 
-            <!-- Validation Messages -->
             @if(name.invalid && (name.dirty || name.touched)) {
             <mat-error role="alert">
                 @if(name.errors?.['required']) {
@@ -32,9 +26,8 @@
     </form>
 </mat-dialog-content>
 
-<!-- Dialog Actions -->
-<mat-dialog-actions align="end" class="tw-mt-6">
-    <button mat-button mat-dialog-close type="button" class="tw-text-gray-600">
+<mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-button mat-dialog-close type="button" class="cancel-button">
         İptal
     </button>
     <button mat-raised-button color="primary" type="submit" [disabled]="!brandForm.valid" (click)="onSubmit()"

@@ -8,6 +8,7 @@ import { OrderService } from '../../../../core/services/ui/order.service';
 import { ListOrder } from '../../../../core/models/orders/list-order';
 import { UpdateOrderComponent } from '../update-order/update-order.component';
 import { OrderStatusPipe } from '../../../../shared/pipes/order-status.pipe';
+import { AdminOrderService } from '../../../../core/services/admin/admin-order.service';
 
 @Component({
   selector: 'app-list-order',
@@ -25,7 +26,7 @@ import { OrderStatusPipe } from '../../../../shared/pipes/order-status.pipe';
   styleUrl: './list-order.component.scss'
 })
 export class ListOrderComponent {
-  private readonly orderService = inject(OrderService);
+  private readonly adminOrderService = inject(AdminOrderService);
   readonly dialogData = inject<{ userId: number }>(MAT_DIALOG_DATA);
 
   readonly updateOrderComponent = viewChild(UpdateOrderComponent);
@@ -48,7 +49,7 @@ export class ListOrderComponent {
     const pageIndex = currentPaginator?.pageIndex ?? 0;
     const pageSize = currentPaginator?.pageSize ?? 5;
 
-    this.orderService.getOrders(pageIndex, pageSize)
+    this.adminOrderService.getOrdersByUserId(this.dialogData.userId, pageIndex, pageSize)
       .subscribe({
         next: (response) => {
           this.dataSource().data = response.data;

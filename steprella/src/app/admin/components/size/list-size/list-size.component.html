@@ -1,85 +1,77 @@
-<h1 class="tw-text-2xl tw-font-bold tw-mb-6 tw-text-center tw-text-gray-800" mat-dialog-title>Ayakkabı İşlemleri</h1>
+<h1 class="dialog-title" mat-dialog-title>Ayakkabı İşlemleri</h1>
 <mat-dialog-content class="mat-typography">
   <div>
     <app-create-size (sizeList)="loadSizes()" [productVariantId]="dialogData.productVariantId" />
   </div>
   
-  <div class="tw-rounded-b-xl tw-shadow-lg tw-bg-white tw-p-4">
+  <div class="table-container">
     <div class="table-responsive">
-    <table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef class="table-header" mat-sort-header>Sıra</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            {{ dataSource().data.indexOf(element) + 1 }}
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef class="tw-text-base" mat-sort-header> Sıra </th>
-        <td mat-cell *matCellDef="let element; let i = index">
-          {{ dataSource().data.indexOf(element) + 1 }}
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="sizeValue">
+          <th mat-header-cell *matHeaderCellDef class="table-header">Numara</th>
+          <td mat-cell *matCellDef="let element">{{ element.sizeValue }}</td>
+        </ng-container>
 
-      <ng-container matColumnDef="sizeValue">
-        <th mat-header-cell *matHeaderCellDef class="tw-text-base">Numara</th>
-        <td mat-cell *matCellDef="let element">{{ element.sizeValue }}</td>
-      </ng-container>
+        <ng-container matColumnDef="stockQuantity">
+          <th mat-header-cell *matHeaderCellDef class="table-header">Stok</th>
+          <td mat-cell *matCellDef="let element">
+            @if(editingStockId() !== element.id) {
+              <span>{{ element.stockQuantity }}</span>
+            } @else {
+              <div class="edit-section">
+                <app-update-size 
+                  [productVariantId]="dialogData.productVariantId" 
+                  [sizeData]="element"
+                  (sizeUpdated)="editingStockId.set(null)" 
+                  (sizeList)="loadSizes()" />
+              </div>
+            }
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="stockQuantity">
-        <th mat-header-cell *matHeaderCellDef class="tw-text-base">Stok</th>
-        <td mat-cell *matCellDef="let element">
-          @if(editingStockId() !== element.id){
-          <span>{{ element.stockQuantity }}</span>
-          }
-          @else {
-            <div class="tw-pt-2">
-              <app-update-size [productVariantId]="dialogData.productVariantId" [sizeData]="element"
-              (sizeUpdated)="editingStockId.set(null)" (sizeList)="loadSizes()" />
+        <ng-container matColumnDef="active">
+          <th mat-header-cell *matHeaderCellDef class="table-header">Durum</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="status-badge" [ngClass]="element.active ? 'status-active' : 'status-inactive'">
+              {{ element.active ? 'Aktif' : 'Kapalı' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="option">
+          <th mat-header-cell *matHeaderCellDef class="table-header">İşlemler</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="action-buttons">
+              @if(editingStockId() !== element.id) {
+                <button mat-icon-button (click)="editRow(element.id)">
+                  <mat-icon class="action-icon">edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="delete(element.id)">
+                  <mat-icon class="action-icon">delete</mat-icon>
+                </button>
+              } @else {
+                <button mat-icon-button (click)="submitUpdate()">
+                  <mat-icon class="action-icon">check_circle</mat-icon>
+                </button>
+                <button mat-icon-button (click)="editingStockId.set(null)">
+                  <mat-icon class="action-icon">cancel</mat-icon>
+                </button>
+              }
             </div>
+          </td>
+        </ng-container>
 
-          }
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="active">
-        <th mat-header-cell *matHeaderCellDef class="tw-text-base">Durum</th>
-        <td mat-cell *matCellDef="let element">
-          <span class="tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium"
-          [ngClass]="{
-            'tw-bg-green-100 tw-text-green-700': element.active,
-            'tw-bg-red-100 tw-text-red-700': !element.active
-          }">
-      {{ element.active ? 'Aktif' : 'Kapalı' }}
-    </span>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="option">
-        <th mat-header-cell *matHeaderCellDef class="tw-text-base">İşlemler</th>
-        <td mat-cell *matCellDef="let element">
-          <div class="tw-flex tw-gap-2">
-            @if(editingStockId() !== element.id){
-            <button mat-icon-button (click)="editRow(element.id)">
-              <mat-icon class="tw-text-teal">edit</mat-icon>
-            </button>
-
-            <button mat-icon-button (click)="delete(element.id)">
-              <mat-icon class="tw-text-teal">delete</mat-icon>
-            </button>
-            }
-            @else(){
-            <button mat-icon-button (click)="submitUpdate()">
-              <mat-icon class="tw-text-teal">check_circle</mat-icon>
-            </button>
-
-            <button mat-icon-button (click)="editingStockId.set(null)">
-              <mat-icon class="tw-text-teal">cancel</mat-icon>
-            </button>
-            }
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-    </table>
-  </div>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

@@ -1,94 +1,54 @@
-<mat-toolbar class="!tw-bg-white !tw-h-[84px]">
-  <header class="tw-flex tw-w-full tw-items-center tw-justify-between">
-    <!-- Left Section: Menu Toggle & Notifications -->
-    <nav class="tw-flex tw-items-center">
-      <!-- Mobile Menu Toggle -->
-      <div class="tw-hidden max-xl2:tw-block max-xl2:tw-ml-6 max-400:tw-ml-1">
-        <button mat-icon-button 
-                (click)="toggleSidebar()" 
-                class="sidebar-toggle-button"
-                aria-label="Toggle navigation menu">
+<mat-toolbar class="header">
+  <header class="header-container">
+    <nav class="left-section">
+      <div class="menu-toggle">
+        <button mat-icon-button (click)="toggleSidebar()" aria-label="Toggle navigation menu">
           <mat-icon>menu</mat-icon>
         </button>
       </div>
 
-      <!-- Notifications Area -->
-      <div class="tw-flex tw-items-center tw-space-x-4 tw-border-r tw-border-gray-200 tw-ml-6" 
-           role="navigation"
-           aria-label="Notifications">
-        <!-- Messages -->
-        <button class="tw-relative" aria-label="Messages">
-          <i class="far fa-envelope tw-text-gray-600 tw-text-xl tw-cursor-pointer 
-                    hover:tw-text-gray-800 hover:tw-scale-110 tw-transition-transform"
-             aria-hidden="true"></i>
-          <span class="tw-absolute -tw-top-2 -tw-right-2 tw-bg-indigo-500 tw-text-white 
-                       tw-rounded-full tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center 
-                       tw-text-xs tw-font-medium"
-                aria-label="2 unread messages">2</span>
+      <div class="notifications-area">
+        <button class="notification-button">
+          <i class="far fa-envelope notification-icon"></i>
+          <span class="notification-badge">2</span>
         </button>
 
-        <!-- Favorites -->
-        <button class="tw-relative" aria-label="Favorites">
-          <i class="far fa-star tw-text-gray-600 tw-text-xl tw-cursor-pointer 
-                    hover:tw-text-gray-800 hover:tw-scale-110 tw-transition-transform"
-             aria-hidden="true"></i>
-          <span class="tw-absolute -tw-top-2 -tw-right-2 tw-bg-indigo-500 tw-text-white 
-                       tw-rounded-full tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center 
-                       tw-text-xs tw-font-medium"
-                aria-label="1 favorite item">1</span>
+        <button class="notification-button">
+          <i class="far fa-star notification-icon"></i>
+          <span class="notification-badge">1</span>
         </button>
 
-        <!-- Alerts -->
-        <button class="tw-relative" aria-label="Notifications">
-          <i class="far fa-bell tw-text-gray-600 tw-text-xl tw-cursor-pointer 
-                    hover:tw-text-gray-800 hover:tw-scale-110 tw-transition-transform"
-             aria-hidden="true"></i>
-          <span class="tw-absolute -tw-top-2 -tw-right-2 tw-bg-indigo-500 tw-text-white 
-                       tw-rounded-full tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center 
-                       tw-text-xs tw-font-medium"
-                aria-label="3 notifications">3</span>
+        <button class="notification-button">
+          <i class="far fa-bell notification-icon"></i>
+          <span class="notification-badge">3</span>
         </button>
       </div>
     </nav>
 
-    <!-- Right Section: User Profile -->
-    <div class="tw-flex tw-items-center tw-mr-6 max-400:tw-mr-1">
-      <button [matMenuTriggerFor]="userMenu" 
-              class="tw-ml-2 tw-cursor-pointer"
-              aria-label="User menu">
-        <img src="assets/images/admin/user.png" 
-             alt="User Avatar" 
-             class="tw-w-12 tw-h-auto tw-object-contain"
-             width="48"
-             height="48" />
+    <div class="user-section">
+      <button [matMenuTriggerFor]="userMenu" class="user-avatar">
+        <img src="assets/images/admin/user.png" alt="User Avatar" width="48" height="48" />
       </button>
 
-      <!-- User Menu -->
-      <mat-menu #userMenu="matMenu" 
-                class="!tw-w-52 !tw-bg-white !tw-mt-5 !tw-rounded-b-lg">
-        <nav aria-label="User navigation">
-          <button mat-menu-item aria-label="Profile">
-            <mat-icon class="material-icons-outlined">person_outline</mat-icon>
-            <span class="tw-text-sm tw-font-normal">Profilim</span>
-          </button>
-          <button mat-menu-item aria-label="Account">
-            <mat-icon class="material-icons-outlined">account_circle</mat-icon>
-            <span class="tw-text-sm tw-font-normal">Hesabım</span>
-          </button>
-          <button mat-menu-item aria-label="Tasks">
-            <mat-icon class="material-icons-outlined">task</mat-icon>
-            <span class="tw-text-sm tw-font-normal">Görevim</span>
-          </button>
+      <mat-menu class="!tw-w-52 !tw-bg-white !tw-mt-5 !tw-rounded-b-lg" #userMenu="matMenu" >
+        <button mat-menu-item>
+          <mat-icon class="material-icons-outlined">person_outline</mat-icon>
+          <span>Profilim</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon class="material-icons-outlined">account_circle</mat-icon>
+          <span>Hesabım</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon class="material-icons-outlined">task</mat-icon>
+          <span>Görevlerim</span>
+        </button>
 
-          <div class="!tw-px-3 !tw-pt-2">
-            <button mat-stroked-button 
-                    (click)="logout()" 
-                    class="!tw-rounded-lg !tw-w-full !tw-border-blue-700"
-                    aria-label="Logout">
-              <span class="tw-text-blue-700">Çıkış Yap</span>
-            </button>
-          </div>
-        </nav>
+        <div class="logout-container">
+          <button mat-stroked-button (click)="logout()" class="!tw-rounded-lg !tw-w-full !tw-border-blue-700">
+            <span class="logout-text">Çıkış Yap</span>
+          </button>
+        </div>
       </mat-menu>
     </div>
   </header>

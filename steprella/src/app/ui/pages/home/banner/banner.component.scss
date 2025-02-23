@@ -1,0 +1,31 @@
+.banner-container {
+  @apply tw-flex tw-flex-col lg:tw-flex-row tw-justify-center tw-py-10 tw-bg-white tw-w-full tw-gap-y-10 lg:tw-gap-[7%];
+}
+
+.banner-left {
+  @apply tw-flex-1 tw-mt-6 lg:tw-mt-12 tw-text-center;
+}
+
+.banner-content {
+  @apply tw-flex tw-flex-col lg:tw-flex-row tw-max-w-[598px] tw-mt-8 tw-justify-center lg:tw-justify-between tw-gap-y-4 lg:tw-gap-0;
+}
+
+.banner-text {
+  @apply tw-w-full lg:tw-w-80;
+}
+
+.banner-description {
+  @apply tw-text-gray-600 tw-text-lg tw-text-center;
+}
+
+.banner-button {
+  @apply tw-bg-orange-500 tw-text-white tw-py-3 tw-px-6 tw-rounded-lg tw-shadow-lg tw-transform tw-transition-transform hover:tw-scale-105;
+}
+
+.banner-right {
+  @apply tw-flex-1 tw-flex;
+}
+
+.banner-image {
+  @apply tw-w-full lg:tw-w-auto tw-max-w-[700px] tw-h-auto;
+}

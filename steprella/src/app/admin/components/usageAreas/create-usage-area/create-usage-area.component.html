@@ -1,0 +1,38 @@
+<h1 class="dialog-title" mat-dialog-title id="create-usageArea-dialog-title">
+    Kullanım Alanı Ekle
+</h1>
+
+<mat-dialog-content>
+    <form #usageAreaForm="ngForm" (ngSubmit)="onSubmit()" class="dialog-content" aria-labelledby="create-usageArea-dialog-title">
+
+        <p class="description">Lütfen kullanım alanı giriniz</p>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Kullanım Alanı</mat-label>
+            <input matInput type="text" name="name" [(ngModel)]="createUsageArea().name" #name="ngModel" required
+                minlength="2" maxlength="50" placeholder="Kullanım Alanı giriniz..." aria-required="true">
+
+            @if(name.invalid && (name.dirty || name.touched)) {
+            <mat-error role="alert">
+                @if(name.errors?.['required']) {
+                Kullanım Alanı zorunludur
+                } @else if(name.errors?.['minlength']) {
+                En az 2 karakter olmalıdır
+                } @else if(name.errors?.['maxlength']) {
+                En fazla 50 karakter olmalıdır
+                }
+            </mat-error>
+            }
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-button mat-dialog-close type="button" class="cancel-button">
+        İptal
+    </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!usageAreaForm.valid" (click)="onSubmit()"
+        cdkFocusInitial>
+        Ekle
+    </button>
+</mat-dialog-actions>

@@ -1,10 +1,10 @@
-<form #orderForm="ngForm">
-    <mat-form-field appearance="outline">
+<form #orderForm="ngForm" (ngSubmit)="onSubmit()" class="order-form">
+    <mat-form-field appearance="outline" class="status-select">
         <mat-label>Sipariş Durumu</mat-label>
-        <mat-select name="status" ngModel required>
+        <mat-select name="status" [(ngModel)]="updateOrder().status" required>
           @for (status of orderStatusList; track status) {
             <mat-option [value]="status.value">{{status.label | orderStatus}}</mat-option>
           }
         </mat-select>
-      </mat-form-field>
+    </mat-form-field>
 </form>

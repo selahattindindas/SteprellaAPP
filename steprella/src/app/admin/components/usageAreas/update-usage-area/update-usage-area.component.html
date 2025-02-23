@@ -1,0 +1,32 @@
+<form #usageAreaForm="ngForm" 
+      (ngSubmit)="onSubmit()"
+      class="form"
+      aria-label="Kullanım Alanı güncelleme formu">
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Kullanım Alanı</mat-label>
+    <input matInput
+           type="text"
+           name="name"
+           [(ngModel)]="updateUsageArea().name"
+           #name="ngModel"
+           required
+           minlength="2"
+           maxlength="50"
+           (keydown.enter)="onSubmit()"
+           aria-required="true">
+
+    <!-- Validation Messages -->
+    @if(name.invalid && (name.dirty || name.touched)) {
+      <mat-error role="alert">
+        @if(name.errors?.['required']) {
+          Kullanım Alanı zorunludur
+        } @else if(name.errors?.['minlength']) {
+          Kullanım Alanı en az 2 karakter olmalıdır
+        } @else if(name.errors?.['maxlength']) {
+          Kullanım Alanı en fazla 50 karakter olmalıdır
+        }
+      </mat-error>
+    }
+  </mat-form-field>
+</form>

@@ -1,0 +1,51 @@
+.file-upload-container {
+  @apply tw-max-w-md tw-shadow-lg tw-bg-white tw-mx-auto tw-rounded-lg;
+}
+
+.upload-button {
+  @apply tw-bg-menu-gradient tw-text-white tw-p-4 tw-rounded-t-lg tw-cursor-pointer hover:tw-opacity-90 tw-transition-all;
+}
+
+.upload-button-content {
+  @apply tw-flex tw-items-center tw-gap-2 tw-justify-center;
+}
+
+.upload-text {
+  @apply tw-font-semibold tw-text-lg;
+}
+
+.file-list {
+  @apply tw-text-gray-200;
+}
+
+.file-item {
+  @apply tw-flex tw-items-center tw-justify-between tw-p-3 tw-border-b tw-border-gray-400;
+}
+
+.file-info {
+  @apply tw-flex tw-items-center tw-gap-3;
+}
+
+.file-icon-container {
+  @apply tw-w-6 tw-h-6 tw-rounded-full tw-bg-gray-600 tw-flex tw-items-center tw-justify-center;
+}
+
+.file-details {
+  @apply tw-max-w-[200px];
+}
+
+.file-name {
+  @apply tw-text-sm tw-text-gray-600 tw-font-medium tw-truncate;
+}
+
+.file-size {
+  @apply tw-text-xs tw-text-gray-400;
+}
+
+.submit-button {
+  @apply tw-px-4 tw-py-2 tw-bg-admin-custom tw-text-white tw-font-medium tw-rounded hover:tw-bg-opacity-90 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed;
+}
+
+.button-container {
+  @apply tw-flex tw-justify-end tw-gap-3 tw-py-4 tw-pr-2;
+}

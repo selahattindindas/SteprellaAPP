@@ -1,20 +1,18 @@
-<div class="tw-pt-3 tw-w-full">
+<div class="variant-container">
   <app-create-product-variant [productId]="productId()" (variantList)="loadProductVariants()"></app-create-product-variant>
 
   @for (variant of productVariants(); track variant.id) {
-  <div class="tw-grid tw-grid-cols-3 tw-items-center tw-p-4 tw-border-b last:tw-border-b-0">
-
+  <div class="variant-item">
     <div class="tw-text-left">
-      <p class="tw-text-lg tw-font-normal">{{variant.colorName}} Renkli Ürün</p>
+      <p class="variant-name">{{variant.colorName}} Renkli Ürün</p>
     </div>
 
     <div class="tw-text-center">
       @if (editingVariantId() !== variant.id) {
-        <span class="tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium"
-              [ngClass]="{
-                'tw-bg-green-100 tw-text-green-700': variant.active,
-                'tw-bg-red-100 tw-text-red-700': !variant.active
-              }">
+        <span class="variant-status" [ngClass]="{
+          'status-active': variant.active,
+          'status-inactive': !variant.active
+        }">
           {{ variant.active ? 'Aktif' : 'Kapalı' }}
         </span>
       } @else {
@@ -27,23 +25,22 @@
       }
     </div>
 
-
-    <div class="tw-flex tw-justify-end tw-space-x-2">
-      <button mat-icon-button (click)="fileDialog(variant.id)" class="hover:tw-text-gray-800">
-        <mat-icon class="tw-text-teal">image</mat-icon>
+    <div class="action-buttons">
+      <button mat-icon-button (click)="fileDialog(variant.id)" class="action-button">
+        <mat-icon class="action-icon">image</mat-icon>
       </button>
 
-      <button mat-icon-button (click)="sizeDialog(variant.id)" class="hover:tw-text-gray-800">
-        <i class="fa-solid fa-shoe-prints tw-text-teal" style="width: 24px; height: 24px;"></i>
+      <button mat-icon-button (click)="sizeDialog(variant.id)" class="action-button">
+        <i class="fa-solid fa-shoe-prints custom-icon"></i>
       </button>
 
       @if (editingVariantId() !== variant.id) {
-      <button mat-icon-button (click)="editRow(variant.id)" class="hover:tw-text-gray-800">
-        <mat-icon class="tw-text-teal">build</mat-icon>
+      <button mat-icon-button (click)="editRow(variant.id)" class="action-button">
+        <mat-icon class="action-icon">build</mat-icon>
       </button>
       } @else {
-      <button mat-icon-button (click)="editingVariantId.set(null)" class="hover:tw-text-gray-800">
-        <mat-icon class="tw-text-teal">cancel</mat-icon>
+      <button mat-icon-button (click)="editingVariantId.set(null)" class="action-button">
+        <mat-icon class="action-icon">cancel</mat-icon>
       </button>
       }
     </div>

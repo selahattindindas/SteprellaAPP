@@ -1,0 +1,114 @@
+<section class="feature-section" aria-label="Ek Özellik Yönetimi">
+    <!-- Search and Create Header -->
+    <div class="header">
+        <!-- Search Field -->
+        <div class="search-container">
+            <label for="featureSearch" class="tw-sr-only">Ek Özellik Ara</label>
+            <input id="featureSearch"
+                   type="search"
+                   placeholder="Ara..." 
+                   aria-label="Ek özellik listesinde ara"
+                   class="search-input"
+                   (keyup)="applyFilter($event)" />
+        </div>
+
+        <!-- Create Button -->
+        <div class="create-button-container">
+            <button (click)="createFeatureDialog()"
+                    aria-label="Yeni ek özellik oluştur"
+                    class="create-button">
+                <mat-icon class="tw-text-white tw-mr-2" aria-hidden="true">add</mat-icon>
+                <span class="tw-text-white tw-font-medium">Oluştur</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <section class="table-section">
+        <div class="table-container" role="region" aria-label="Ek Özellik listesi">
+            <table mat-table [dataSource]="dataSource()" matSort class="tw-w-full">
+                <thead>
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header> 
+                            Sıra 
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            {{ dataSource().data.indexOf(element) + 1 }}
+                        </td>
+                    </ng-container>
+        
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header> 
+                            Ek Özellik 
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            @if(editingFeatureId() !== element.id){
+                                <span>{{element.name}}</span>
+                            } @else {
+                                <div class="tw-pt-2">
+                                    <app-update-feature 
+                                        [featureData]="element" 
+                                        (featureList)="loadFeatures()"
+                                        (featureUpdated)="editingFeatureId.set(null)" />
+                                </div>
+                            }
+                        </td>
+                    </ng-container>
+        
+                    <!-- Options Column -->
+                    <ng-container matColumnDef="options">
+                        <th scope="col" mat-header-cell *matHeaderCellDef>
+                            İşlemler
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="tw-flex tw-items-center tw-gap-2">
+                                @if(editingFeatureId() !== element.id){
+                                    <button mat-icon-button 
+                                            (click)="editRow(element.id)"
+                                            aria-label="Ek Özellikyı düzenle">
+                                        <mat-icon class="tw-text-teal">edit</mat-icon>
+                                    </button>
+                                    <button mat-icon-button (click)="delete(element.id)">
+                                        <mat-icon class="tw-text-teal">delete</mat-icon>
+                                    </button>
+                                } @else {
+                                    <button mat-icon-button 
+                                            (click)="submitUpdate()"
+                                            aria-label="Değişiklikleri kaydet">
+                                        <mat-icon class="tw-text-teal">check_circle</mat-icon>
+                                    </button>
+                                    <button mat-icon-button 
+                                            (click)="editingFeatureId.set(null)"
+                                            aria-label="Düzenlemeyi iptal et">
+                                        <mat-icon class="tw-text-teal">cancel</mat-icon>
+                                    </button>
+                                }
+                            </div>
+                        </td>
+                    </ng-container>
+                </thead>
+        
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- No Data Row -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="no-data-message" colspan="4" role="alert">
+                        Filtre ile eşleşen veri bulunamadı.
+                    </td>
+                </tr>
+            </table>
+        
+            <!-- Pagination -->
+            <nav aria-label="Sayfa navigasyonu">
+                <mat-paginator 
+                    [pageSizeOptions]="[5, 10, 25]"
+                    (page)="loadFeatures()"
+                    aria-label="Sayfa seçimi">
+                </mat-paginator>
+            </nav>
+        </div>
+    </section>
+</section>

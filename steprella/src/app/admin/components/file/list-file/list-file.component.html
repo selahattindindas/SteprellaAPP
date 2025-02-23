@@ -1,35 +1,27 @@
-<h1 class="tw-text-2xl tw-font-bold tw-mb-6 tw-text-center tw-text-gray-800" mat-dialog-title>
+<h1 class="dialog-title" mat-dialog-title>
     Fotoğraf İşlemleri
 </h1>
 
 <mat-dialog-content>
-
     <div class="tw-mb-8">
         <app-create-file [productVariantId]="dialogData.productVariantId" (fileList)="loadFiles()" />
     </div>
 
-    <div class="tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-6 tw-justify-items-center">
+    <div class="file-grid">
         @for(file of files()?.files; track file.id){
-        <div class="tw-bg-white tw-rounded-lg tw-shadow-md tw-max-w-72 tw-overflow-hidden tw-relative tw-mb-4">
-
-            <div class="tw-aspect-square tw-overflow-hidden">
-                <img [src]="file | fileArray" [alt]="file.fileName"
-                    class="tw-w-full tw-h-full tw-object-cover tw-transition-transform tw-duration-300 group-hover:tw-scale-105">
+        <div class="file-card">
+            <div class="image-container">
+                <img [src]="file | fileArray" [alt]="file.fileName" class="file-image">
             </div>
 
-            <div class="tw-p-4">
-                <div class="tw-flex tw-items-center tw-justify-between">
-
+            <div class="file-content">
+                <div class="file-header">
                     <div class="tw-flex-1">
-                        <h3 class="tw-font-medium tw-text-gray-800 tw-max-w-[150px] sm:tw-max-w-[75%] tw-truncate"
-                            [title]="file.fileName">
+                        <h3 class="file-title" [title]="file.fileName">
                             {{file.fileName}}
                         </h3>
                     </div>
-
-                    <mat-icon class="tw-text-gray-400 hover:tw-text-red-500 tw-transition-colors"
-                        (click)="delete(file.id)">delete</mat-icon>
-
+                    <mat-icon class="delete-icon" (click)="delete(file.id)">delete</mat-icon>
                 </div>
             </div>
         </div>
@@ -37,12 +29,11 @@
     </div>
 
     @if(!files()?.files?.length) {
-    <div class="tw-text-center tw-py-12 tw-text-gray-500">
-        <mat-icon class="tw-text-6xl tw-mb-4">photo_library</mat-icon>
-        <p class="tw-text-lg">Henüz fotoğraf yüklenmemiş</p>
+    <div class="empty-state">
+        <mat-icon class="empty-state-icon">photo_library</mat-icon>
+        <p class="empty-state-text">Henüz fotoğraf yüklenmemiş</p>
     </div>
     }
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-
 </mat-dialog-actions>

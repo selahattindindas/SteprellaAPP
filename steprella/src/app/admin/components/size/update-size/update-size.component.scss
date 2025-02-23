@@ -1,0 +1,11 @@
+.form-container {
+  @apply tw-flex tw-flex-col tw-gap-1;
+}
+
+.form-field {
+  @apply tw-w-36;
+}
+
+.validation-message {
+  @apply tw-text-red-500;
+}

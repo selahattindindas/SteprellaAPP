@@ -1,0 +1,39 @@
+.section-container {
+  @apply tw-bg-white tw-rounded-xl;
+}
+
+.header {
+  @apply tw-flex tw-justify-between tw-items-center tw-pt-6 max-450:tw-block max-450:tw-space-y-4 tw-pb-6;
+}
+
+.search-container {
+  @apply tw-mx-5 tw-h-[40px] max-450:tw-w-[calc(100%-40px)] max-450:tw-mx-auto;
+}
+
+.search-input {
+  @apply tw-bg-slate-200 tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full;
+}
+
+.table-section {
+  @apply tw-shadow-lg tw-px-4 tw-pb-4;
+}
+
+.table-container {
+  @apply tw-overflow-x-auto;
+}
+
+.table-header {
+  @apply tw-text-base;
+}
+
+.action-buttons {
+  @apply tw-flex tw-items-center tw-gap-2;
+}
+
+.action-icon {
+  @apply tw-text-teal;
+}
+
+.no-data-message {
+  @apply tw-py-5 tw-text-center tw-font-medium tw-text-lg tw-text-gray-600;
+}

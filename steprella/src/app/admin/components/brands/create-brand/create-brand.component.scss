@@ -1,11 +1,23 @@
-// .mat-mdc-form-field.mat-form-field-appearance-fill {
-//     .mdc-text-field--filled {
-//       border: 1px solid #e2e8f0;
-//       border-radius: 20px;
-//       background-color: rgb(226 232 240);
-//     }
-  
-//     .mdc-line-ripple {
-//       display: none;
-//     }
-//   }
+.dialog-title {
+  @apply tw-text-2xl tw-font-medium tw-text-gray-800;
+}
+
+.dialog-content {
+  @apply tw-mt-5;
+}
+
+.description {
+  @apply tw-text-gray-600;
+}
+
+.form-field {
+  @apply tw-w-full;
+}
+
+.dialog-actions {
+  @apply tw-mt-6;
+}
+
+.cancel-button {
+  @apply tw-text-gray-600;
+}

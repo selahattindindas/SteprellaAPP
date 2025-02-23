@@ -1,0 +1,67 @@
+.material-section {
+  @apply tw-bg-white tw-rounded-xl;
+}
+
+.header {
+  @apply tw-flex tw-justify-between tw-items-center tw-pt-6 tw-pb-6;
+}
+
+.search-container {
+  @apply tw-mx-5 tw-h-[40px];
+}
+
+.search-input {
+  @apply tw-bg-slate-200 tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full;
+}
+
+.create-button-container {
+  @apply tw-mx-5 tw-flex tw-justify-end;
+}
+
+.create-button {
+  @apply tw-flex tw-items-center tw-bg-indigo-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-indigo-500/80 tw-transition-colors;
+}
+
+.table-section {
+  @apply tw-px-4 tw-pb-4 tw-shadow-lg;
+}
+
+.table-container {
+  @apply tw-overflow-x-auto;
+}
+
+.no-data-message {
+  @apply tw-py-5 tw-text-center tw-font-medium tw-text-lg tw-text-gray-600;
+}
+
+.edit-container {
+  @apply tw-pt-2;
+}
+
+.action-buttons {
+  @apply tw-flex tw-items-center tw-gap-2;
+}
+
+@media (max-width: 450px) {
+  .header {
+    @apply tw-block tw-space-y-4;
+  }
+
+  .search-container, .create-button-container {
+    @apply tw-w-[calc(100%-40px)] tw-mx-auto;
+  }
+}
+
+th {
+  @apply tw-text-base;
+}
+
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: transparent;
+  --mdc-outlined-text-field-hover-outline-color: transparent;
+  --mdc-outlined-text-field-focus-outline-color: transparent;
+}
+
+.mat.table-overrides{
+  --mat-sys-surface: red;
+}

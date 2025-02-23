@@ -1,41 +1,32 @@
-<aside class="tw-pt-7">
-  <!-- Logo Section -->
-  <header class="tw-mx-4">
+<aside class="sidebar">
+  
+  <header class="logo-container">
     <a routerLink="/admin">
       <img src="assets/images/common/logo2.png" 
            alt="Steprella Logo"
-           class="tw-w-32 tw-h-auto tw-object-contain">
+           class="logo">
     </a>
   </header>
 
-  <!-- Navigation Section -->
-  <nav class="tw-mt-5">
+  <nav class="navigation">
     <mat-nav-list>
-      <!-- Menu Groups -->
+
       @for (menuGroup of menu; track menuGroup) {
-        <section class="tw-mb-4">
-          <!-- Group Header -->
-          <h2 class="tw-mx-4 tw-py-2 tw-text-xs tw-font-semibold tw-uppercase tw-text-customGray tw-tracking-widest">
+        <section class="menu-group">
+          <h2 class="group-header">
             {{ menuGroup.label }}
           </h2>
 
-          <!-- Menu Items -->
-          <ul class="tw-list-none tw-p-0">
+          <ul class="menu-item">
             @for (item of menuGroup.item; track item) {
               <li>
                 <a [routerLink]="item.route" 
-                   routerLinkActive="!tw-bg-indigo-500 !tw-text-white !tw-rounded-xl"
-                   class="tw-flex tw-items-center tw-cursor-pointer tw-ml-5 tw-pl-4 tw-py-3 
-                          tw-no-underline tw-text-customGray tw-decoration-none 
-                          hover:tw-bg-violet-100 hover:tw-rounded-xl 
-                          tw-duration-300 tw-ease-in-out">
-                  
-                  <!-- Icon -->
-                  <i [class]="item.icon + ' tw-w-5 tw-text-lg'"
+                   routerLinkActive="!tw-bg-indigo-500 !tw-text-white !tw-rounded-xl">
+
+                  <i [class]="item.icon + ' item-icon '"
                      aria-hidden="true"></i>
-                  
-                  <!-- Label -->
-                  <span class="tw-ml-3 tw-font-normal tw-text-sm">
+
+                  <span class="item-label">
                     {{ item.label }}
                   </span>
                 </a>

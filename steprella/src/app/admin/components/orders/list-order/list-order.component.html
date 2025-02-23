@@ -1,78 +1,76 @@
 <header>
-    <h1 class="tw-text-2xl tw-font-medium tw-text-gray-800 tw-text-center" mat-dialog-title>
+    <h1 class="dialog-header" mat-dialog-title>
         Sipariş İşlemleri
     </h1>
 </header>
 
 <mat-dialog-content class="!tw-py-4">
-    <section class="tw-rounded-xl tw-bg-white tw-shadow-lg tw-p-4">
-        <div class="table-container tw-overflow-x-auto">
+    <section class="table-section">
+        <div class="table-container">
             <table mat-table [dataSource]="dataSource()" matSort class="tw-w-full">
-                    <ng-container matColumnDef="id">
-                        <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header> Sıra </th>
-                        <td mat-cell *matCellDef="let element; let i = index">
-                            {{ dataSource().data.indexOf(element) + 1 }}
-                        </td>
-                    </ng-container>
+                <ng-container matColumnDef="id">
+                    <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header> Sıra </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        {{ dataSource().data.indexOf(element) + 1 }}
+                    </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="orderNumber">
-                        <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header class="!tw-text-base"> 
-                            Sipariş Numarası 
-                        </th>
-                        <td mat-cell *matCellDef="let element">{{element.orderNumber}}</td>
-                    </ng-container>
+                <ng-container matColumnDef="orderNumber">
+                    <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header> 
+                        Sipariş Numarası 
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{element.orderNumber}}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="status">
-                        <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header class="!tw-text-base"> 
-                            Sipariş Durumu 
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            @if(editingOrderId() !== element.id){
-                            <span class="tw-px-3 tw-py-1 tw-rounded-full tw-text-sm {{element.status | orderStatus:'class'}}" 
-                                  role="status" 
-                                 >
+                <ng-container matColumnDef="status">
+                    <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header> 
+                        Sipariş Durumu 
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        @if(editingOrderId() !== element.id){
+                            <span class="status-badge {{element.status | orderStatus:'class'}}" role="status">
                                 {{element.status | orderStatus}}
                             </span>
-                            }
-                            @else(){
-                            <div class="tw-pt-2">
+                        }
+                        @else(){
+                            <div class="edit-section">
                                 <app-update-order 
                                     [orderId]="element.id" 
                                     (orderUpdated)="editingOrderId.set(null)"
                                     (orderList)="loadOrders()" />
                             </div>
-                            }
-                        </td>
-                    </ng-container>
+                        }
+                    </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="option">
-                        <th scope="col" mat-header-cell *matHeaderCellDef class="!tw-text-base">İşlemler</th>
-                        <td mat-cell *matCellDef="let element">
-                            <div class="tw-flex tw-items-center tw-gap-2">
-                                @if(editingOrderId() !== element.id){
-                                <button class="tw-pl-3" 
+                <ng-container matColumnDef="option">
+                    <th scope="col" mat-header-cell *matHeaderCellDef>İşlemler</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="action-buttons">
+                            @if(editingOrderId() !== element.id){
+                                <button class="edit-button" 
                                         mat-icon-button 
                                         (click)="editRow(element.id)"
                                         aria-label="Siparişi düzenle">
-                                    <mat-icon class="tw-text-teal">edit</mat-icon>
+                                    <mat-icon class="action-icon">edit</mat-icon>
                                 </button>
-                                }
-                                @else(){
+                            }
+                            @else(){
                                 <button mat-icon-button 
                                         (click)="submitUpdate()"
                                         aria-label="Değişiklikleri kaydet">
-                                    <mat-icon class="tw-text-teal">check_circle</mat-icon>
+                                    <mat-icon class="action-icon">check_circle</mat-icon>
                                 </button>
 
                                 <button mat-icon-button 
                                         (click)="editingOrderId.set(null)"
                                         aria-label="Düzenlemeyi iptal et">
-                                    <mat-icon class="tw-text-teal">cancel</mat-icon>
+                                    <mat-icon class="action-icon">cancel</mat-icon>
                                 </button>
-                                }
-                            </div>
-                        </td>
-                    </ng-container>
+                            }
+                        </div>
+                    </td>
+                </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

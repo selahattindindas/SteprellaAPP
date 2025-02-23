@@ -1,10 +1,10 @@
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="tw-p-6">
-  <!-- Grid Container - Azaltılmış dikey boşluk -->
-  <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-4">
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
+  <!-- Grid Container -->
+  <div class="grid-container">
     <!-- Kategori -->
-    <div class="tw-space-y-1">
-      <mat-label class="tw-font-semibold tw-text-slate-800">Kategori</mat-label>
-      <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
+    <div class="form-group">
+      <mat-label class="form-label">Kategori</mat-label>
+      <mat-form-field appearance="outline" class="form-field !tw-mb-0">
         <mat-select formControlName="categoryId">
           @for(category of listCategory$ | async; track category) {
             <mat-optgroup [label]="category.name"></mat-optgroup>
@@ -27,9 +27,9 @@
       </mat-form-field>
     </div>
 
-    <div class="tw-space-y-1">
-      <mat-label class="tw-font-semibold tw-text-slate-800">Kullanım Alanı</mat-label>
-      <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
+    <div class="form-group">
+      <mat-label class="form-label">Kullanım Alanı</mat-label>
+      <mat-form-field appearance="outline" class="form-field !tw-mb-0">
         <mat-select formControlName="usageAreaId">
           @for(usageArea of listUsageArea$ | async; track usageArea) {
             <mat-option [value]="usageArea.id">{{ usageArea.name }}</mat-option>
@@ -38,9 +38,9 @@
       </mat-form-field>
     </div>
 
-    <div class="tw-space-y-1">
-      <mat-label class="tw-font-semibold tw-text-slate-800">Marka</mat-label>
-      <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
+    <div class="form-group">
+      <mat-label class="form-label">Marka</mat-label>
+      <mat-form-field appearance="outline" class="form-field !tw-mb-0">
         <mat-select formControlName="brandId">
           @for(brand of listBrand$ | async; track brand) {
             <mat-option [value]="brand.id">{{ brand.name }}</mat-option>
@@ -49,9 +49,9 @@
       </mat-form-field>
     </div>
 
-    <div class="tw-space-y-1">
-      <mat-label class="tw-font-semibold tw-text-slate-800">Model</mat-label>
-      <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
+    <div class="form-group">
+      <mat-label class="form-label">Model</mat-label>
+      <mat-form-field appearance="outline" class="form-field !tw-mb-0">
         <mat-select formControlName="shoeModelId">
           @for(model of listShoeModel$ | async; track model) {
             <mat-option [value]="model.id">{{ model.name }}</mat-option>
@@ -60,9 +60,9 @@
       </mat-form-field>
     </div>
 
-    <div class="tw-space-y-1">
-      <mat-label class="tw-font-semibold tw-text-slate-800">Materyal</mat-label>
-      <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
+    <div class="form-group">
+      <mat-label class="form-label">Materyal</mat-label>
+      <mat-form-field appearance="outline" class="form-field !tw-mb-0">
         <mat-select formControlName="materialId">
           @for(material of listMaterial$ | async; track material) {
             <mat-option [value]="material.id">{{ material.name }}</mat-option>
@@ -71,9 +71,9 @@
       </mat-form-field>
     </div>
 
-    <div class="tw-space-y-1">
-      <mat-label class="tw-font-semibold tw-text-slate-800">Fiyat</mat-label>
-      <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
+    <div class="form-group">
+      <mat-label class="form-label">Fiyat</mat-label>
+      <mat-form-field appearance="outline" class="form-field !tw-mb-0">
         <input matInput type="number" name="price" placeholder="0" formControlName="price" />
         <span matTextPrefix>$&nbsp;</span>
         <span matTextSuffix>.99</span>
@@ -81,20 +81,19 @@
     </div>
   </div>
 
-  <!-- Açıklama - Azaltılmış üst margin -->
-  <div class="tw-space-y-1 tw-mt-4">
-    <mat-label class="tw-font-semibold tw-text-slate-800">Açıklama</mat-label>
-    <mat-form-field appearance="outline" class="tw-w-full !tw-mb-0">
-      <textarea matInput formControlName="description" class="tw-w-full" rows="4"></textarea>
+  <!-- Açıklama -->
+  <div class="description-container">
+    <mat-label class="form-label">Açıklama</mat-label>
+    <mat-form-field appearance="outline" class="description-field !tw-mb-0">
+      <textarea matInput formControlName="description" class="description-textarea" rows="4"></textarea>
     </mat-form-field>
   </div>
 
   <!-- Submit Button -->
-  <div class="tw-text-right tw-mt-4">
+  <div class="submit-container">
     <button type="submit" 
             [disabled]="!productForm.valid"
-            class="tw-bg-admin-custom tw-cursor-pointer tw-px-6 tw-py-3 tw-rounded-lg tw-text-white 
-                   tw-font-medium focus:tw-bg-indigo-800 disabled:tw-opacity-50 tw-transition tw-duration-300">
+            class="submit-button">
       {{ btnTitle() }}
     </button>
   </div>

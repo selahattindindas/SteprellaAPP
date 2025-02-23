@@ -1,6 +1,6 @@
 <form #brandForm="ngForm" 
       (ngSubmit)="onSubmit()"
-      class="tw-w-full"
+      class="form"
       aria-label="Marka güncelleme formu">
   
   <mat-form-field appearance="outline">
@@ -16,7 +16,6 @@
            (keydown.enter)="onSubmit()"
            aria-required="true">
 
-    <!-- Validation Messages -->
     @if(name.invalid && (name.dirty || name.touched)) {
       <mat-error role="alert">
         @if(name.errors?.['required']) {

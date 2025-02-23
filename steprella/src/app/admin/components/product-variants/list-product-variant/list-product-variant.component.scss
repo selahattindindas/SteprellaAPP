@@ -1,0 +1,41 @@
+.variant-container {
+  @apply tw-pt-3 tw-w-full;
+}
+
+.variant-item {
+  @apply tw-grid tw-grid-cols-3 tw-items-center tw-p-4 tw-border-b last:tw-border-b-0;
+}
+
+.variant-name {
+  @apply tw-text-lg tw-font-normal;
+}
+
+.variant-status {
+  @apply tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium;
+}
+
+.status-active {
+  @apply tw-bg-green-100 tw-text-green-700;
+}
+
+.status-inactive {
+  @apply tw-bg-red-100 tw-text-red-700;
+}
+
+.action-buttons {
+  @apply tw-flex tw-justify-end tw-space-x-2;
+}
+
+.action-button {
+  @apply hover:tw-text-gray-800;
+}
+
+.action-icon {
+  @apply tw-text-teal;
+}
+
+.custom-icon {
+  @apply tw-text-teal;
+  width: 24px;
+  height: 24px;
+}

@@ -22,3 +22,43 @@
       border-bottom-width: 0;
     }
   }
+
+.dialog-title {
+  @apply tw-text-2xl tw-font-bold tw-mb-6 tw-text-center tw-text-gray-800;
+}
+
+.table-container {
+  @apply tw-rounded-b-xl tw-shadow-lg tw-bg-white tw-p-4;
+}
+
+.table-responsive {
+  @apply tw-overflow-x-auto;
+}
+
+.table-header {
+  @apply tw-text-base;
+}
+
+.status-badge {
+  @apply tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium;
+}
+
+.status-active {
+  @apply tw-bg-green-100 tw-text-green-700;
+}
+
+.status-inactive {
+  @apply tw-bg-red-100 tw-text-red-700;
+}
+
+.edit-section {
+  @apply tw-pt-2;
+}
+
+.action-buttons {
+  @apply tw-flex tw-gap-2;
+}
+
+.action-icon {
+  @apply tw-text-teal;
+}

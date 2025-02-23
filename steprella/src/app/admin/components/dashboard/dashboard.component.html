@@ -1,18 +1,17 @@
 <div class="row">
   <!-- Stats Cards -->
-  <div class="col-lg-12 tw-mb-6">
+  <div class="col-lg-12 !tw-mb-6">
     <div class="row tw-justify-center">
       <div class="col-lg-2" *ngFor="let stat of stats">
-        <mat-card class="tw-mb-4">
+        <mat-card class="!tw-mb-4">
           <mat-card-content>
-            <div class="tw-flex tw-gap-4 tw-items-center tw-relative">
-              <div class="tw-rounded-xl tw-w-12 tw-h-12 tw-flex tw-items-center tw-justify-center"
-                [style.background-color]="stat.color + '15'">
+            <div class="stats-wrapper">
+              <div class="stats-icon-container" [style.background-color]="stat.color + '15'">
                 <i [class]="stat.icon" [style.color]="stat.color" class="tw-text-xl"></i>
               </div>
               <div>
-                <p class="tw-text-gray-600 tw-m-0">{{stat.title}}</p>
-                <h3 class="tw-text-xl tw-font-semibold tw-m-0 tw-text-customGray">{{stat.value | number}}</h3>
+                <p class="stats-text">{{stat.title}}</p>
+                <h3 class="stats-value">{{stat.value | number}}</h3>
               </div>
             </div>
           </mat-card-content>
@@ -24,23 +23,22 @@
   <!-- Main Content -->
   <div class="col-lg-8">
     <!-- Recent Activities -->
-    <mat-card class="tw-mb-6">
+    <mat-card class="!tw-mb-6">
       <mat-card-header>
         <mat-card-title class="!tw-text-lg !tw-font-semibold">Son Aktiviteler</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="tw-divide-y">
-          <div *ngFor="let activity of recentActivities" 
-               class="tw-py-[19.5px] tw-flex tw-items-center tw-justify-between">
-            <div class="tw-flex tw-items-center tw-gap-4">
-              <div [ngClass]="{
+          <div *ngFor="let activity of recentActivities" class="activity-item">
+            <div class="activity-info">
+              <div class="activity-status" [ngClass]="{
                 'tw-bg-green-500': activity.status === 'success',
                 'tw-bg-yellow-500': activity.status === 'warning',
                 'tw-bg-pink-600': activity.status === 'error'
-              }" class="tw-w-[10px] tw-h-[10px] tw-rounded-full"></div>
+              }"></div>
               <div>
-                <p class="tw-m-0 tw-font-medium tw-text-customGray">{{activity.action}}</p>
-                <small class="tw-text-gray-500">{{activity.user}} - {{activity.time}}</small>
+                <p class="activity-text">{{activity.action}}</p>
+                <small class="activity-meta">{{activity.user}} - {{activity.time}}</small>
               </div>
             </div>
           </div>
@@ -49,30 +47,27 @@
     </mat-card>
 
     <!-- Top Products -->
-    <mat-card class="tw-mb-6">
+    <mat-card class="!tw-mb-6">
       <mat-card-header>
         <mat-card-title class="!tw-text-lg !tw-font-semibold">En Çok Satan Ürünler</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="tw-space-y-4">
-          <div *ngFor="let product of topProducts" 
-               class="tw-p-4 tw-flex tw-items-center tw-justify-between tw-rounded-lg hover:tw-bg-gray-50 tw-transition-colors">
-            <div class="tw-flex tw-items-center tw-gap-3">
-              <div class="tw-rounded-lg tw-w-12 tw-h-12 tw-bg-green-50 tw-flex tw-items-center tw-justify-center">
+          <div *ngFor="let product of topProducts" class="product-item">
+            <div class="product-info">
+              <div class="product-icon-wrapper">
                 <i class="fas fa-shoe-prints tw-text-green-500"></i>
               </div>
               <div>
-                <p class="tw-m-0 tw-font-medium tw-text-customGray">{{product.name}}</p>
-                <div class="tw-flex tw-items-center tw-gap-2">
-                  <span class="tw-text-sm tw-text-gray-500">
-                    {{product.sales}} satış
-                  </span>
+                <p class="product-name">{{product.name}}</p>
+                <div class="product-sales">
+                  <span class="product-sales-text">{{product.sales}} satış</span>
                 </div>
               </div>
             </div>
-            <div class="tw-text-right">
-              <p class="tw-m-0 tw-font-semibold tw-text-emerald-600">₺{{product.revenue | number}}</p>
-              <small class="tw-text-gray-500">Gelir</small>
+            <div class="product-revenue">
+              <p class="product-revenue-value">₺{{product.revenue | number}}</p>
+              <small class="product-revenue-label">Gelir</small>
             </div>
           </div>
         </div>
@@ -83,25 +78,25 @@
   <!-- Right Sidebar -->
   <div class="col-lg-4">
     <!-- Goals Card -->
-    <mat-card class="tw-mb-6">
+    <mat-card class="!tw-mb-6">
       <mat-card-content>
-        <div class="tw-flex tw-gap-4 tw-items-center tw-pb-1">
-          <div class="tw-rounded-xl tw-w-12 tw-h-12 tw-bg-[#a6f7f5] tw-flex tw-items-center tw-justify-center">
+        <div class="goals-header">
+          <div class="goals-icon-container">
             <i class="fas fa-chart-line tw-text-[#16cdc7] tw-text-xl"></i>
           </div>
           <mat-card-title class="!tw-text-base !tw-font-medium !tw-mb-0">Aylık Hedefler</mat-card-title>
         </div>
 
-        <div class="tw-mt-6">
-          <div class="tw-flex tw-items-center tw-justify-between tw-mb-2">
-            <h6 class="tw-text-[15px] tw-font-medium tw-m-0">Satış Hedefi</h6>
-            <h6 class="tw-text-[15px] tw-font-medium tw-m-0">83%</h6>
+        <div class="goals-content">
+          <div class="goals-item">
+            <h6 class="goals-item-title">Satış Hedefi</h6>
+            <h6 class="goals-item-value">83%</h6>
           </div>
           <mat-progress-bar mode="determinate" color="accent" value="83"></mat-progress-bar>
 
-          <div class="tw-flex tw-items-center tw-justify-between tw-mb-2 tw-mt-4">
-            <h6 class="tw-text-[15px] tw-font-medium tw-m-0">Müşteri Hedefi</h6>
-            <h6 class="tw-text-[15px] tw-font-medium tw-m-0">75%</h6>
+          <div class="goals-item tw-mt-4">
+            <h6 class="goals-item-title">Müşteri Hedefi</h6>
+            <h6 class="goals-item-value">75%</h6>
           </div>
           <mat-progress-bar mode="determinate" color="accent" value="75"></mat-progress-bar>
         </div>
@@ -111,25 +106,25 @@
     <!-- Quick Actions -->
     <mat-card>
       <mat-card-content>
-        <div class="tw-flex tw-gap-4 tw-items-center tw-pb-1">
-          <div class="tw-rounded-xl tw-w-12 tw-h-12 tw-bg-[#ffccdb] tw-flex tw-items-center tw-justify-center">
-            <svg class="tw-w-6 tw-h-6 tw-text-[#ff6692]" fill="currentColor" viewBox="0 0 24 24">
+        <div class="metrics-header">
+          <div class="metrics-icon-container">
+            <svg class="metrics-icon" fill="currentColor" viewBox="0 0 24 24">
               <path d="M13.5,8H12V13L16.28,15.54L17,14.33L13.5,12.25V8M13,3A9,9 0 0,0 4,12H1L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3"></path>
             </svg>
           </div>
           <mat-card-title class="!tw-text-base !tw-font-medium !tw-mb-0">Performans Metrikleri</mat-card-title>
         </div>
 
-        <div class="tw-mt-6">
-          <div class="tw-flex tw-items-center tw-justify-between tw-mb-2">
-            <h6 class="tw-text-[15px] tw-font-medium tw-m-0">Sipariş Tamamlanma</h6>
-            <h6 class="tw-text-[15px] tw-font-medium tw-m-0">92%</h6>
+        <div class="goals-content">
+          <div class="goals-item">
+            <h6 class="goals-item-title">Sipariş Tamamlanma</h6>
+            <h6 class="goals-item-value">92%</h6>
           </div>
           <mat-progress-bar mode="determinate" color="progress" value="92"></mat-progress-bar>
 
-          <div class="tw-flex tw-items-center tw-justify-between tw-mb-2 tw-mt-4">
-            <h6 class="tw-text-[15px] tw-font-medium tw-m-0">Müşteri Memnuniyeti</h6>
-            <h6 class="tw-text-[15px] tw-font-medium tw-m-0">88%</h6>
+          <div class="goals-item tw-mt-4">
+            <h6 class="goals-item-title">Müşteri Memnuniyeti</h6>
+            <h6 class="goals-item-value">88%</h6>
           </div>
           <mat-progress-bar mode="determinate" color="progress" value="88"></mat-progress-bar>
         </div>

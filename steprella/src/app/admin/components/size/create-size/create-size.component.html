@@ -1,68 +1,61 @@
-<form #stockForm="ngForm" (ngSubmit)="onSubmit()" class="tw-w-full">
-  <div class="tw-bg-white tw-px-6 tw-pt-6 tw-rounded-t-xl">
-    <div class="tw-flex">
-      <div class="tw-flex tw-flex-col min-xl:tw-flex-row tw-gap-4 tw-flex-1">
-
-        <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full min-xl:tw-max-w-[200px]">
-          <label class="tw-text-xs tw-font-medium tw-text-gray-600">Ayakkabı Numarası</label>
-          <div class="tw-h-[42px]"> 
-            <input 
-              class="tw-bg-admin-bg tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full"
-              [(ngModel)]="createSize().sizeValue" 
-              name="sizeValue"
-              #sizeValue="ngModel" 
-              type="number" 
-              required
-              min="1" 
-              max="55"
-            >
-          </div>
-          @if(sizeValue.invalid && (sizeValue.dirty || sizeValue.touched)) {
-            <div class="tw-text-red-500 tw-text-xs">
-              @if(sizeValue.errors?.['max']) {
-                <span>Maksimum 55 numara girilebilir</span>
-              }
-              @if(sizeValue.errors?.['min']) {
-                <span>Minimum 1 numara girilebilir</span>
-              }
-            </div>
-          }
+<form #stockForm="ngForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-header">
+    <div class="form-group">
+      <div class="input-container">
+        <label class="input-label">Ayakkabı Numarası</label>
+        <div class="input-wrapper"> 
+          <input 
+            class="form-input"
+            [(ngModel)]="createSize().sizeValue" 
+            name="sizeValue"
+            #sizeValue="ngModel" 
+            type="number" 
+            required
+            min="1" 
+            max="55"
+          >
         </div>
-
-        <div class="tw-flex tw-flex-col tw-gap-2 tw-w-full min-xl:tw-max-w-[200px]">
-          <label class="tw-text-xs tw-font-medium tw-text-gray-600">Stok Sayısı</label>
-          <div class="tw-h-[42px]">
-            <input
-              class="tw-bg-admin-bg tw-border-none tw-rounded-full tw-px-4 tw-h-full focus:tw-outline-none tw-w-full"
-              [(ngModel)]="createSize().stockQuantity" 
-              name="stockQuantity" 
-              #stockQuantity="ngModel" 
-              type="number"
-              min="1"
-              max="100"
-            >
+        @if(sizeValue.invalid && (sizeValue.dirty || sizeValue.touched)) {
+          <div class="validation-message">
+            @if(sizeValue.errors?.['max']) {
+              <span>Maksimum 55 numara girilebilir</span>
+            }
+            @if(sizeValue.errors?.['min']) {
+              <span>Minimum 1 numara girilebilir</span>
+            }
           </div>
-          @if(stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)) {
-            <div class="tw-text-red-500 tw-text-xs">
-              @if(stockQuantity.errors?.['min']) {
-                <span>Minimum 1 olmalıdır</span>
-              }
-              @if(stockQuantity.errors?.['max']) {
-                <span>Maksimum 100 olmalıdır</span>
-              }
-            </div>
-          }
-        </div>
-
-        <!-- Button -->
-        <button 
-          type="submit" 
-          [disabled]="!stockForm.valid"
-          class="tw-px-6 tw-h-[42px] tw-cursor-pointer tw-bg-indigo-500 tw-text-white tw-font-medium tw-rounded-lg hover:tw-bg-opacity-90 tw-whitespace-nowrap min-xl:tw-translate-y-[24px]"
-        >
-          Oluştur
-        </button>
+        }
       </div>
+  
+      <div class="input-container">
+        <label class="input-label">Stok Sayısı</label>
+        <div class="input-wrapper">
+          <input
+            class="form-input"
+            [(ngModel)]="createSize().stockQuantity" 
+            name="stockQuantity" 
+            #stockQuantity="ngModel" 
+            type="number"
+            min="1"
+            max="100"
+          >
+        </div>
+        @if(stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)) {
+          <div class="validation-message">
+            @if(stockQuantity.errors?.['min']) {
+              <span>Minimum 1 olmalıdır</span>
+            }
+            @if(stockQuantity.errors?.['max']) {
+              <span>Maksimum 100 olmalıdır</span>
+            }
+          </div>
+        }
+      </div>
+  
+      <button type="submit" [disabled]="!stockForm.valid" class="submit-button">
+        Oluştur
+      </button>
     </div>
   </div>
+
 </form>

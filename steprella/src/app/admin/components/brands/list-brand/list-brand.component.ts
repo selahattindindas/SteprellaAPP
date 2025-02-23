@@ -119,7 +119,7 @@ export class ListBrandComponent {
       afterClosed: () => this.loadBrands(),
       options: {
         width: '280px',
-        height: '260px'
+        height: '285px'
       },
     });
   }

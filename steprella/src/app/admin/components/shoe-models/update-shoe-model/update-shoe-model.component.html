@@ -1,6 +1,6 @@
 <form #shoeModelForm="ngForm" (ngSubmit)="onSubmit()">
     
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="form-field">
         <mat-label>Model Adı</mat-label>
         <input matInput
         type="text"
@@ -15,7 +15,7 @@
 
     <!-- Validation Messages -->
     @if(name.invalid && (name.dirty || name.touched)) {
-        <mat-error role="alert">
+        <mat-error role="alert" class="validation-message">
           @if(name.errors?.['required']) {
             Marka adı zorunludur
           } @else if(name.errors?.['minlength']) {

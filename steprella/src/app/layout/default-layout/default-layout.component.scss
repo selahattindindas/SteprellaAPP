@@ -1,0 +1,15 @@
+.layout-container {
+    @apply tw-min-h-screen tw-flex tw-flex-col;
+  }
+  
+  .header-wrapper {
+    @apply tw-fixed tw-left-0 tw-right-0 tw-top-0 tw-z-30 tw-bg-white tw-border-b tw-border-gray-200;
+  }
+  
+  .header-content {
+    @apply tw-max-w-[1450px] tw-mx-auto;
+  }
+  
+  .main-content {
+    @apply tw-flex-grow tw-my-20 tw-max-w-[1450px] tw-mx-auto tw-w-full;
+  }

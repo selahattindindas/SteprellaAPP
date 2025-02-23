@@ -129,3 +129,113 @@
 .mat-mdc-card {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
+
+// New styles with @apply
+.stats-icon-container {
+  @apply tw-rounded-xl tw-w-12 tw-h-12 tw-flex tw-items-center tw-justify-center;
+}
+
+.stats-text {
+  @apply tw-text-gray-600 tw-m-0;
+}
+
+.stats-value {
+  @apply tw-text-xl tw-font-semibold tw-m-0 tw-text-customGray;
+}
+
+.stats-wrapper {
+  @apply tw-flex tw-gap-4 tw-items-center tw-relative;
+}
+
+.activity-item {
+  @apply tw-py-[19.5px] tw-flex tw-items-center tw-justify-between;
+}
+
+.activity-info {
+  @apply tw-flex tw-items-center tw-gap-4;
+}
+
+.activity-status {
+  @apply tw-w-[10px] tw-h-[10px] tw-rounded-full;
+}
+
+.activity-text {
+  @apply tw-m-0 tw-font-medium tw-text-customGray;
+}
+
+.activity-meta {
+  @apply tw-text-gray-500;
+}
+
+.product-item {
+  @apply tw-p-4 tw-flex tw-items-center tw-justify-between tw-rounded-lg hover:tw-bg-gray-50 tw-transition-colors;
+}
+
+.product-icon-wrapper {
+  @apply tw-rounded-lg tw-w-12 tw-h-12 tw-bg-green-50 tw-flex tw-items-center tw-justify-center;
+}
+
+.product-info {
+  @apply tw-flex tw-items-center tw-gap-3;
+}
+
+.product-name {
+  @apply tw-m-0 tw-font-medium tw-text-customGray;
+}
+
+.product-sales {
+  @apply tw-flex tw-items-center tw-gap-2;
+}
+
+.product-sales-text {
+  @apply tw-text-sm tw-text-gray-500;
+}
+
+.product-revenue {
+  @apply tw-text-right;
+}
+
+.product-revenue-value {
+  @apply tw-m-0 tw-font-semibold tw-text-emerald-600;
+}
+
+.product-revenue-label {
+  @apply tw-text-gray-500;
+}
+
+.goals-header {
+  @apply tw-flex tw-gap-4 tw-items-center tw-pb-1;
+}
+
+.goals-icon-container {
+  @apply tw-rounded-xl tw-w-12 tw-h-12 tw-bg-[#a6f7f5] tw-flex tw-items-center tw-justify-center;
+}
+
+
+.goals-content {
+  @apply tw-mt-6;
+}
+
+.goals-item {
+  @apply tw-flex tw-items-center tw-justify-between tw-mb-2;
+}
+
+.goals-item-title {
+  @apply tw-text-[15px] tw-font-medium tw-m-0;
+}
+
+.goals-item-value {
+  @apply tw-text-[15px] tw-font-medium tw-m-0;
+}
+
+.metrics-header {
+  @apply tw-flex tw-gap-4 tw-items-center tw-pb-1;
+}
+
+.metrics-icon-container {
+  @apply tw-rounded-xl tw-w-12 tw-h-12 tw-bg-[#ffccdb] tw-flex tw-items-center tw-justify-center;
+}
+
+.metrics-icon {
+  @apply tw-w-6 tw-h-6 tw-text-[#ff6692];
+}

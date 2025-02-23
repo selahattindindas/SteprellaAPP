@@ -1,0 +1,44 @@
+.form-container {
+  @apply tw-p-6;
+}
+
+.grid-container {
+  @apply tw-grid tw-grid-cols-1 md:tw-grid-cols-2 tw-gap-4;
+}
+
+.form-group {
+  @apply tw-space-y-1;
+}
+
+.form-label {
+  @apply tw-font-semibold tw-text-slate-800;
+}
+
+.form-field {
+  @apply tw-w-full;
+}
+
+.description-container {
+  @apply tw-space-y-1 tw-mt-4;
+}
+
+.description-field {
+  @apply tw-w-full;
+}
+
+.description-textarea {
+  @apply tw-w-full;
+}
+
+.submit-container {
+  @apply tw-text-right tw-mt-4;
+}
+
+.submit-button {
+  @apply tw-bg-admin-custom tw-cursor-pointer tw-px-6 tw-py-3 tw-rounded-lg tw-text-white 
+         tw-font-medium focus:tw-bg-indigo-800 disabled:tw-opacity-50 tw-transition tw-duration-300;
+}
+
+.hidden-option {
+  @apply tw-hidden;
+}

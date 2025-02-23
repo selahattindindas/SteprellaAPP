@@ -11,7 +11,7 @@
     [defaultSpacing]="24">
   @for(brand of brandList(); track brand) {
     <div class="keen-slider__slide">
-      <div class="brand-card">
+      <div class="brand-card" (click)="navigateToBrand(brand)">
         <i [ngClass]="brand.logo" class="brand-logo"></i>
       </div>
     </div>

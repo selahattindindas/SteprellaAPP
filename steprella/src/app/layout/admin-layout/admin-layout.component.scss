@@ -1,12 +1,24 @@
-@media (min-width: 1200px) {
-  .sidebar-fixed {
-    position: fixed !important;
-    visibility: visible !important;
-    transform: none !important;
-    width: 260px !important;
-  }
-
-  .main-content {
-    margin-left: 260px;
-  }
+.layout-container {
+  @apply tw-flex tw-min-h-screen;
 }
+
+.progressbar{
+  @apply tw-fixed tw-inset-0 tw-bg-white;
+}
+
+.sidenav-container {
+  @apply tw-h-screen tw-w-full;
+}
+
+.main-content {
+  @apply tw-rounded-3xl tw-mx-5 tw-mb-5 tw-bg-customBackground tw-min-h-[calc(100vh-104px)];
+}
+
+.content-wrapper {
+  @apply tw-max-w-7xl tw-mx-auto;
+}
+
+.content-inner {
+  @apply tw-py-14 tw-px-6;
+}
+

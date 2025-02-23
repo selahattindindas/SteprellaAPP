@@ -1,0 +1,32 @@
+<form #featureForm="ngForm" 
+      (ngSubmit)="onSubmit()"
+      class="form"
+      aria-label="Ek özellik güncelleme formu">
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Ek Özellik</mat-label>
+    <input matInput
+           type="text"
+           name="name"
+           [(ngModel)]="updateFeature().name"
+           #name="ngModel"
+           required
+           minlength="2"
+           maxlength="50"
+           (keydown.enter)="onSubmit()"
+           aria-required="true">
+
+    <!-- Validation Messages -->
+    @if(name.invalid && (name.dirty || name.touched)) {
+      <mat-error role="alert">
+        @if(name.errors?.['required']) {
+          Ek Özellik zorunludur
+        } @else if(name.errors?.['minlength']) {
+          Ek Özellik en az 2 karakter olmalıdır
+        } @else if(name.errors?.['maxlength']) {
+          Ek Özellik en fazla 50 karakter olmalıdır
+        }
+      </mat-error>
+    }
+  </mat-form-field>
+</form>

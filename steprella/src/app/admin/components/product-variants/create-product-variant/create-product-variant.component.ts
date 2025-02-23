@@ -24,7 +24,7 @@ export class CreateProductVariantComponent {
   readonly variantForm = viewChild<NgForm>('variantForm');
 
   readonly productId = input.required<number>();
-  readonly variantList = output<void>();
+  readonly variantCreated = output<void>();
 
   readonly colors = signal<ListColor[]>([]);
   readonly createVariant = model<CreateProductVariant>({
@@ -61,7 +61,7 @@ export class CreateProductVariantComponent {
 
     this.adminProductVariantService.create(variantData, () => {
       form.reset();
-      this.variantList.emit();
+      this.variantCreated.emit();
     });
   }
 }

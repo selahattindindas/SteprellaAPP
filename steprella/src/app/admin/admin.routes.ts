@@ -27,6 +27,18 @@ export const adminRoutes: Routes = [
             {
                 path: 'brand',
                 loadComponent: () => import('./components/brands/list-brand/list-brand.component').then(m => m.ListBrandComponent),
+            },
+            {
+                path: 'material',
+                loadComponent: () => import('./components/materials/list-material/list-material.component').then(m => m.ListMaterialComponent),
+            },
+            {
+                path: 'feature',
+                loadComponent: () => import('./components/features/list-feature/list-feature.component').then(m => m.ListFeatureComponent),
+            },
+            {
+                path: 'usageArea',
+                loadComponent: () => import('./components/usageAreas/list-usage-area/list-usage-area.component').then(m => m.ListUsageAreaComponent),
             }
         ]
     }

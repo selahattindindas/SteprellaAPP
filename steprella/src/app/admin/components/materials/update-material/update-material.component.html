@@ -1,0 +1,32 @@
+<form #materialForm="ngForm" 
+      (ngSubmit)="onSubmit()"
+      class="form"
+      aria-label="Materyal güncelleme formu">
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Materyal Adı</mat-label>
+    <input matInput
+           type="text"
+           name="name"
+           [(ngModel)]="updateMaterial().name"
+           #name="ngModel"
+           required
+           minlength="2"
+           maxlength="50"
+           (keydown.enter)="onSubmit()"
+           aria-required="true">
+
+    <!-- Validation Messages -->
+    @if(name.invalid && (name.dirty || name.touched)) {
+      <mat-error role="alert">
+        @if(name.errors?.['required']) {
+          Materyal adı zorunludur
+        } @else if(name.errors?.['minlength']) {
+          Materyal adı en az 2 karakter olmalıdır
+        } @else if(name.errors?.['maxlength']) {
+          Materyal adı en fazla 50 karakter olmalıdır
+        }
+      </mat-error>
+    }
+  </mat-form-field>
+</form>

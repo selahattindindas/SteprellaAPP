@@ -25,14 +25,7 @@ interface MenuItem{
     MatIconModule
   ],
   templateUrl: './sidebar.component.html',
-  styles: [`
-    .active-link {
-      background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%) !important;
-      color: white !important;
-      border-radius: 6px;
-      margin: 0 8px;
-    }
-  `]
+  styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
   readonly isCollapsed = input<boolean>();
@@ -44,12 +37,12 @@ export class SidebarComponent {
       label: 'Uygulamalar',
       item: [
         {
-          icon: 'fas fa-box',
+          icon: 'fas fa-boxes',
           label: 'Ürünler',
           route: '/admin/products',
         },
         {
-          icon: 'fas fa-user',
+          icon: 'fas fa-users',
           label: 'Kullanıcılar',
           route: '/admin/users'
         },
@@ -57,6 +50,21 @@ export class SidebarComponent {
           icon: 'fas fa-tags',
           label: 'Markalar',
           route: '/admin/brand'
+        },
+        {
+          icon: 'fas fa-sliders',
+          label: 'Ek Özellikler',
+          route: '/admin/feature'
+        },
+        {
+          icon: 'fas fa-cube',
+          label: 'Materyal',
+          route: '/admin/material'
+        },
+        {
+          icon: 'fas fa-list-check',
+          label: 'Kullanım Alanı',
+          route: '/admin/usageArea'
         }
       ]
     },

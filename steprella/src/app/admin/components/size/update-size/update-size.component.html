@@ -1,20 +1,19 @@
-<form #stockForm="ngForm" (ngSubmit)="onSubmit()" class="tw-flex tw-flex-col tw-gap-1">
-  <mat-form-field appearance="outline" class="tw-w-36">
+<form #stockForm="ngForm" (ngSubmit)="onSubmit()" class="form-container">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Stok Sayısı</mat-label>
     <input matInput
-    type="number"
-    name="stockQuantity" 
-    [(ngModel)]="updateSize().stockQuantity" 
-    #stockQuantity="ngModel" 
-    required
-    min="1" 
-    max="100"
-    (keydown.enter)="onSubmit()"
-    aria-required="true">
- 
+           type="number"
+           name="stockQuantity" 
+           [(ngModel)]="updateSize().stockQuantity" 
+           #stockQuantity="ngModel" 
+           required
+           min="1" 
+           max="100"
+           (keydown.enter)="onSubmit()"
+           aria-required="true">
     
     @if(stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)) {
-      <mat-error role="alert">
+      <mat-error role="alert" class="validation-message">
         @if(stockQuantity.errors?.['required']) {
           <span>Stok sayısı gereklidir</span>
         }

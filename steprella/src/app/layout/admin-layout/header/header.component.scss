@@ -1,0 +1,65 @@
+.header {
+  @apply tw-bg-white !tw-h-[84px];
+}
+
+.header-container {
+  @apply tw-flex tw-w-full tw-items-center tw-justify-between;
+}
+
+.left-section {
+  @apply tw-flex tw-items-center;
+}
+
+.menu-toggle {
+  @apply tw-hidden tw-ml-6;
+
+  @media (max-width: 1200px) {
+    @apply tw-block;
+  }
+
+  @media (max-width: 400px) {
+    @apply tw-ml-1;
+  }
+}
+
+.notifications-area {
+  @apply tw-flex tw-items-center tw-space-x-4 tw-border-r tw-border-gray-200 tw-ml-6;
+}
+
+.notification-button {
+  @apply tw-relative;
+}
+
+.notification-icon {
+  @apply tw-text-gray-600 tw-text-xl tw-cursor-pointer 
+         hover:tw-text-gray-800 hover:tw-scale-110 tw-transition-transform;
+}
+
+.notification-badge {
+  @apply tw-absolute tw--top-2 tw--right-2 tw-bg-indigo-500 tw-text-white 
+         tw-rounded-full tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center 
+         tw-text-xs tw-font-medium;
+}
+
+.user-section {
+  @apply tw-flex tw-items-center tw-mr-6;
+
+  @media (max-width: 400px) {
+    @apply tw-mr-1;
+  }
+}
+
+.user-avatar {
+  @apply tw-ml-2 tw-cursor-pointer;
+
+  img{
+    @apply tw-w-12 tw-h-auto tw-object-contain;
+  }
+}
+.logout-container{
+  @apply tw-px-3 tw-py-2;
+}
+
+.logout-text {
+  @apply tw-text-blue-700;
+}

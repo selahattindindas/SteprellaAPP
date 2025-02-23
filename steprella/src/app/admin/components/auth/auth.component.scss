@@ -33,3 +33,47 @@
     font-size: 12px;
     font-weight: bold;
 }
+
+.auth-container {
+  @apply tw-min-h-screen tw-flex tw-items-center tw-justify-center tw-bg-slate-200;
+}
+
+.auth-card {
+  @apply tw-w-full tw-max-w-md tw-p-8 tw-shadow-[0_20px_50px_rgba(0,0,0,0.3)];
+}
+
+.logo-container {
+  @apply tw-flex tw-justify-center tw-mb-6 tw-mt-4;
+}
+
+.logo {
+  @apply tw-w-32 tw-h-auto tw-object-contain;
+}
+
+.header-container {
+  @apply tw-flex tw-justify-center tw-mb-6;
+}
+
+.form-container {
+  @apply tw-space-y-6;
+}
+
+.form-field {
+  @apply tw-w-full tw-h-14;
+}
+
+.form-icon {
+  @apply tw-text-gray-700;
+}
+
+.submit-button-container {
+  @apply tw-mt-6;
+}
+
+.submit-button {
+  @apply tw-w-full tw-rounded-lg;
+}
+
+.button-content {
+  @apply tw-flex tw-items-center tw-justify-center;
+}

@@ -36,6 +36,20 @@ export class FilterSectionComponent {
         }
       });
     }
+    
+    if (this.sectionKey() === 'brands') {
+      this.route.queryParams.subscribe(params => {
+        const brandId = params['brandId'];
+        if (brandId && this.items().length > 0) {
+          const matchingBrand = this.items().find(item => item.id === Number(brandId));
+          if (matchingBrand) {
+            this.items().forEach(item => {
+              item.selected = item.id === matchingBrand.id;
+            });
+          }
+        }
+      });
+    }
   }
 
   ngOnChanges() {
@@ -46,6 +60,18 @@ export class FilterSectionComponent {
         if (matchingGender) {
           this.items().forEach(item => {
             item.selected = item.id === matchingGender.id;
+          });
+        }
+      }
+    }
+
+    if (this.sectionKey() === 'brands' && this.items().length > 0) {
+      const brandId = this.route.snapshot.queryParams['brandId'];
+      if (brandId) {
+        const matchingBrand = this.items().find(item => item.id === Number(brandId));
+        if (matchingBrand) {
+          this.items().forEach(item => {
+            item.selected = item.id === matchingBrand.id;
           });
         }
       }

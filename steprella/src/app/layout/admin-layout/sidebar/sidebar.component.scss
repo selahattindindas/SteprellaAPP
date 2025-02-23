@@ -1,0 +1,47 @@
+.sidebar {
+  @apply tw-pt-7;
+}
+
+.logo-container {
+  @apply tw-mx-4;
+}
+
+.logo {
+  @apply tw-w-32 tw-h-auto tw-object-contain;
+}
+
+.navigation {
+  @apply tw-mt-5;
+}
+
+.menu-group {
+  @apply tw-mb-4;
+}
+
+.group-header {
+  @apply tw-mx-4 tw-py-2 tw-text-xs tw-font-semibold tw-uppercase tw-text-customGray tw-tracking-widest;
+}
+
+.menu-list {
+  @apply tw-list-none tw-p-0;
+}
+
+.menu-item {
+  a {
+    @apply tw-flex tw-items-center tw-cursor-pointer tw-ml-5 tw-pl-4 tw-py-3 
+           tw-no-underline tw-text-customGray
+           tw-duration-300 tw-ease-in-out;
+
+           &:hover{
+            @apply tw-bg-violet-100 tw-rounded-xl 
+           }
+  }
+}
+
+.item-icon {
+  @apply tw-w-5 tw-text-lg;
+}
+
+.item-label {
+  @apply tw-ml-3 tw-font-normal tw-text-sm;
+}

@@ -24,7 +24,7 @@ export class UserAuthService {
     }
 
     update(body: UpdateUser):Observable<UpdateUser>{
-        return this.httpClientService.post<UpdateUser>({
+        return this.httpClientService.put<UpdateUser>({
             controller: 'auth',
             action: 'update',
             withCredentials: true
