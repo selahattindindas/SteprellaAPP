@@ -9,9 +9,6 @@
 .sidebar-header {
   @apply tw-flex tw-justify-between tw-items-center tw-p-4 tw-border-b tw-border-gray-100;
 
-  .logo {
-    @apply tw-h-[30px];
-  }
 
   .close-btn {
     @apply tw-text-2xl tw-border-none tw-bg-none tw-cursor-pointer;

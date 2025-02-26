@@ -8,7 +8,8 @@
     #slider 
     [breakpoints]="sliderBreakpoints()"
     [defaultPerView]="4"
-    [defaultSpacing]="24">
+    [defaultSpacing]="24"
+    [forceUpdate]="forceUpdateTrigger()">
   @for(brand of brandList(); track brand) {
     <div class="keen-slider__slide">
       <div class="brand-card" (click)="navigateToBrand(brand)">

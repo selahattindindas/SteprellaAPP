@@ -4,16 +4,19 @@
       @for(variant of product.productVariants; track variant.id){
         <div class="product-card" [routerLink]="['/product', product.id, getFirstActiveVariantId(product, variant)]">
           <div class="image-container">
-            @if (variant.productFiles && variant.productFiles.length > 0) {
-            @for(files of variant.productFiles; track files) {
-            <img src='assets/images/ui/shoe1.png' [alt]="files.fileName" class="product-image">
-            }
-            } @else {
-            <img src='assets/images/ui/shoe1.png' alt="Default product image" class="product-image">
-            }
+            @if(variant.productFiles.length > 0) {
+              <img 
+              class="product-image"
+              ngSrc="assets/images/ui/shoe1.png"
+              alt="{{variant.productFiles[0].fileName}}"
+              [priority]="false"
+              width="192"
+              height="192"
+              loading="lazy">
+              }
     
-            <button (click)="toggleFavorite(variant)" class="favorite-btn">
-              <i [class]="variant.isFavorite ? 'fa-solid' : 'fa-regular'" class="fa-heart tw-text-xl" [class.favorite-active]="variant.isFavorite"></i>
+            <button (click)="$event.stopPropagation(); toggleFavorite(variant)" class="favorite-btn">
+              <i class="fa-heart tw-text-xl" [class.fa-solid]="variant.isFavorite" [class.fa-regular]="!variant.isFavorite" [class.favorite-active]="variant.isFavorite"></i>
             </button>
           </div>
     

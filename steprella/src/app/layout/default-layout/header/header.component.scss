@@ -2,6 +2,14 @@
   @apply tw-flex tw-items-center tw-justify-between tw-h-20;
 }
 
+.logo-section{
+  @apply tw-relative tw-w-[120px] tw-h-[60px];
+
+  img{
+    @apply tw-w-full tw-h-auto tw-object-contain;
+  }
+}
+
 .actions-section {
   @apply tw-flex;
 }

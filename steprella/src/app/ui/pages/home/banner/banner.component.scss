@@ -3,7 +3,11 @@
 }
 
 .banner-left {
-  @apply tw-flex-1 tw-mt-6 lg:tw-mt-12 tw-text-center;
+  @apply tw-flex-1 tw-mt-6 lg:tw-mt-12 tw-text-center tw-relative;
+
+  img{
+    @apply tw-w-full tw-h-auto;
+  }
 }
 
 .banner-content {
@@ -23,7 +27,8 @@
 }
 
 .banner-right {
-  @apply tw-flex-1 tw-flex;
+  @apply tw-flex-1 tw-flex tw-relative;
+  
 }
 
 .banner-image {

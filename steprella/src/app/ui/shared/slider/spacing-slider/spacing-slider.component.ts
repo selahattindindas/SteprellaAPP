@@ -1,5 +1,5 @@
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, inject, PLATFORM_ID, input, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, PLATFORM_ID, input, viewChild, OnChanges, SimpleChanges } from '@angular/core';
 import KeenSlider, { KeenSliderInstance, KeenSliderOptions } from "keen-slider";
 
 export interface SliderBreakpoint {
@@ -17,13 +17,14 @@ export interface SliderBreakpoint {
   styleUrl: './spacing-slider.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SpacingSliderComponent {
+export class SpacingSliderComponent implements OnChanges {
   private readonly platformId = inject(PLATFORM_ID);
   readonly sliderRef = viewChild<ElementRef<HTMLElement>>("sliderRef");
   
   readonly breakpoints = input<SliderBreakpoint[]>();
   readonly defaultPerView = input<number>(4);
   readonly defaultSpacing = input<number>(24);
+  readonly forceUpdate = input<any>();
 
   slider: KeenSliderInstance | undefined;
 
@@ -51,23 +52,31 @@ export class SpacingSliderComponent {
     return breakpointConfig;
   }
 
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        const options: KeenSliderOptions = {
-          slides: {
-            perView: this.defaultPerView(),
-            spacing: this.defaultSpacing(),
-          },
-          breakpoints: this.createBreakpointConfig()
-        };
-  
-        this.slider = new KeenSlider(this.sliderRef()!.nativeElement, options);
-      }, 300);
+  ngOnDestroy() {
+    if (this.slider) {
+      this.slider.destroy();
     }
   }
 
-  ngOnDestroy() {
-    this.slider?.destroy();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['forceUpdate']) {
+      if (this.slider) {
+        this.slider.destroy();
+      }
+
+      if (isPlatformBrowser(this.platformId)) {
+        setTimeout(() => {
+          const options: KeenSliderOptions = {
+            slides: {
+              perView: this.defaultPerView(),
+              spacing: this.defaultSpacing(),
+            },
+            breakpoints: this.createBreakpointConfig()
+          };
+    
+          this.slider = new KeenSlider(this.sliderRef()!.nativeElement, options);
+        });
+      }
+    }
   }
 }

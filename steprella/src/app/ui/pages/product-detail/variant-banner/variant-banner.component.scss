@@ -1,21 +1,28 @@
 .image-container {
-  @apply tw-w-full tw-flex tw-items-center tw-justify-center ;
+  @apply tw-w-full tw-flex tw-items-center tw-justify-center tw-relative;
 }
 
 .slider {
-  @apply tw-h-[500px];
+  .image-container {
+    @apply tw-py-5 tw-h-[475px] tw-cursor-pointer;
 
+    img {
+      @apply tw-max-w-full tw-max-h-full tw-py-2 tw-object-contain;
+    }
+
+  }
 }
 
 .thumbnail {
   @apply tw-mt-7;
 
   .image-container {
-    @apply tw-p-5 tw-h-[155px] tw-cursor-pointer;
+    @apply tw-py-5 tw-h-[150px] tw-cursor-pointer;
+
+    img {
+      @apply tw-max-w-full tw-max-h-full tw-py-2 tw-object-contain;
+    }
 
   }
 }
 
-img {
-  @apply tw-max-w-full tw-max-h-full tw-object-contain;
-}

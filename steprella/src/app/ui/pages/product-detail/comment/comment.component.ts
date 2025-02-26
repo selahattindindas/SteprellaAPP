@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ListProduct } from '../../../../core/models/products/list-product';
 import { ListComment } from '../../../../core/models/comments/list-comment';
@@ -7,7 +7,7 @@ import { ListComment } from '../../../../core/models/comments/list-comment';
 @Component({
   selector: 'app-comment',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgOptimizedImage],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

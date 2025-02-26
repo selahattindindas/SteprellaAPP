@@ -1,20 +1,28 @@
 import { ChangeDetectionStrategy, Component, input, computed, output, inject, Signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, IMAGE_CONFIG, NgOptimizedImage } from '@angular/common';
 import { ListProductVariant } from '../../../core/models/product-variants/list-product-variant';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ListProduct } from '../../../core/models/products/list-product';
+import { FavoriteService } from '../../../core/services/ui/favorite.service';
+import { CreateFavorite } from '../../../core/models/favorites/create-favorite';
+import { AuthService } from '../../../core/services/common/auth.service';
+import { SweetAlertService } from '../../../core/services/common/sweet-alert.service';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, NgOptimizedImage],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class CardComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private favoriteService = inject(FavoriteService);
+  private authService = inject(AuthService);
+  private sweetAlertService = inject(SweetAlertService);
 
   readonly data = input<any[]>();
   readonly totalCount = input<number>();
@@ -40,18 +48,26 @@ export class CardComponent {
   }
 
   private transformToListProduct(item: any): ListProduct {
-    if (!('variant' in item)) return item as ListProduct;
+    if (!('variant' in item)) {
+        return {
+            ...item,
+            productVariants: item.productVariants.map((variant: any) => ({
+                ...variant,
+                isFavorite: variant.favorite 
+            }))
+        } as ListProduct;
+    }
   
     const { id, price, productVariant } = item;
     return {
-      id,
-      price: price || 0,
-      ...productVariant,
-      productVariants: [{
         id,
+        price: price || 0,
         ...productVariant,
-        isFavorite: item.isFavorite || false 
-      }]
+        productVariants: [{
+            id,
+            ...productVariant,
+            isFavorite: item.isFavorite || false 
+        }]
     } as ListProduct;
   }
 
@@ -67,10 +83,28 @@ export class CardComponent {
     ])].sort((a, b) => a - b);
   }
 
-  toggleFavorite(product: ListProductVariant): void {
-    console.log('Toggled favorite:', product);
+  toggleFavorite(variant: ListProductVariant): void {
+    event?.stopPropagation();
+  
+    if (!this.authService.isUserAuthenticated()) {
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+    
+    if (!variant.isFavorite) {
+      const createFavorite: CreateFavorite = {
+        productVariantId: variant.id
+      };
+      
+      this.favoriteService.create(createFavorite).subscribe({
+        next: () => {
+          variant.isFavorite = true;
+          this.sweetAlertService.showMessage();
+        },
+      });
+    }
   }
-
+  
   handlePageChange(page: number): void {
     this.router.navigate([], {
       relativeTo: this.route,

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 
 interface TechnologyFeature {
@@ -11,7 +11,7 @@ interface TechnologyFeature {
 @Component({
   selector: 'app-technology',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './technology.component.html',
   styleUrl: './technology.component.scss'
 })

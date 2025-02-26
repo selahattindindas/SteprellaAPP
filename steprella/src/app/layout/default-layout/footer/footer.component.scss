@@ -46,8 +46,8 @@
   @apply tw-flex tw-flex-col tw-items-start tw-gap-6;
 }
 
-.logo {
-  @apply tw-h-8 tw-w-auto;
+img {
+  @apply tw-h-8 tw-w-full;
 }
 
 .nav-menu {

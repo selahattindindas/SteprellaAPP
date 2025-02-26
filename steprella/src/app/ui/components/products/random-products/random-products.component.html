@@ -8,7 +8,8 @@
     #slider 
     [breakpoints]="sliderBreakpoints()"
     [defaultPerView]="4"
-    [defaultSpacing]="24">
+    [defaultSpacing]="24"
+    [forceUpdate]="forceUpdateTrigger()">
     @for(product of listProduct(); track product) {
         <div class="keen-slider__slide">
              <app-card [data]="[product]"></app-card> 

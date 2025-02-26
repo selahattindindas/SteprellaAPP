@@ -25,20 +25,16 @@ export class FavoriteService {
         );
     }
 
-    async create(body: CreateFavorite): Promise<void> {
-        const observable: Observable<CreateFavorite> = this.httpClientService.post({
+    create(body: CreateFavorite): Observable<CreateFavorite> {
+        return this.httpClientService.post<CreateFavorite>({
             controller: 'favorites',
             action: 'create-favorite'
         }, body)
-
-        await firstValueFrom(observable);
     }
 
-    async delete(id: number): Promise<void> {
-        const observable: Observable<ListFavorite> = this.httpClientService.delete({
+    delete(id: number): Observable<void> {
+        return this.httpClientService.delete<void>({
             controller: 'favorites',
         }, id)
-
-        await firstValueFrom(observable);
     }
 }

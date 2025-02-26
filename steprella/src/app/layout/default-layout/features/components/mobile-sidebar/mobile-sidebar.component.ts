@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from '../../../../../core/services/ui/category.service';
 import { ListCategory } from '../../../../../core/models/categories/list-category';
@@ -8,7 +8,7 @@ import { UrlService } from '../../../../../core/services/common/url.service';
 @Component({
   selector: 'app-mobile-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NgOptimizedImage],
   templateUrl: './mobile-sidebar.component.html',
   styleUrl: './mobile-sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

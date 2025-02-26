@@ -20,6 +20,7 @@ interface BrandSlider {
 export class BrandSlideComponent {
   private router = inject(Router);
   readonly slider = viewChild<SpacingSliderComponent>('slider');
+  readonly forceUpdateTrigger = signal<number>(0);
 
   readonly brandList = signal<BrandSlider[]>([
     {id: 1, name: 'adidas', logo: 'logo-adidas'},
@@ -42,6 +43,12 @@ export class BrandSlideComponent {
     { maxWidth: 768, perView: 2, spacing: 16 },
     { maxWidth: 480, perView: 1, spacing: 16 }
   ]); 
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.forceUpdateTrigger.set(Date.now());
+    });
+  }
 
   nextSlide() {
     this.slider()?.slider?.next();

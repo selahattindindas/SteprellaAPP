@@ -1,5 +1,5 @@
-import { Component, ViewChild, inject, signal, viewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, ViewChild, inject, signal, viewChild } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MainNavComponent } from '../features/components/main-nav/main-nav.component';
 import { MobileSidebarComponent } from '../features/components/mobile-sidebar/mobile-sidebar.component';
 import { RouterLink } from '@angular/router';
@@ -16,10 +16,12 @@ import { CartService } from '../../../core/services/ui/cart.service';
     MobileSidebarComponent,
     RouterLink,
     UserDropdownComponent,
-    CartComponent
+    CartComponent,
+    NgOptimizedImage
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
   mobileSidebar = viewChild<MobileSidebarComponent>(MobileSidebarComponent);
