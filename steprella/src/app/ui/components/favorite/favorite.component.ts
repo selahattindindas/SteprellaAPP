@@ -1,18 +1,25 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { CardComponent } from '../../shared/card/card.component';
 import { FavoriteService } from '../../../core/services/ui/favorite.service';
 import { ListFavorite } from '../../../core/models/favorites/list-favorite';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
+import { SweetAlertService } from '../../../core/services/common/sweet-alert.service';
+import { ResultToolbarComponent } from '../../shared/result-toolbar/result-toolbar.component';
 
 @Component({
   selector: 'app-favorite',
-  imports: [CardComponent],
+  standalone: true,
+  imports: [CardComponent, PageBannerComponent, ResultToolbarComponent],
   templateUrl: './favorite.component.html',
-  styleUrl: './favorite.component.scss'
+  styleUrl: './favorite.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FavoriteComponent implements OnInit{
   private readonly favoriteService = inject(FavoriteService);
+  private readonly sweetAlertService = inject(SweetAlertService);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   readonly listFavorite = signal<ListFavorite[]>([]);
   readonly loading = signal(false);
@@ -43,6 +50,28 @@ export class FavoriteComponent implements OnInit{
         this.totalCount.set(0);
         this.loading.set(false);
       }
+    });
+  }
+
+  delete(id: number){
+    this.sweetAlertService.confirmation().then(result => {
+      if (result.isConfirmed) {
+        this.favoriteService.delete(id).subscribe({
+          next: () => {
+            this.sweetAlertService.showMessage();
+            this.getFavorites();
+          }
+        })
+      }
+    })
+  }
+
+  handlePageChange(page: number) {
+    this.currentPage.set(page);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page },
+      queryParamsHandling: 'merge'
     });
   }
 }

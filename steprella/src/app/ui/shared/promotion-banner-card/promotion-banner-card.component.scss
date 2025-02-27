@@ -16,10 +16,10 @@
     }
   
     .banner-image {
-      @apply tw-flex-shrink-0;
+      @apply tw-flex-shrink-0 tw-relative;
   
       .bank-logo {
-        @apply tw-w-20 md:tw-w-28 tw-h-auto tw-object-contain;
+        @apply tw-w-20 tw-h-auto tw-object-contain;
       }
     }
   

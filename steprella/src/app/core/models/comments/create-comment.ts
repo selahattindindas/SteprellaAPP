@@ -1,5 +1,5 @@
 export interface CreateComment{
     commentText: string;
-    productVariantId: number;
+    productId: number;
     rating: number;
 }

@@ -1,18 +1,28 @@
-<app-slider-header 
-    [title]="'Sizin İçin Seçtiklerimiz'"
-    (prev)="prevSlide()"
-    (next)="nextSlide()">
-</app-slider-header>
+<section>
+    <div>
+        <app-slider-header 
+        [title]="'Sizin İçin Seçtiklerimiz'"
+        (prev)="prevSlide()"
+        (next)="nextSlide()" 
+        />
+    </div>
+    
+    <div>
+        <app-spacing-slider 
+        #slider 
+        [breakpoints]="sliderBreakpoints()"
+        [defaultPerView]="4"
+        [defaultSpacing]="24"
+        [forceUpdate]="forceUpdateTrigger()" >
+    
+            @for(product of products(); track product.id){
+                @for(variant of product.productVariants; track variant.id){
+                    <div class="keen-slider__slide">
+                        <app-card [data]="product" [variant]="variant"></app-card> 
+                    </div>
+                }
+            }
+        </app-spacing-slider>
+    </div>
+</section>
 
-<app-spacing-slider 
-    #slider 
-    [breakpoints]="sliderBreakpoints()"
-    [defaultPerView]="4"
-    [defaultSpacing]="24"
-    [forceUpdate]="forceUpdateTrigger()">
-    @for(product of listProduct(); track product) {
-        <div class="keen-slider__slide">
-             <app-card [data]="[product]"></app-card> 
-        </div>
-    }
-</app-spacing-slider>

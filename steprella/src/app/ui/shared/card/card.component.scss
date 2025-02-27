@@ -14,21 +14,21 @@
       }
 
       .favorite-btn {
-        @apply tw-absolute tw-top-4 tw-right-4 tw-p-2 tw-rounded-full tw-bg-white tw-transition-colors;
+        @apply tw-absolute tw-w-10 tw-h-10 tw-top-4 tw-right-4 tw-p-2 tw-rounded-full tw-bg-white tw-transition-colors;
 
         i {
-          @apply tw-transition-colors;
+          @apply tw-transition-colors tw-text-xl;
           
           &.favorite-active {
-            @apply tw-text-orange-500;
+            @apply tw-text-ui-bg;
           }
         }
 
         &:hover {
-          @apply tw-text-ui-bg;
+          @apply tw-text-orange-700;
           
           i.favorite-active {
-            @apply tw-text-orange-600;
+            @apply tw-text-ui-bg;
           }
         }
       }
@@ -39,7 +39,11 @@
 
       .rating {
         @apply tw-flex tw-items-center tw-gap-1 tw-text-sm tw-pb-2 tw-text-gray-600;
-      
+
+        i {
+          @apply tw-text-base;
+        }
+        
         .fa-star {
           @apply tw-text-amber-500;
           
@@ -60,16 +64,13 @@
           @apply tw-flex tw-flex-col;
 
           .price {
-            @apply tw-text-base tw-font-medium tw-text-gray-900;
-          }
-
-          .sold-out {
-            @apply tw-text-sm tw-text-gray-500;
+            @apply tw-text-base tw-font-semibold tw-text-ui-bg;
           }
         }
 
         .cart-btn {
-          @apply tw-w-10 tw-h-10 tw-rounded-full tw-bg-ui-bg tw-flex tw-items-center tw-justify-center hover:tw-bg-ui-bg tw-transition-colors;
+          @apply tw-w-10 tw-h-10 tw-rounded-full tw-bg-ui-bg tw-flex tw-items-center 
+          tw-justify-center hover:tw-bg-ui-bg tw-transition-colors;
 
           svg {
             @apply tw-w-5 tw-h-5 tw-text-white;
@@ -106,7 +107,3 @@
     }
   }
 }
-
-
-// Ürün sayısı bilgisi için
-

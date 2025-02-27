@@ -1,0 +1,49 @@
+.comment-card {
+    @apply tw-flex tw-gap-4 tw-mb-8  tw-bg-white tw-rounded-lg;
+  }
+  
+  .comment-left {
+    .user-avatar {
+      @apply tw-w-12 tw-h-12 tw-rounded-full tw-overflow-hidden;
+  
+      img {
+        @apply tw-w-full tw-h-full tw-object-cover;
+      }
+    }
+  }
+  
+  .comment-right {
+    @apply tw-flex-1;
+  }
+  
+  .comment-header {
+    @apply tw-flex tw-justify-between tw-items-start tw-mb-2;
+  }
+  
+  .user-info {
+    @apply tw-flex tw-flex-col;
+  
+    .user-name {
+      @apply tw-font-medium tw-text-ui-black tw-text-lg;
+    }
+  
+    .comment-date {
+      @apply tw-text-sm tw-text-gray-500;
+    }
+  }
+  
+  .rating-stars {
+    @apply tw-flex tw-gap-1 tw-text-lg;
+  
+    i {
+      @apply tw-text-gray-300;
+  
+      &.active {
+        @apply tw-text-orange-400;
+      }
+    }
+  }
+  
+  .comment-text {
+    @apply tw-text-slate-500 tw-font-medium tw-leading-relaxed;
+  }

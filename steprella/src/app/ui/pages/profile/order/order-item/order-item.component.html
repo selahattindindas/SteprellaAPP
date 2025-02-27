@@ -3,7 +3,7 @@
   <div class="item">
     <div class="item-image">
       @if (item.variant.productImages.length > 0) {
-      <img src="assets/images/ui/shoe1.png">
+      <img ngSrc="{{item.variant.productImages[0].path}}" width="128" height="128" loading="lazy">
       }
     </div>
 

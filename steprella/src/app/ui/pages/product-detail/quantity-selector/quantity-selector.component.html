@@ -1,23 +1,24 @@
 <div class="product-purchase">
-    <div class="price">{{ product()?.price | currency:'TRY':'symbol-narrow':'1.2-2'}}</div>
-    <div class="quantity">
-      <button class="qty-btn" [disabled]="quantity() <= min" (click)="updateQuantity(false)">
-        <i class="fa-solid fa-minus"></i>
+  <div class="price">{{ product()?.price | currency:'TRY':'symbol-narrow':'1.2-2'}}</div>
+  <div class="quantity">
+    <button class="qty-btn" [disabled]="quantity() <= min" (click)="updateQuantity(false)">
+      <i class="fa-solid fa-minus"></i>
+    </button>
+    <span class="qty-value">{{ quantity() }}</span>
+    <button class="qty-btn" [disabled]="quantity() >= max" (click)="updateQuantity(true)">
+      <i class="fa-solid fa-plus"></i>
+    </button>
+  </div>
+  <div class="add-to-cart">
+    <button class="add-to-btn" (click)="submit.emit()">Sepete Ekle</button>
+    <div class="action-buttons">
+      <button class="action-btn" (click)="onFavoriteClick()">
+        <i [class]="selectedVariant()?.favorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+           [ngClass]="{'tw-text-ui-bg': selectedVariant()?.favorite}"></i>
       </button>
-      <span class="qty-value">{{ quantity() }}</span>
-      <button class="qty-btn" [disabled]="quantity() >= max" (click)="updateQuantity(true)">
-        <i class="fa-solid fa-plus"></i>
+      <button class="action-btn">
+        <i class="fa-solid fa-rotate"></i>
       </button>
-    </div>
-    <div class="add-to-cart">
-      <button class="add-to-btn" (click)="submit.emit()">Sepete Ekle</button>
-      <div class="action-buttons">
-        <button class="action-btn">
-          <i class="fa-regular fa-heart"></i>
-        </button>
-        <button class="action-btn">
-          <i class="fa-solid fa-rotate"></i>
-        </button>
-      </div>
     </div>
   </div>
+</div>

@@ -4,20 +4,27 @@
   <div class="products-grid">
     @if(products().length > 0) {
 
-    <div class="result-toolbar">
-      <app-result-toolbar [totalCount]="totalCount()" />
-    </div>
+      <div class="result-toolbar">
+        <app-result-toolbar [totalCount]="totalCount()" />
+      </div>
 
-    <div class="product-card">
-      <app-card [data]="products()" [currentPage]="currentPage()" [pageSize]="pageSize()" [totalCount]="totalCount()"
-        (onPageChange)="handlePageChange($event)" />
-    </div>
-
-    }
-    @else {
-    <div class="not-found">
-      <app-not-found />
-    </div>
-    }
+      <div class="product-card">
+        @for(product of products(); track product.id){
+          @for(variant of product.productVariants; track variant.id){
+            <app-card 
+            [data]="product" 
+            [variant]="variant" 
+            [currentPage]="currentPage()" 
+            [pageSize]="pageSize()" 
+            [totalCount]="totalCount()"
+            (onPageChange)="handlePageChange($event)" />
+          }
+        }
+      </div>
+    } @else {
+        <div class="not-found">
+          <app-not-found />
+        </div>
+      }
   </div>
 </div>

@@ -3,7 +3,7 @@ import { RandomProductsComponent } from "../random-products/random-products.comp
 import { VariantColorComponent } from "../../../pages/product-detail/variant-color/variant-color.component";
 import { CommentComponent } from "../../../pages/product-detail/comment/comment.component";
 import { DescriptionComponent } from "../../../pages/product-detail/description/description.component";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ListProduct } from "../../../../core/models/products/list-product";
 import { ProductService } from "../../../../core/services/ui/product.service";
 import { VariantSizeComponent } from "../../../pages/product-detail/variant-size/variant-size.component";
@@ -15,6 +15,8 @@ import { CreateCartItem } from "../../../../core/models/cart-items/create-cart-i
 import { Icon, SweetAlertService } from "../../../../core/services/common/sweet-alert.service";
 import { AuthService } from "../../../../core/services/common/auth.service";
 import { CartService } from "../../../../core/services/ui/cart.service";
+import { ListProductVariant } from "../../../../core/models/product-variants/list-product-variant";
+import { FavoriteService } from "../../../../core/services/ui/favorite.service";
 
 interface ProductDetail {
   title: string;
@@ -45,6 +47,8 @@ export class ProductDetailComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly sweetAlertService = inject(SweetAlertService);
   private readonly authService = inject(AuthService);
+  private readonly favoriteService = inject(FavoriteService);
+  private readonly router = inject(Router);
   
   readonly product = signal<ListProduct | null>(null);
   readonly selectedVariantId = signal<number | null>(null);
@@ -68,6 +72,12 @@ export class ProductDetailComponent {
     });
   }
 
+  onCommentAdded() {
+    if (this.product()) {
+      this.loadProduct(this.product()!.id);
+    }
+  }
+
   loadProduct(id: number) {
     this.productService.getById(id).subscribe({
       next: (product) => {
@@ -88,9 +98,9 @@ export class ProductDetailComponent {
     this.selectedSizeId = sizeId;
   }
 
-  onSubmit() {
+  createCartItem() {
     if (!this.authService.isUserAuthenticated()) {
-      this.sweetAlertService.showMessage("Lütfen önce giriş yapın.", Icon.WARNING);
+      this.router.navigate(['/auth']);
       return;
     }
 
@@ -107,7 +117,7 @@ export class ProductDetailComponent {
 
     this.cartItemService.create(cartItem).subscribe({
       next: () => {
-        this.sweetAlertService.showMessage("Ürün sepete eklendi.");
+        this.sweetAlertService.showMessage();
         this.cartService.notifyCartUpdate();
         this.cartService.setCartOpen(true);
       },
@@ -117,7 +127,28 @@ export class ProductDetailComponent {
     });
   }
 
-  getSelectedVariant() {
-    return this.product()?.productVariants.find(v => v.id === this.selectedVariantId());
+  onFavoriteClick() {
+    if (!this.authService.isUserAuthenticated()) {
+      this.router.navigate(['/auth']);
+      return;
+    }
+
+    const variant = this.getSelectedVariant();
+    if (!variant || variant.favorite) return;
+
+    this.favoriteService.create({ productVariantId: variant.id }).subscribe({
+      next: () => {
+        variant.favorite = true;
+        this.sweetAlertService.showMessage('Ürün favorilere eklendi', Icon.SUCCESS);
+      },
+      error: () => {
+        this.sweetAlertService.showMessage('Bir hata oluştu', Icon.ERROR);
+      }
+    });
+  }
+
+  getSelectedVariant(): ListProductVariant | null {
+    const variant = this.product()?.productVariants.find(v => v.id === this.selectedVariantId());
+    return variant || null;
   }
 }

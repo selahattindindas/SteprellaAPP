@@ -27,7 +27,12 @@
       </div>
 
       <div class="product-footer">
-        <app-quantity-selector [product]="product()" (submit)="onSubmit()" (quantityChange)="onQuantityChange($event)" />
+        <app-quantity-selector 
+          [product]="product()" 
+          [selectedVariant]="getSelectedVariant()"
+          (submit)="createCartItem()" 
+          (favoriteClick)="onFavoriteClick()" 
+          (quantityChange)="onQuantityChange($event)" />
       </div>
     </div>
   </div>
@@ -37,7 +42,7 @@
   </div>
 
   <div class="comment">
-    <app-comment [listComment]="product()?.productComments" />
+    <app-comment [listComment]="product()?.productComments" [productId]="product()?.id ?? 0" (commentAdded)="onCommentAdded()" />
   </div>
 
   <div class="random">

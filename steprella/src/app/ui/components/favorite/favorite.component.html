@@ -1,11 +1,34 @@
-@if(loading()) {
-    <div class="loading">Yükleniyor...</div>
-}
+<section>
+    <div class="favorite-header">
+        <app-page-banner [title]="'FAVORİLERİM'" />
+    </div>
 
-@else if(listFavorite().length > 0) {
-    <app-card [data]="listFavorite()" />
-} 
+    @if(listFavorite().length > 0) {
+        <div class="favorite-toolbar">
+            <app-result-toolbar [totalCount]="totalCount()"/>
+        </div>
 
-@else {
-    <h1>Beğendiğin ürün bulunmamaktadır.</h1>
-}
+        <div class="favorite-container">
+            @for(favorite of listFavorite(); track favorite.id ){
+                @for(variant of favorite.product.productVariants ; track variant.id){
+                    <app-card 
+                    [data]="favorite" 
+                    [variant]="variant" 
+                    [showHeartIcon]="false" 
+                    (onDelete)="delete(favorite.id)"
+                    [currentPage]="currentPage()" 
+                    [pageSize]="pageSize()" 
+                    [totalCount]="totalCount()"
+                    (onPageChange)="handlePageChange($event)"/>
+                }
+            }
+        </div>
+    }
+    @else {
+        <div class="empty-favorites">
+            <i class="fa-solid fa-heart-crack empty-icon"></i>
+            <h2>Beğendiğiniz ürün bulunmamaktadır</h2>
+            <p>Favori ürünlerinizi burada görüntüleyebilirsiniz</p>
+        </div>
+    }
+</section>

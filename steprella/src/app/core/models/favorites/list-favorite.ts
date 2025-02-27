@@ -1,6 +1,6 @@
-import { ListProductVariantDetail } from "../product-variants/list-product-variant-detail";
+import { ListProduct } from "../products/list-product";
 
 export interface ListFavorite{
     id: number;
-    productVariant: ListProductVariantDetail;
+    product: ListProduct;
 }

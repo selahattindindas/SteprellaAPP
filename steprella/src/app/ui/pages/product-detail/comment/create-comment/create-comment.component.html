@@ -1,0 +1,29 @@
+<div class="add-comment-form">
+  <form #commentForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="section-header">
+      <h3 class="section-title">Yorum Ekle</h3>
+      <span class="section-description">Yorum alanını doldurunuz.</span>
+    </div>
+
+    <div class="rating-container">
+      <p>Puanınız</p>
+      <div class="stars">
+        @for (star of stars; track $index) {
+          <i class="fa-regular fa-star" (click)="rate(star)" [class.active]="star <= rating"></i>
+        }
+      </div>
+      @if (isFormSubmitted && rating === 0) {
+        <span class="error-message">Lütfen bir puan seçiniz</span>
+      }
+    </div>
+
+    <div class="review-container">
+      <textarea [(ngModel)]="review" name="review" #reviewInput="ngModel" required placeholder="Yorumunuzu buraya yazın..." class="review-input" [class.error]="isFormSubmitted && reviewInput.invalid"></textarea>
+      @if (isFormSubmitted && reviewInput.invalid) {
+        <span class="error-message">Lütfen yorumunuzu yazınız</span>
+      }
+    </div>
+
+    <button type="submit" class="submit-btn">Gönder</button>
+  </form>
+</div>

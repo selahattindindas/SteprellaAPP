@@ -1,8 +1,9 @@
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-page-banner',
-  imports: [],
+  imports: [CommonModule, NgOptimizedImage],
   standalone: true,
   templateUrl: './page-banner.component.html',
   styleUrl: './page-banner.component.scss',
@@ -10,5 +11,4 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class PageBannerComponent {
   readonly title = input.required<string>();
-  readonly height = input<number>(300);
 }

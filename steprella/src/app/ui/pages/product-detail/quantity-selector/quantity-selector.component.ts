@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { ListProduct } from '../../../../core/models/products/list-product';
+import { ListProductVariant } from '../../../../core/models/product-variants/list-product-variant';
 
 @Component({
   selector: 'app-quantity-selector',
@@ -12,15 +13,21 @@ import { ListProduct } from '../../../../core/models/products/list-product';
 })
 export class QuantitySelectorComponent {
   readonly product = input<ListProduct | null>(null);
-
+  readonly selectedVariant = input<ListProductVariant | null>(null);
+  
   readonly submit = output<void>();
   
   readonly quantityChange = output<number>();
+  readonly favoriteClick = output<void>();
   
   protected readonly min = 1;
   protected readonly max = 5;
 
   quantity = signal(1);
+
+  onFavoriteClick() {
+    this.favoriteClick.emit();
+  }
   
   updateQuantity(increment: boolean) {
     const current = this.quantity();

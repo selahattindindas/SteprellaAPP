@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, viewChild, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, viewChild, signal, ChangeDetectorRef, OnInit } from '@angular/core';
 import { SliderHeaderComponent } from '../../../shared/slider/slider-header/slider-header.component';
 import { SpacingSliderComponent } from '../../../shared/slider/spacing-slider/spacing-slider.component';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
@@ -13,8 +13,9 @@ import { Router } from '@angular/router';
   styleUrl: './variant-color.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VariantColorComponent {
+export class VariantColorComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly cd = inject(ChangeDetectorRef);
   
   readonly slider = viewChild<SpacingSliderComponent>('slider');
   readonly product = input<ListProduct | null>(null);
@@ -24,7 +25,8 @@ export class VariantColorComponent {
   ngOnInit() {
     setTimeout(() => {
       this.forceUpdateTrigger.set(Date.now());
-    });
+      this.cd.detectChanges();
+    }, 100);
   }
 
   selectVariant(variantId: number) {
@@ -33,15 +35,18 @@ export class VariantColorComponent {
       this.router.navigate(['/product', productId, variantId]);
       setTimeout(() => {
         this.forceUpdateTrigger.set(Date.now());
-      });
+        this.cd.detectChanges();
+      }, 100);
     }
   }
 
   nextSlide() {
     this.slider()?.slider?.next();
+    this.cd.detectChanges();
   }
 
   prevSlide() {
     this.slider()?.slider?.prev();
+    this.cd.detectChanges();
   }
 }

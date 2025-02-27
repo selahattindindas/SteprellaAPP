@@ -1,5 +1,5 @@
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, inject, PLATFORM_ID, input, viewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, PLATFORM_ID, input, viewChild, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 import KeenSlider, { KeenSliderInstance, KeenSliderOptions } from "keen-slider";
 
 export interface SliderBreakpoint {
@@ -17,7 +17,7 @@ export interface SliderBreakpoint {
   styleUrl: './spacing-slider.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SpacingSliderComponent implements OnChanges {
+export class SpacingSliderComponent implements OnChanges, AfterViewInit {
   private readonly platformId = inject(PLATFORM_ID);
   readonly sliderRef = viewChild<ElementRef<HTMLElement>>("sliderRef");
   
@@ -58,25 +58,33 @@ export class SpacingSliderComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['forceUpdate']) {
+  ngAfterViewInit() {
+    this.initializeSlider();
+  }
+
+  private initializeSlider() {
+    if (isPlatformBrowser(this.platformId) && this.sliderRef()) {
       if (this.slider) {
         this.slider.destroy();
       }
 
-      if (isPlatformBrowser(this.platformId)) {
-        setTimeout(() => {
-          const options: KeenSliderOptions = {
-            slides: {
-              perView: this.defaultPerView(),
-              spacing: this.defaultSpacing(),
-            },
-            breakpoints: this.createBreakpointConfig()
-          };
-    
-          this.slider = new KeenSlider(this.sliderRef()!.nativeElement, options);
-        });
-      }
+      const options: KeenSliderOptions = {
+        slides: {
+          perView: this.defaultPerView(),
+          spacing: this.defaultSpacing(),
+        },
+        breakpoints: this.createBreakpointConfig()
+      };
+
+      this.slider = new KeenSlider(this.sliderRef()!.nativeElement, options);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['forceUpdate']) {
+      setTimeout(() => {
+        this.initializeSlider();
+      });
     }
   }
 }

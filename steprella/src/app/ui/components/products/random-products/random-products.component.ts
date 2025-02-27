@@ -18,7 +18,7 @@ export class RandomProductsComponent implements OnInit {
   private readonly productService = inject(ProductService);
   readonly slider = viewChild<SpacingSliderComponent>('slider');
 
-  readonly listProduct = signal<ListProduct[]>([]);
+  readonly products = signal<ListProduct[]>([]);
   readonly forceUpdateTrigger = signal<number>(0);
 
   readonly sliderBreakpoints = signal<SliderBreakpoint[]>([
@@ -35,11 +35,11 @@ export class RandomProductsComponent implements OnInit {
   getRandomProducts() {
     this.productService.getRandomProduct(10).subscribe({
       next: (response) => {
-        this.listProduct.set(response);
+        this.products.set(response);
         this.forceUpdateTrigger.set(Date.now());
       },
       error: () => {
-        this.listProduct.set([]);
+        this.products.set([]);
       }
     });
   }

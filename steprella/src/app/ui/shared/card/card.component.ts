@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, input, computed, output, inject, Signal } from '@angular/core';
-import { CommonModule, IMAGE_CONFIG, NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, input, computed, output, inject } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ListProductVariant } from '../../../core/models/product-variants/list-product-variant';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { ListProduct } from '../../../core/models/products/list-product';
@@ -24,7 +24,8 @@ export class CardComponent {
   private authService = inject(AuthService);
   private sweetAlertService = inject(SweetAlertService);
 
-  readonly data = input<any[]>();
+  readonly data = input<any>();
+  readonly variant = input<any>();
   readonly totalCount = input<number>();
   readonly currentPage = input<number>();
   readonly pageSize = input<number>();
@@ -32,43 +33,48 @@ export class CardComponent {
   protected readonly Math = Math;
 
   readonly totalPages = computed(() => this.calculateTotalPages());
-  readonly normalizedData: Signal<ListProduct[]> = computed(() => this.normalizeData());
 
-  private calculateTotalPages(): number {
-    const total = this.totalCount();
-    const size = this.pageSize();
-    return (!total || !size) ? 0 : Math.ceil(total / size);
-  }
+  readonly productData = computed(() => {
+    const data = this.data();
+    return data?.product || data;
+  });
 
-  private normalizeData(): ListProduct[] {
-    const rawData = this.data();
-    if (!rawData) return [];
+  readonly showHeartIcon = input<boolean>(true);
+  readonly onDelete = output<void>();
 
-    return rawData.map(item => this.transformToListProduct(item));
-  }
-
-  private transformToListProduct(item: any): ListProduct {
-    if (!('variant' in item)) {
-        return {
-            ...item,
-            productVariants: item.productVariants.map((variant: any) => ({
-                ...variant,
-                isFavorite: variant.favorite 
-            }))
-        } as ListProduct;
+  toggleFavorite(event: Event): void { 
+    event?.stopPropagation();
+    const currentVariant = this.variant();
+    
+    if (!currentVariant) return;
+    
+    if (!this.authService.isUserAuthenticated()) {
+      this.router.navigate(['/auth/login']);
+      return;
     }
-  
-    const { id, price, productVariant } = item;
-    return {
-        id,
-        price: price || 0,
-        ...productVariant,
-        productVariants: [{
-            id,
-            ...productVariant,
-            isFavorite: item.isFavorite || false 
-        }]
-    } as ListProduct;
+    
+    if (this.showHeartIcon()) {
+      if (currentVariant.favorite) {
+        return;
+      }
+
+      const createFavorite: CreateFavorite = {
+        productVariantId: currentVariant.id
+      };
+      
+      currentVariant.favorite = true;
+      
+      this.favoriteService.create(createFavorite).subscribe({
+        next: () => {
+          this.sweetAlertService.showMessage();
+        },
+        error: () => {
+          currentVariant.favorite = false;
+        }
+      });
+    } else {
+      this.onDelete.emit();
+    }
   }
 
   getVisiblePageNumbers(): number[] {
@@ -83,26 +89,10 @@ export class CardComponent {
     ])].sort((a, b) => a - b);
   }
 
-  toggleFavorite(variant: ListProductVariant): void {
-    event?.stopPropagation();
-  
-    if (!this.authService.isUserAuthenticated()) {
-      this.router.navigate(['/auth/login']);
-      return;
-    }
-    
-    if (!variant.isFavorite) {
-      const createFavorite: CreateFavorite = {
-        productVariantId: variant.id
-      };
-      
-      this.favoriteService.create(createFavorite).subscribe({
-        next: () => {
-          variant.isFavorite = true;
-          this.sweetAlertService.showMessage();
-        },
-      });
-    }
+  calculateTotalPages(): number {
+    const total = this.totalCount();
+    const size = this.pageSize();
+    return (!total || !size) ? 0 : Math.ceil(total / size);
   }
   
   handlePageChange(page: number): void {
@@ -113,8 +103,13 @@ export class CardComponent {
     }).then(() => this.onPageChange.emit(page));
   }
 
-  getFirstActiveVariantId(product: ListProduct, currentVariant: ListProductVariant): number {
+  getFirstActiveVariantId(): number {
+    const product = this.productData();
+    const currentVariant = this.variant();
+    
+    if (!product) return 0;
+    
     if (currentVariant?.active) return currentVariant.id;
-    return product.productVariants.find(v => v.active)?.id ?? product.productVariants[0].id;
+    return product.productVariants.find((v: { active: any; }) => v.active)?.id ?? product.productVariants[0].id;
   }
 }

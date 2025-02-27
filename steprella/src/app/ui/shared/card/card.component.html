@@ -1,72 +1,59 @@
-<div class="card-container">
-  <div class="card">
-    @for(product of normalizedData(); track product.id){
-      @for(variant of product.productVariants; track variant.id){
-        <div class="product-card" [routerLink]="['/product', product.id, getFirstActiveVariantId(product, variant)]">
-          <div class="image-container">
-            @if(variant.productFiles.length > 0) {
-              <img 
-              class="product-image"
-              ngSrc="assets/images/ui/shoe1.png"
-              alt="{{variant.productFiles[0].fileName}}"
-              [priority]="false"
-              width="192"
-              height="192"
-              loading="lazy">
-              }
-    
-            <button (click)="$event.stopPropagation(); toggleFavorite(variant)" class="favorite-btn">
-              <i class="fa-heart tw-text-xl" [class.fa-solid]="variant.isFavorite" [class.fa-regular]="!variant.isFavorite" [class.favorite-active]="variant.isFavorite"></i>
-            </button>
-          </div>
-    
-          <div class="product-info">
-            <div class="rating">
-              @for(star of [1,2,3,4,5]; track star) {
-                <i [class]="product.rating >= star ? 'fas fa-star' : 'far fa-star'" class="tw-text-base tw-text-amber-500"></i>
-              }
-              <span>({{product.ratingCount | number}} kişi puanladı)</span>
-            </div>
-    
-            <h3 class="product-name">{{product.brandName}} - {{product.shoeModelName}}</h3>
-    
-            <div class="product-bottom">
-              <div class="price-container">
-                <span class="price">{{product.price | currency:'TRY':'symbol-narrow':'1.2-2'}}</span>
-              </div>
-
-            </div>
-    
-          </div>
-        </div>
-      }
-    }
-  </div>
-
-  @if(totalCount() != null && pageSize() != null && (totalCount() ?? 0) > (pageSize() ?? 0)) {
-    <div class="pagination-wrapper">
-      <div class="pagination">
-        <button [disabled]="(currentPage() ?? 1) === 1" 
-                (click)="handlePageChange((currentPage() ?? 1) - 1)">
-          <i class="fa-solid fa-chevron-left tw-mr-2"></i>
-        </button>
-  
-        @for(page of getVisiblePageNumbers(); track page) {
-          @if(page > 1 && !getVisiblePageNumbers().includes(page - 1)) {
-            <span class="ellipsis">...</span>
-          }
-          <button class="nav-btn" 
-                  [class.active]="page === (currentPage() ?? 1)" 
-                  (click)="handlePageChange(page)">
-            {{page}}
-          </button>
+<div class="card">
+  <div class="product-card" [routerLink]="['/product', productData()?.id, getFirstActiveVariantId()]">
+    <div class="image-container">
+      <img class="product-image" ngSrc="{{variant()?.productFiles?.[0]?.path}}" alt="{{variant()?.productFiles?.[0]?.fileName}}"
+        width="192" height="192" loading="lazy">
+ 
+      <button type="button" (click)="toggleFavorite($event)" class="favorite-btn">
+        @if(showHeartIcon()) {
+          <i class="fa-heart" [class.fa-solid]="variant()?.favorite" [class.fa-regular]="!variant()?.favorite"
+            [class.favorite-active]="variant()?.favorite"></i>
+        } @else {
+          <i class="fa-solid fa-xmark"></i>
         }
-  
-        <button [disabled]="(currentPage() ?? 1) === totalPages()"
-                (click)="handlePageChange((currentPage() ?? 1) + 1)">
-          <i class="fa-solid fa-chevron-right tw-ml-2"></i>
-        </button>
-      </div>
+      </button>
     </div>
-  }
+
+    <div class="product-info">
+      <div class="rating">
+        @for(star of [1,2,3,4,5]; track star) {
+        <i [class]="star <= (productData()?.rating ?? 0)  ? 'fas fa-star' : 'far fa-star'"></i>
+        }
+        <span>({{productData()?.ratingCount | number}} kişi puanladı)</span>
+      </div>
+
+      <h3 class="product-name">{{productData()?.brandName}} - {{productData()?.shoeModelName}}</h3>
+
+      <div class="product-bottom">
+        <div class="price-container">
+          <span class="price">{{productData()?.price | currency:'TRY':'symbol-narrow':'1.2-2'}}</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 </div>
+
+@if(totalCount() != null && pageSize() != null && (totalCount() ?? 0) > (pageSize() ?? 0)) {
+<div class="pagination-wrapper">
+  <div class="pagination">
+    <button [disabled]="(currentPage() ?? 1) === 1" (click)="handlePageChange((currentPage() ?? 1) - 1)">
+      <i class="fa-solid fa-chevron-left tw-mr-2"></i>
+    </button>
+
+    @for(page of getVisiblePageNumbers(); track page) {
+    @if(page > 1 && !getVisiblePageNumbers().includes(page - 1)) {
+    <span class="ellipsis">...</span>
+    }
+    <button class="nav-btn" [class.active]="page === (currentPage() ?? 1)" (click)="handlePageChange(page)">
+      {{page}}
+    </button>
+    }
+
+    <button [disabled]="(currentPage() ?? 1) === totalPages()" (click)="handlePageChange((currentPage() ?? 1) + 1)">
+      <i class="fa-solid fa-chevron-right tw-ml-2"></i>
+    </button>
+  </div>
+</div>
+}

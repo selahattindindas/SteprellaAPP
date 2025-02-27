@@ -5,7 +5,7 @@ export interface ListProductVariant {
     id: number;
     colorName: string;
     active: boolean;
-    isFavorite: boolean;
+    favorite: boolean;
     productSizes: ListSize[];
     productFiles: ListFile[];
 }

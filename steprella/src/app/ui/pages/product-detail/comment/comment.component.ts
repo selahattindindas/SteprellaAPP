@@ -1,28 +1,23 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ListProduct } from '../../../../core/models/products/list-product';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ListCommentComponent } from './list-comment/list-comment.component';
+import { CreateCommentComponent } from './create-comment/create-comment.component';
 import { ListComment } from '../../../../core/models/comments/list-comment';
 
 @Component({
   selector: 'app-comment',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgOptimizedImage],
+  imports: [CommonModule, ListCommentComponent, CreateCommentComponent],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CommentComponent {
-  readonly listComment = input<ListComment[] | undefined>([]);
+  readonly productId = input.required<number>();
+  readonly listComment = input<ListComment[]>();
+  readonly commentAdded = output<void>();
 
-  protected rating = 0;
-  protected review = '';
-  protected stars = [1, 2, 3, 4, 5];
-
-
-  rate(star: number): void {
-    this.rating = star;
+  onCommentAdded() {
+    this.commentAdded.emit();
   }
-
-
 }

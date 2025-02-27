@@ -1,28 +1,41 @@
-<div class="search-container">
-    <div class="search-toolbar">
-        <div class="search-input-container">
-            <input class="search-input" placeholder="Ürün ara..." [(ngModel)]="searchText" (keyup.enter)="searchProducts()">
-            <button class="search-button" (click)="searchProducts()">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
+<section>
+    <div class="search-container">
+        <div class="search-toolbar">
+            <div class="search-input-container">
+                <input class="search-input" placeholder="Ürün ara..." [(ngModel)]="searchText"
+                    (keyup.enter)="searchProducts()">
+                <button class="search-button" (click)="searchProducts()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+    
+            <div class="toolbar">
+                <app-result-toolbar [totalCount]="totalCount()" />
+            </div>
+    
         </div>
-
-        <div class="toolbar">
-            <app-result-toolbar [totalCount]="totalCount()" />
-        </div>
-
+    
+        @if (hasSearched()) {
+            @if (products().length > 0) {
+    
+                <div class="product-grid" [class.list-view]="viewMode() === 'list'">
+                    @for(product of products(); track product.id){
+                        @for(variant of product.productVariants; track variant.id){
+                            <app-card
+                            [data]="product" 
+                            [variant]="variant" 
+                            [currentPage]="currentPage()" 
+                            [pageSize]="pageSize()"
+                            [totalCount]="totalCount()" 
+                            (onPageChange)="handlePageChange($event)" />
+                        }
+                    }
+                </div>
+            } @else {
+                <div class="not-found">
+                    <app-not-found />
+                </div>
+            }
+        }
     </div>
-
-    @if (hasSearched()) {
-    @if (products().length > 0) {
-    <div class="product-grid" [class.list-view]="viewMode() === 'list'">
-        <app-card [data]="products()" [currentPage]="currentPage()" [pageSize]="pageSize()" [totalCount]="totalCount()"
-            (onPageChange)="handlePageChange($event)" />
-    </div>
-    } @else {
-    <div class="not-found">
-        <app-not-found />
-    </div>
-    }
-    }
-</div>
+</section>

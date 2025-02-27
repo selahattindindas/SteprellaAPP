@@ -7,8 +7,8 @@
             <img 
               ngSrc="{{image.path}}" 
               [alt]="'Product image ' + ($index + 1)"
-              loading="eager"
-              decoding="sync"
+              loading="lazy"
+              [priority]="false"
               fill
             >
           </div>
@@ -23,8 +23,8 @@
             <img 
               ngSrc="{{image.path}}"
               [alt]="'Product thumbnail ' + ($index + 1)"
-              loading="eager"
-              decoding="sync"
+              loading="lazy"
+              [priority]="false"
               fill
             >
           </div>

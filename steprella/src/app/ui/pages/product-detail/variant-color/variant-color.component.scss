@@ -28,3 +28,7 @@
              tw-h-auto tw-w-auto;  
     }
   }
+
+.slider-container {
+  @apply tw-w-full tw-overflow-hidden;
+}
