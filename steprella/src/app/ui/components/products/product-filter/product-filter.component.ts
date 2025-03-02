@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../../shared/card/card.component';
 import { FilterGroupComponent } from '../../../shared/filter-sidebar/filter-group/filter-group.component';
@@ -24,6 +24,8 @@ import { FilterParams } from '../../../../core/models/filters/filter.params';
   styleUrl: './product-filter.component.scss'
 })
 export class ProductFilterComponent implements OnInit {
+  @ViewChild('filterGroup') filterGroup!: FilterGroupComponent;
+
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
   private urlService = inject(UrlService);
@@ -85,5 +87,9 @@ export class ProductFilterComponent implements OnInit {
       relativeTo: this.route,
       queryParams: categoryId ? { categoryId } : {}
     });
+  }
+
+  toggleFilters(): void {
+    this.filterGroup.toggleSidebar();
   }
 }

@@ -1,21 +1,23 @@
-<div class="comment-card">
+<article class="comment-card">
     <div class="comment-left">
         <div class="user-avatar">
-            <img ngSrc="assets/images/admin/user.png" width="32" height="32" alt="user-icon">
+            <img ngSrc="assets/images/admin/user.png" width="32" height="32" alt="Kullanıcı avatarı" loading="lazy">
         </div>
     </div>
     <div class="comment-right">
-        <div class="comment-header">
+        <header class="comment-header">
             <div class="user-info">
                 <span class="user-name">{{comment()?.fullName}}</span>
-                <span class="comment-date">{{comment()?.createdDate}}</span>
+                <time class="comment-date">
+                    {{comment()?.createdDate}}
+                </time>
             </div>
             <div class="rating-stars">
                 @for (star of [1,2,3,4,5]; track $index) {
-                <i class="fa-solid fa-star" [class.active]="star <= (comment()?.rating ?? 0)"></i>
+                <i class="fa-solid fa-star" [class.active]="star <= (comment()?.rating ?? 0)" aria-hidden="true"></i>
                 }
             </div>
-        </div>
+        </header>
         <p class="comment-text">{{comment()?.commentText}}</p>
     </div>
-</div>
+</article>

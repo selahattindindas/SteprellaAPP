@@ -1,12 +1,75 @@
 .filter-sidebar {
-    @apply tw-w-72 tw-sticky tw-top-0;
-  
-    .filter-header-title{
-      @apply tw-text-xl tw-font-semibold tw-text-gray-800 tw-mb-6;
-    }
-  
-    .filter-group {
-      @apply tw-h-[calc(100vh-50px)] tw-overflow-y-auto;
+  @apply tw-fixed tw-inset-y-0 tw-left-0 tw-z-50 
+  tw-shadow-lg tw-border-r tw-border-gray-200
+  tw-transform tw-transition-transform tw-duration-300 
+  tw-ease-in-out tw-w-72;
+  transform: translateX(-100%);
+
+  &.active {
+    transform: translateX(0);
+  }
+
+  .overlay {
+    @apply tw-fixed tw-inset-0 tw-bg-black 
+    tw-bg-opacity-50 tw-hidden;
+    
+    &.active {
+      @apply tw-block;
     }
   }
+
+  .sidebar-content {
+    @apply tw-bg-white tw-h-full tw-relative tw-z-10 tw-pl-5;
+    
+    .filter-header {
+      @apply tw-flex tw-justify-between tw-items-center tw-my-6;
+
+    }
+
+    .filter-header-title {
+      @apply tw-text-xl tw-font-semibold tw-text-gray-800;
+    }
+
+    .close-button {
+      @apply tw-p-2 tw-text-gray-600 hover:tw-text-gray-800;
+    }
+
+    .filter-group {
+      @apply tw-h-[calc(100vh-80px)] tw-overflow-y-auto;
+
+    }
+  }
+}
+
+@screen lg {
+  .filter-sidebar {
+    @apply tw-relative tw-transform-none tw-w-72 
+    tw-shadow-none tw-border-none;
+    position: static;
+    height: auto;
+
+    .overlay {
+      @apply tw-hidden;
+    }
+
+    .sidebar-content {
+      height: auto;
+      @apply tw-pl-0;
+
+      .filter-header {
+        @apply tw-mt-0;
+  
+      }
+
+      .close-button {
+        @apply tw-hidden;
+      }
+    }
+
+    .filter-group {
+      height: auto;
+      max-height: none;
+    }
+  }
+}
   

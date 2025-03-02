@@ -1,15 +1,20 @@
-<div class="section-title">
-  <span>Numara Seç</span>
-  <a class="size-guide">Boyut Kılavuzları</a>
-</div>
-<div class="section-options">
-  @for(size of getSelectedVariantSizes(); track size.id) {
-      <button class="size-btn" 
-              [class.out-of-stock]="size.stockQuantity === 0" 
-              [class.active]="size.id === selectedSizeId"
-              (click)="onSizeSelect(size.id)"
-              [disabled]="size.stockQuantity === 0">
-          {{ size.sizeValue }}
+<section class="size-selector">
+  <header class="section-header">
+    <h3 class="title">Numara Seç</h3>
+    <button class="guide-btn">Boyut Kılavuzları</button>
+  </header>
+
+  <div class="size-options">
+    @for(size of getSelectedVariantSizes(); track size.id) {
+      <button 
+        class="size-btn" 
+        [class.out-of-stock]="size.stockQuantity === 0" 
+        [class.active]="size.id === selectedSizeId"
+        (click)="onSizeSelect(size.id)"
+        [disabled]="size.stockQuantity === 0"
+      >
+        {{ size.sizeValue }}
       </button>
-  }
-</div>
+    }
+  </div>
+</section>

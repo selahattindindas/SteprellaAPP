@@ -7,14 +7,24 @@
 }
 
 .footer-main {
-  @apply tw-grid tw-gap-8 tw-py-8 tw-relative tw-border-y tw-border-gray-500;
+  @apply tw-grid tw-py-8 tw-relative tw-border-y tw-border-gray-500;
   grid-template-columns: 60% 40%;
+  transition: all 0.5s ease-in-out;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    @apply tw-gap-12;
+  }
 
   &::after {
     content: '';
     @apply tw-absolute tw-top-0 tw-bottom-0 tw-w-[1px] tw-bg-gray-500;
     left: 60%;
     height: 100%;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }
 
@@ -24,6 +34,10 @@
 
 .interest-text {
   @apply tw-text-6xl md:tw-text-8xl tw-font-bold tw-leading-tight;
+  
+  @media (max-width: 768px) {
+    @apply tw-text-6xl tw-mb-10;
+  }
 }
 
 .shopping-link {
@@ -39,7 +53,11 @@
 }
 
 .footer-right {
-  @apply tw-flex tw-flex-col tw-justify-between tw-items-start ;
+  @apply tw-flex tw-flex-col tw-justify-between tw-items-start tw-pl-6;
+  
+  @media (max-width: 768px) {
+    @apply tw-border-t tw-border-gray-500 tw-pt-8 tw-pl-0;
+  }
 }
 
 .brand-section {
@@ -60,6 +78,10 @@ img {
 
 .social-links {
   @apply tw-flex tw-gap-6 tw-mt-6;
+  
+  @media (max-width: 768px) {
+    @apply tw-mt-8;
+  }
 }
 
 .social-link {

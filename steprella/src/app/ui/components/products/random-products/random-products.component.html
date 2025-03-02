@@ -1,25 +1,25 @@
-<section>
-    <div>
+<section class="random-products" aria-labelledby="random-products-title">
+    <header class="slider-header">
         <app-slider-header 
-        [title]="'Sizin İçin Seçtiklerimiz'"
-        (prev)="prevSlide()"
-        (next)="nextSlide()" 
+            [title]="'Sizin İçin Seçtiklerimiz'"
+            (prev)="prevSlide()"
+            (next)="nextSlide()" 
         />
-    </div>
+    </header>
     
-    <div>
+    <div class="slider-container" role="region" aria-label="Ürün Slider">
         <app-spacing-slider 
-        #slider 
-        [breakpoints]="sliderBreakpoints()"
-        [defaultPerView]="4"
-        [defaultSpacing]="24"
-        [forceUpdate]="forceUpdateTrigger()" >
+            #slider 
+            [breakpoints]="sliderBreakpoints()"
+            [defaultPerView]="4"
+            [defaultSpacing]="24"
+            [forceUpdate]="forceUpdateTrigger()" >
     
             @for(product of products(); track product.id){
                 @for(variant of product.productVariants; track variant.id){
-                    <div class="keen-slider__slide">
-                        <app-card [data]="product" [variant]="variant"></app-card> 
-                    </div>
+                    <article class="keen-slider__slide" role="group" aria-label="Ürün">
+                        <app-card [data]="product" [variant]="variant" />
+                    </article>
                 }
             }
         </app-spacing-slider>

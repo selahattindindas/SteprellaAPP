@@ -1,11 +1,11 @@
 .add-comment-form {
-  @apply tw-mt-8 tw-rounded-lg;
+  @apply tw-mt-6 lg:tw-mt-8 tw-rounded-lg;
 
-  .section-header{
-    @apply tw-mb-5;
+  .section-header {
+    @apply tw-mb-4 lg:tw-mb-5;
 
     .section-title {
-      @apply tw-text-2xl tw-font-medium tw-text-ui-black tw-mb-3;
+      @apply tw-text-xl lg:tw-text-2xl tw-font-medium;
     }
     
     .section-description{
@@ -22,10 +22,10 @@
   }
 
   .stars {
-    @apply tw-flex tw-gap-2;
+    @apply tw-flex tw-gap-1 lg:tw-gap-2;
 
     i {
-      @apply tw-text-2xl tw-cursor-pointer tw-text-gray-300 
+      @apply tw-text-xl lg:tw-text-2xl tw-cursor-pointer tw-text-gray-300 
              tw-transition-colors tw-duration-200;
 
       &.active {
@@ -44,8 +44,8 @@
 }
 
 .review-input {
-  @apply tw-w-full tw-p-4 tw-border tw-border-gray-200 tw-rounded-lg 
-         tw-resize-none tw-h-32 tw-bg-white
+  @apply tw-p-3 lg:tw-p-4 tw-h-24 lg:tw-h-32 tw-w-full tw-border tw-border-gray-200 tw-rounded-lg 
+         tw-resize-none tw-bg-white
          focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-orange-400 
          focus:tw-border-transparent;
 
@@ -55,7 +55,8 @@
 }
 
 .submit-btn {
-  @apply tw-mt-4 tw-px-6 tw-py-3 tw-font-medium tw-text-lg tw-bg-orange-500 tw-text-white 
+  @apply tw-mt-3 lg:tw-mt-4 tw-px-4 lg:tw-px-6 
+         tw-py-2 lg:tw-py-3 tw-text-base lg:tw-text-lg tw-font-medium tw-bg-orange-500 tw-text-white 
          tw-rounded-3xl hover:tw-bg-orange-600 tw-transition-colors 
          tw-shadow-md hover:tw-shadow-lg;
 }

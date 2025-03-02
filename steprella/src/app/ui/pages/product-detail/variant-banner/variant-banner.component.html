@@ -1,35 +1,37 @@
-@if (images().length > 0) {
-  <app-thumbnails-slider [forceUpdate]="variantId()">
-    <div class="keen-slider slider" slider>
-      @for (image of images(); track image.id) {
-        <div class="keen-slider__slide">
-          <div class="image-container">
-            <img 
-              ngSrc="{{image.path}}" 
-              [alt]="'Product image ' + ($index + 1)"
-              loading="lazy"
-              [priority]="false"
-              fill
-            >
+<div class="banner-container">
+  @if (images().length > 0) {
+    <app-thumbnails-slider [forceUpdate]="variantId()">
+      <div class="keen-slider slider" slider>
+        @for (image of images(); track image.id) {
+          <div class="keen-slider__slide">
+            <figure class="image-container">
+              <img 
+                ngSrc="{{image.path}}" 
+                [alt]="'Ürün görseli ' + ($index + 1)"
+                loading="lazy"
+                [priority]="false"
+                fill
+              >
+            </figure>
           </div>
-        </div>
-      }
-    </div>
+        }
+      </div>
 
-    <div class="keen-slider thumbnail" thumbnailSlider>
-      @for (image of images(); track image.id) {
-        <div class="keen-slider__slide">
-          <div class="image-container">
-            <img 
-              ngSrc="{{image.path}}"
-              [alt]="'Product thumbnail ' + ($index + 1)"
-              loading="lazy"
-              [priority]="false"
-              fill
-            >
+      <div class="keen-slider thumbnail" thumbnailSlider>
+        @for (image of images(); track image.id) {
+          <div class="keen-slider__slide">
+            <figure class="image-container">
+              <img 
+                ngSrc="{{image.path}}"
+                [alt]="'Ürün küçük görsel ' + ($index + 1)"
+                loading="lazy"
+                [priority]="false"
+                fill
+              >
+            </figure>
           </div>
-        </div>
-      }
-    </div>
-  </app-thumbnails-slider>
-}
+        }
+      </div>
+    </app-thumbnails-slider>
+  }
+</div>

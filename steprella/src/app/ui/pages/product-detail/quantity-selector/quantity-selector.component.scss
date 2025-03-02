@@ -2,7 +2,7 @@
     @apply tw-space-y-4 tw-mt-auto;
   
     .price {
-      @apply tw-text-4xl tw-font-bold;
+      @apply tw-text-3xl lg:tw-text-4xl tw-font-bold;
     }
   
     .quantity {
@@ -16,40 +16,34 @@
       .qty-btn {
         @apply tw-h-10 tw-w-10 tw-rounded-full tw-flex tw-items-center 
         tw-justify-center tw-border tw-border-slate-300 disabled:tw-cursor-not-allowed;
-      }
   
-      i {
-        @apply tw-text-gray-500;
+        i {
+          @apply tw-text-gray-500;
+        }
       }
     }
   
     .add-to-cart {
-      @apply tw-flex tw-items-center tw-justify-between tw-gap-4;
+      @apply tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-gap-4;
     
       .add-to-btn {
-        @apply tw-bg-orange-500 tw-text-white tw-text-xl 
-               tw-py-3 tw-px-5 tw-font-medium tw-w-full
-               tw-rounded-3xl hover:tw-bg-orange-600 
-               tw-transition-colors tw-shadow-md hover:tw-shadow-lg;
+        @apply tw-bg-orange-500 tw-text-white 
+               tw-text-lg lg:tw-text-xl tw-py-3 tw-px-5 
+               tw-font-medium tw-w-full
+               tw-rounded-3xl hover:tw-bg-orange-600;
       }
     
       .action-buttons {
-        @apply tw-flex tw-gap-4; 
-      
-        .action-btn {
-          @apply tw-h-[52px] tw-w-[52px]
-                 tw-flex tw-items-center tw-justify-center
-                 tw-rounded-full
-                 tw-border tw-border-slate-300  
-                 hover:tw-bg-gray-50 
-                 tw-transition-colors;
-      
-          i {
-            @apply tw-text-gray-600 tw-text-2xl;
+        @apply tw-flex tw-justify-center sm:tw-justify-start tw-gap-4; 
+      }
+    
+      .action-btn {
+        @apply tw-p-2;
   
+        i {
+          @apply tw-text-gray-500;
   
-          }
-          .fa-heart{
+          &.favorite {
             @apply tw-text-ui-bg;
           }
         }

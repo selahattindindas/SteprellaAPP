@@ -1,4 +1,4 @@
-<div class="navigation-menu">
+<nav class="navigation-menu" role="navigation" aria-label="Ana Navigasyon">
   <ul class="tw-flex tw-gap-8">
     @for(category of categoryList(); track category) {
     <div class="nav-item">
@@ -7,7 +7,7 @@
          class="nav-link">
         {{ category.name }}
       </a>
-      <div class="dropdown-menu">
+      <div class="dropdown-menu" role="menu">
         <div class="dropdown-content">
           @if(category.children.length > 0) {
             @if(category.name !== 'Çocuk') {
@@ -17,7 +17,8 @@
                   <ul>
                     @for(child of category.children; track child) {
                       <li>
-                        <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" [queryParams]="{categoryId: child.id}">
+                        <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" 
+                           [queryParams]="{categoryId: child.id}">
                           {{child.name}}
                         </a>
                       </li>
@@ -33,7 +34,8 @@
                     <ul>
                       @for(subChild of child.children; track subChild) {
                         <li>
-                          <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" [queryParams]="{categoryId: subChild.id}">
+                          <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" 
+                             [queryParams]="{categoryId: subChild.id}">
                             {{subChild.name}}
                           </a>
                         </li>
@@ -49,4 +51,4 @@
     </div>
     }
   </ul>
-</div>
+</nav>

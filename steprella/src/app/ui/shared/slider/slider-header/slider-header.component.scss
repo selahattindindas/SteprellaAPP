@@ -1,88 +1,84 @@
 .slider-header {
     @apply tw-flex tw-items-center tw-justify-between;
-  }
-  
-  .title-section {
+}
+
+.title-section {
     @apply tw-flex tw-items-center;
 
-    .icon{
-      @apply tw-mr-3;
+    .icon {
+        @apply tw-mr-3 tw-text-ui-bg;
     }
 
-    &.xs{
-      .icon {
-        @apply tw-text-lg;
-      }
-      .slider-title {
-        @apply tw-text-lg;
-      }
+    .slider-title {
+        @apply tw-font-medium tw-text-ui-black;
+    }
+
+    &.xs {
+        .icon {
+            @apply tw-text-lg;
+        }
+        .slider-title {
+            @apply tw-text-lg;
+        }
     }
 
     &.sm {
-      .icon {
-        @apply tw-text-xl;
-      }
-      .slider-title {
-        @apply tw-text-2xl;
-      }
+        .icon {
+            @apply tw-text-xl;
+        }
+        .slider-title {
+            @apply tw-text-2xl;
+        }
     }
 
     &.md {
-      .icon {
-        @apply tw-text-2xl;
-      }
-      .slider-title {
-        @apply tw-text-3xl;
-      }
+        .icon {
+            @apply tw-text-2xl;
+        }
+        .slider-title {
+            @apply tw-text-3xl;
+        }
     }
 
     &.lg {
-      .icon {
-        @apply tw-text-3xl;
-      }
-      .slider-title {
-        @apply tw-text-4xl;
-      }
+        .icon {
+            @apply tw-text-3xl;
+        }
+        .slider-title {
+            @apply tw-text-4xl;
+        }
     }
-    
-    .icon {
-      @apply tw-text-ui-bg;
-    }
-    
-    .slider-title {
-      @apply tw-font-medium tw-text-ui-black;
-    }
-  }
-  
-  .nav-buttons {
+}
+
+.nav-buttons {
     @apply tw-flex tw-gap-2;
-  }
-  
-  .nav-button {
+}
+
+.nav-button {
     @apply tw-w-12 tw-h-12 tw-rounded-full 
            tw-flex tw-items-center tw-justify-center
            tw-transition-all tw-duration-300
            tw-border-none tw-cursor-pointer;
-  
-    &.prev {
-      @apply tw-bg-pink-50;
-      i {
-        @apply tw-text-orange-500;
-      }
-    }
-  
-    &.next {
-      @apply tw-bg-orange-500;
-      i {
-        @apply tw-text-white;
-      }
-    }
-  
+
     i {
-      @apply tw-text-xs;
+        @apply tw-text-xs;
     }
-  
+
+    &.prev {
+        @apply tw-bg-pink-50;
+        i {
+            @apply tw-text-orange-500;
+        }
+    }
+
+    &.next {
+        @apply tw-bg-orange-500;
+        i {
+            @apply tw-text-white;
+        }
+    }
+
     &:hover {
-      @apply tw-scale-110;
+        @apply tw-scale-110;
     }
-  }
+}

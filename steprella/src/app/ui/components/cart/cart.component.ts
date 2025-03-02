@@ -85,7 +85,7 @@ export class CartComponent implements OnInit {
 
     const updateData: UpdateCartItem = {
       id: item.id,
-      productVariantId: item.variant.variantId,
+      productVariantId: item.product.variantId,
       productVariantSizeId: item.sizeId, 
       quantity: newQuantity
     };

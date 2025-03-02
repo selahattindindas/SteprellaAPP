@@ -1,15 +1,23 @@
-<div class="comment-section">
-  <div class="comments-header">
-    <h3 class="section-title">Yorumlar</h3>
+<section class="comment-section" aria-labelledby="comments-title">
+  <header class="comments-header">
+    <h2 id="comments-title" class="section-title">Yorumlar</h2>
+  </header>
+  
+  <div class="divider" role="separator"></div>
 
-  </div>
-  <div class="divider"></div>
-
-  <div class="comments-list">
-    @for (comment of listComment(); track comment.id) {
-    <app-list-comment [comment]="comment" />
+  <div class="comments-list" aria-label="Ürün Yorumları">
+    @if(listComment()?.length) {
+      @for (comment of listComment(); track comment.id) {
+        <app-list-comment [comment]="comment" />
+      }
+    } @else {
+      <p class="no-comments">Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
     }
   </div>
 
-  <app-create-comment [productId]="productId()" (commentAdded)="onCommentAdded()"/>
-</div>
+  <app-create-comment 
+    [productId]="productId()" 
+    (commentAdded)="onCommentAdded()"
+    aria-label="Yorum Ekleme Formu"
+  />
+</section>

@@ -1,32 +1,44 @@
+$dropdown-z-index: 10;
+$transition-duration: 300ms;
+
+@mixin hover-transition {
+  @apply tw-transition-colors tw-duration-300;
+}
+
 .dropdown-container {
-    @apply tw-relative;
+  @apply tw-relative;
+}
 
-    .dropdown-header {
-        @apply tw-px-4 tw-py-2 tw-text-gray-500
-        tw-flex tw-items-center tw-justify-between tw-cursor-pointer tw-transition-colors;
+.dropdown-header {
+  @apply tw-px-4 tw-py-2 tw-text-gray-500;
+  @apply tw-flex tw-items-center tw-justify-between tw-cursor-pointer;
+  @include hover-transition;
 
-        .selected-value {
-            @apply tw-mr-2;
-        }
+  .selected-value {
+    @apply tw-mr-2;
+  }
 
-        i {
-            @apply tw-transition-transform;
-            &.open {
-                @apply tw-transform tw-rotate-180;
-            }
-        }
+  i {
+    @apply tw-transition-transform tw-duration-300;
+    
+    &.open {
+      @apply tw-transform tw-rotate-180;
     }
+  }
+}
 
-    .dropdown-list {
-        @apply tw-absolute tw-z-10 tw-mt-1 tw-min-w-full tw-max-w-[200px] tw-break-words
-        tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-lg tw-py-1;
+.dropdown-list {
+  @apply tw-absolute tw-mt-1 tw-min-w-full tw-max-w-[200px] tw-break-words;
+  @apply tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-lg tw-py-1;
+  z-index: $dropdown-z-index;
 
-        li {
-            @apply tw-px-4 tw-py-2 tw-cursor-pointer hover:tw-bg-gray-100 tw-transition-colors;
+  li {
+    @apply tw-px-4 tw-py-2 tw-cursor-pointer;
+    @include hover-transition;
+    @apply hover:tw-bg-gray-100;
 
-            &.active {
-                @apply tw-text-ui-bg tw-bg-orange-50;
-            }
-        }
+    &.active {
+      @apply tw-text-ui-bg tw-bg-orange-50;
     }
+  }
 }

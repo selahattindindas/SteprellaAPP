@@ -1,24 +1,28 @@
-<div class="auth-container">
-  <div class="auth-content">
-    <h2>Merhaba,</h2>
-    <p>Steprella'ya giriş yap veya hesap oluştur, indirimleri kaçırma!</p>
-    
-    <div class="auth-box">
-      <div class="auth-tabs">
-        <button 
-          [class.active]="(authType$ | async) === 'login'"
-          (click)="switchAuth('login')">
-          Giriş Yap
-        </button>
-        <button 
-          [class.active]="(authType$ | async) === 'register'"
-          (click)="switchAuth('register')">
-          Üye Ol
-        </button>
-      </div>
+<section class="auth-container" aria-labelledby="auth-title">
+    <div class="auth-content">
+        <h1 id="auth-title">Merhaba,</h1>
+        <p>Steprella'ya giriş yap veya hesap oluştur, indirimleri kaçırma!</p>
+        
+        <div class="auth-box" role="tabpanel">
+            <nav class="auth-tabs" role="tablist">
+                <button 
+                    role="tab"
+                    [attr.aria-selected]="(authType$ | async) === 'login'"
+                    [class.active]="(authType$ | async) === 'login'"
+                    (click)="switchAuth('login')">
+                    Giriş Yap
+                </button>
+                <button 
+                    role="tab"
+                    [attr.aria-selected]="(authType$ | async) === 'register'"
+                    [class.active]="(authType$ | async) === 'register'"
+                    (click)="switchAuth('register')">
+                    Üye Ol
+                </button>
+            </nav>
 
-      <app-login *ngIf="(authType$ | async) === 'login'" />
-      <app-register *ngIf="(authType$ | async) === 'register'" />
+            <app-login *ngIf="(authType$ | async) === 'login'" />
+            <app-register *ngIf="(authType$ | async) === 'register'" />
+        </div>
     </div>
-  </div>
-</div>
+</section>

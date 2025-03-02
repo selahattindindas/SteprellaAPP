@@ -7,5 +7,5 @@ export interface ListOrderItem{
     quantity: number;
     unitPrice: number;
     totalPrice: number;
-    variant: ListProductVariantDetail;
+    product: ListProductVariantDetail;
 }

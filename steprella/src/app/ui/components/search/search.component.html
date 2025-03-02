@@ -1,41 +1,49 @@
-<section>
-    <div class="search-container">
-        <div class="search-toolbar">
-            <div class="search-input-container">
-                <input class="search-input" placeholder="Ürün ara..." [(ngModel)]="searchText"
-                    (keyup.enter)="searchProducts()">
-                <button class="search-button" (click)="searchProducts()">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </div>
-    
-            <div class="toolbar">
-                <app-result-toolbar [totalCount]="totalCount()" />
-            </div>
-    
+<section class="search-container" aria-label="Ürün Arama">
+    <div class="search-toolbar">
+        <form class="search-input-container" role="search" (submit)="searchProducts()">
+            <label for="search-input" class="tw-sr-only">Ürün ara</label>
+            <input 
+                id="search-input"
+                class="search-input" 
+                type="search"
+                placeholder="Ürün ara..." 
+                [(ngModel)]="searchText"
+                name="search">
+            <button 
+                type="submit" 
+                class="search-button"
+                aria-label="Ara">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            </button>
+        </form>
+
+        <div class="toolbar">
+            <app-result-toolbar [totalCount]="totalCount()" />
         </div>
-    
-        @if (hasSearched()) {
-            @if (products().length > 0) {
-    
-                <div class="product-grid" [class.list-view]="viewMode() === 'list'">
-                    @for(product of products(); track product.id){
-                        @for(variant of product.productVariants; track variant.id){
-                            <app-card
+    </div>
+
+    @if (hasSearched()) {
+        @if (products().length > 0) {
+            <div class="product-grid" 
+                 [class.list-view]="viewMode() === 'list'"
+                 role="grid">
+                @for(product of products(); track product.id){
+                    @for(variant of product.productVariants; track variant.id){
+                        <app-card
+                            role="gridcell"
                             [data]="product" 
                             [variant]="variant" 
                             [currentPage]="currentPage()" 
                             [pageSize]="pageSize()"
                             [totalCount]="totalCount()" 
                             (onPageChange)="handlePageChange($event)" />
-                        }
                     }
-                </div>
-            } @else {
-                <div class="not-found">
-                    <app-not-found />
-                </div>
-            }
+                }
+            </div>
+        } @else {
+            <div class="not-found" role="alert">
+                <app-not-found />
+            </div>
         }
-    </div>
+    }
 </section>

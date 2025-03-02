@@ -8,5 +8,5 @@ export interface ListCartItem {
     totalPrice: number;
     sizeId: number;
     sizeValue: number;
-    variant: ListProductVariantDetail;
+    product: ListProductVariantDetail;
 }

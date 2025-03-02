@@ -1,25 +1,42 @@
-<div class="filter-section">
-    <div class="section-header" (click)="toggle()">
-        <span class="header-title">{{ title()}}</span>
-        <span class="arrow" [class.expanded]="expandedSections()[sectionKey()]"></span>
-    </div>
+<section class="filter-section" role="region" aria-labelledby="price-title">
+    <button class="section-header" 
+            (click)="toggle()"
+            aria-controls="price-content">
+        <span class="header-title" id="price-title">{{ title()}}</span>
+        <span class="arrow" 
+              [class.expanded]="expandedSections()[sectionKey()]"
+              aria-hidden="true"></span>
+    </button>
     @if(expandedSections()[sectionKey()]){
-    <div class="section-content">
+    <div class="section-content" 
+         id="price-content"
+         role="group"
+         aria-label="Fiyat Aralığı Seçimi">
         <div class="price-inputs">
             <div class="price-input-wrapper">
-                <input type="number" class="price-input" [(ngModel)]="priceRange.currentMin"
-                    (change)="updatePriceRange('min', priceRange.currentMin)" [min]="priceRange.min"
-                    [max]="priceRange.currentMax" placeholder="Min">
-                <span class="currency">₺</span>
+                <input type="number" 
+                       class="price-input" 
+                       [(ngModel)]="priceRange.currentMin"
+                       (change)="updatePriceRange('min', priceRange.currentMin)" 
+                       [min]="priceRange.min"
+                       [max]="priceRange.currentMax" 
+                       aria-label="Minimum Fiyat"
+                       placeholder="Min">
+                <span class="currency" aria-hidden="true">₺</span>
             </div>
-            <span class="separator">-</span>
+            <span class="separator" aria-hidden="true">-</span>
             <div class="price-input-wrapper">
-                <input type="number" class="price-input" [(ngModel)]="priceRange.currentMax"
-                    (change)="updatePriceRange('max', priceRange.currentMax)" [min]="priceRange.currentMin"
-                    [max]="priceRange.max" placeholder="Max">
-                <span class="currency">₺</span>
+                <input type="number" 
+                       class="price-input" 
+                       [(ngModel)]="priceRange.currentMax"
+                       (change)="updatePriceRange('max', priceRange.currentMax)" 
+                       [min]="priceRange.currentMin"
+                       [max]="priceRange.max" 
+                       aria-label="Maksimum Fiyat"
+                       placeholder="Max">
+                <span class="currency" aria-hidden="true">₺</span>
             </div>
         </div>
     </div>
     }
-</div>
+</section>

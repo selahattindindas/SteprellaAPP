@@ -2,10 +2,10 @@
   @apply tw-flex tw-items-center tw-justify-between tw-h-20;
 }
 
-.logo-section{
+.logo-section {
   @apply tw-relative tw-w-[120px] tw-h-[60px];
 
-  img{
+  img {
     @apply tw-w-full tw-h-auto tw-object-contain;
   }
 }
@@ -30,7 +30,8 @@
   @apply tw-flex tw-items-center;
 
   &__item {
-    @apply tw-transition-colors tw-w-12 tw-h-12 tw-rounded-full tw-relative tw-flex tw-justify-center tw-items-center;
+    @apply tw-transition-colors tw-w-12 tw-h-12 tw-rounded-full 
+           tw-relative tw-flex tw-justify-center tw-items-center;
 
     &:hover {
       @apply tw-bg-gray-100;
@@ -43,6 +44,8 @@
 }
 
 .cart-count {
-  @apply tw-bg-ui-bg tw-text-white tw-rounded-full tw-w-5 tw-h-5 tw-flex tw-items-center tw-justify-center tw-text-xs tw-absolute tw-top-[-2px] tw-right-[-2px];
+  @apply tw-bg-ui-bg tw-text-white tw-rounded-full tw-w-5 tw-h-5 
+         tw-flex tw-items-center tw-justify-center tw-text-xs 
+         tw-absolute tw-top-[-2px] tw-right-[-2px];
 }
 

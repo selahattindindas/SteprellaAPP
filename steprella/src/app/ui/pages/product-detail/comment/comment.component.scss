@@ -1,17 +1,23 @@
 .comment-section {
-  @apply tw-mx-auto tw-p-6;
+  @apply tw-mx-auto tw-p-4 sm:tw-p-6 lg:tw-p-8;
 }
 
 .comments-header {
-  @apply tw-flex tw-items-center tw-gap-4 tw-mb-2;
+  @apply tw-flex tw-items-center tw-justify-between tw-mb-4;
 
   .section-title {
-    @apply tw-text-3xl tw-font-semibold;
+    @apply tw-text-2xl sm:tw-text-3xl tw-font-semibold tw-text-ui-black;
   }
-
-
 }
 
 .divider {
-  @apply tw-flex-grow tw-h-[1px] tw-bg-gray-200 tw-mb-6;
+  @apply tw-w-full tw-h-px tw-bg-gray-200 tw-mb-6 sm:tw-mb-8;
+}
+
+.comments-list {
+  @apply tw-space-y-6 sm:tw-space-y-8;
+}
+
+.no-comments {
+  @apply tw-text-center tw-text-gray-500 tw-py-8;
 }

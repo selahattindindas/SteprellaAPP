@@ -1,15 +1,24 @@
 <div class="dropdown-container">
-    <div class="dropdown-header" 
-         [class]="headerBgColor() + ' ' + headerBorderWidth() + ' ' + headerBorderColor() + ' ' 
-         + headerRadius() + ' ' + textSize() + ' ' + fontWeight()"
-         (click)="toggleDropdown()">
+    <button class="dropdown-header" 
+            [class]="headerBgColor() + ' ' + headerBorderWidth() + ' ' + headerBorderColor() + ' ' 
+            + headerRadius() + ' ' + textSize() + ' ' + fontWeight()"
+            (click)="toggleDropdown()"
+            aria-haspopup="listbox"
+            [attr.aria-expanded]="isOpen()"
+            role="combobox">
         <span class="selected-value">{{ selectedLabel() }}</span>
-        <i class="fa-solid fa-chevron-down" [class.open]="isOpen()"></i>
-    </div>
+        <i class="fa-solid fa-chevron-down" 
+           [class.open]="isOpen()"
+           aria-hidden="true"></i>
+    </button>
     @if (isOpen()) {
-        <ul class="dropdown-list">
+        <ul class="dropdown-list" 
+            role="listbox"
+            aria-label="Seçenekler">
             @for (option of options(); track option.value) {
-                <li (click)="selectOption(option.value)"
+                <li role="option"
+                    [attr.aria-selected]="option.value === value()"
+                    (click)="selectOption(option.value)"
                     [class.active]="option.value === value()">
                     {{ option.label }}
                 </li>

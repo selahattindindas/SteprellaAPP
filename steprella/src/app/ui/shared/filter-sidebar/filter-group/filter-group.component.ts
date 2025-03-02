@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, output, HostListener } from '@angular/core';
 import { FilterButtonComponent } from '../filter-button/filter-button.component';
 import { FilterSectionComponent } from '../filter-section/filter-section.component';
 import { BrandService } from '../../../../core/services/ui/brand.service';
@@ -43,6 +43,8 @@ export class FilterGroupComponent {
 
   readonly applyFilters = output<any>();
   readonly clearFilters = output<void>();
+
+  readonly isOpen = signal(false);
 
   expandedSections: { [key: string]: boolean } = {
     brands: true,
@@ -109,5 +111,16 @@ export class FilterGroupComponent {
   handleClearFilters() {
     this.selectedFilters.set({});
     this.clearFilters.emit();
+  }
+
+  @HostListener('document:keydown.escape')
+  handleEscKey(): void {
+    if (this.isOpen()) {
+      this.toggleSidebar();
+    }
+  }
+
+  toggleSidebar(): void {
+    this.isOpen.update(value => !value);
   }
 }

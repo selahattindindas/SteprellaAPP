@@ -1,5 +1,6 @@
-<div class="product-purchase">
+<section class="product-purchase">
   <div class="price">{{ product()?.price | currency:'TRY':'symbol-narrow':'1.2-2'}}</div>
+  
   <div class="quantity">
     <button class="qty-btn" [disabled]="quantity() <= min" (click)="updateQuantity(false)">
       <i class="fa-solid fa-minus"></i>
@@ -9,16 +10,16 @@
       <i class="fa-solid fa-plus"></i>
     </button>
   </div>
+  
   <div class="add-to-cart">
     <button class="add-to-btn" (click)="submit.emit()">Sepete Ekle</button>
     <div class="action-buttons">
       <button class="action-btn" (click)="onFavoriteClick()">
-        <i [class]="selectedVariant()?.favorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
-           [ngClass]="{'tw-text-ui-bg': selectedVariant()?.favorite}"></i>
+        <i [class]="selectedVariant()?.favorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" [ngClass]="{'favorite': selectedVariant()?.favorite}"></i>
       </button>
       <button class="action-btn">
         <i class="fa-solid fa-rotate"></i>
       </button>
     </div>
   </div>
-</div>
+</section>

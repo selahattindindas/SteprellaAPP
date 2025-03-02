@@ -1,59 +1,79 @@
-<div class="card">
-  <div class="product-card" [routerLink]="['/product', productData()?.id, getFirstActiveVariantId()]">
-    <div class="image-container">
-      <img class="product-image" ngSrc="{{variant()?.productFiles?.[0]?.path}}" alt="{{variant()?.productFiles?.[0]?.fileName}}"
-        width="192" height="192" loading="lazy">
+<div class="card-grid" role="grid">
+  <article class="product-card" 
+           [routerLink]="['/product', productData()?.id, getFirstActiveVariantId()]"
+           role="gridcell">
+    <div class="image-container" role="img" aria-label="Ürün Görseli">
+      <img class="product-image" 
+           ngSrc="{{variant()?.productFiles?.[0]?.path}}" 
+           [alt]="variant()?.productFiles?.[0]?.fileName"
+           width="192" 
+           height="192" 
+           loading="lazy">
  
-      <button type="button" (click)="toggleFavorite($event)" class="favorite-btn">
+      <button type="button" 
+              (click)="toggleFavorite($event)" 
+              class="favorite-btn"
+              [attr.aria-label]="variant()?.favorite ? 'Favorilerden Çıkar' : 'Favorilere Ekle'"
+              [attr.aria-pressed]="variant()?.favorite">
         @if(showHeartIcon()) {
-          <i class="fa-heart" [class.fa-solid]="variant()?.favorite" [class.fa-regular]="!variant()?.favorite"
-            [class.favorite-active]="variant()?.favorite"></i>
+          <i class="fa-heart" 
+             [class.fa-solid]="variant()?.favorite" 
+             [class.fa-regular]="!variant()?.favorite"
+             [class.favorite-active]="variant()?.favorite"
+             aria-hidden="true"></i>
         } @else {
-          <i class="fa-solid fa-xmark"></i>
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
         }
       </button>
     </div>
 
     <div class="product-info">
-      <div class="rating">
+      <div class="rating" role="group" aria-label="Ürün Değerlendirmesi">
         @for(star of [1,2,3,4,5]; track star) {
-        <i [class]="star <= (productData()?.rating ?? 0)  ? 'fas fa-star' : 'far fa-star'"></i>
+          <i [class]="star <= (productData()?.rating ?? 0) ? 'fas fa-star' : 'far fa-star'"
+             aria-hidden="true"></i>
         }
-        <span>({{productData()?.ratingCount | number}} kişi puanladı)</span>
+        <span aria-label="Değerlendirme Sayısı">({{productData()?.ratingCount | number}} kişi puanladı)</span>
       </div>
 
       <h3 class="product-name">{{productData()?.brandName}} - {{productData()?.shoeModelName}}</h3>
 
       <div class="product-bottom">
-        <div class="price-container">
+        <div class="price-container" role="group" aria-label="Ürün Fiyatı">
           <span class="price">{{productData()?.price | currency:'TRY':'symbol-narrow':'1.2-2'}}</span>
         </div>
-
       </div>
-
     </div>
-  </div>
+  </article>
 </div>
 
 @if(totalCount() != null && pageSize() != null && (totalCount() ?? 0) > (pageSize() ?? 0)) {
-<div class="pagination-wrapper">
+<nav class="pagination-wrapper" role="navigation" aria-label="Sayfalama">
   <div class="pagination">
-    <button [disabled]="(currentPage() ?? 1) === 1" (click)="handlePageChange((currentPage() ?? 1) - 1)">
-      <i class="fa-solid fa-chevron-left tw-mr-2"></i>
+    <button [disabled]="(currentPage() ?? 1) === 1" 
+            (click)="handlePageChange((currentPage() ?? 1) - 1)"
+            aria-label="Önceki Sayfa">
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
     </button>
 
     @for(page of getVisiblePageNumbers(); track page) {
-    @if(page > 1 && !getVisiblePageNumbers().includes(page - 1)) {
-    <span class="ellipsis">...</span>
-    }
-    <button class="nav-btn" [class.active]="page === (currentPage() ?? 1)" (click)="handlePageChange(page)">
-      {{page}}
-    </button>
+      @if(page > 1 && !getVisiblePageNumbers().includes(page - 1)) {
+        <span class="ellipsis" aria-hidden="true">...</span>
+      }
+      <button class="nav-btn" 
+              [class.active]="page === (currentPage() ?? 1)" 
+              (click)="handlePageChange(page)"
+              [attr.aria-current]="page === (currentPage() ?? 1) ? 'page' : undefined"
+              aria-label="Sayfa">
+        {{page}}
+      </button>
     }
 
-    <button [disabled]="(currentPage() ?? 1) === totalPages()" (click)="handlePageChange((currentPage() ?? 1) + 1)">
-      <i class="fa-solid fa-chevron-right tw-ml-2"></i>
+    <button [disabled]="(currentPage() ?? 1) === totalPages()" 
+            (click)="handlePageChange((currentPage() ?? 1) + 1)"
+            aria-label="Sonraki Sayfa">
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
     </button>
   </div>
-</div>
+</nav>
 }

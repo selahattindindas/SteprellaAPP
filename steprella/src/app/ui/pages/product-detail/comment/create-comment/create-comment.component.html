@@ -1,29 +1,39 @@
-<div class="add-comment-form">
-  <form #commentForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="section-header">
-      <h3 class="section-title">Yorum Ekle</h3>
-      <span class="section-description">Yorum alanını doldurunuz.</span>
-    </div>
+<form class="add-comment-form" #commentForm="ngForm" (ngSubmit)="onSubmit()">
+  <header class="section-header">
+    <h3 class="section-title">Yorum Ekle</h3>
+    <p class="section-description">Yorum alanını doldurunuz.</p>
+  </header>
 
-    <div class="rating-container">
-      <p>Puanınız</p>
-      <div class="stars">
-        @for (star of stars; track $index) {
-          <i class="fa-regular fa-star" (click)="rate(star)" [class.active]="star <= rating"></i>
-        }
-      </div>
-      @if (isFormSubmitted && rating === 0) {
-        <span class="error-message">Lütfen bir puan seçiniz</span>
+  <div class="rating-container" role="group" aria-label="Ürün Puanlama">
+    <label class="rating-label">Puanınız</label>
+    <div class="stars" role="radiogroup">
+      @for (star of stars; track $index) {
+        <button 
+          type="button"
+          class="star-btn"
+          [class.active]="star <= rating"
+          (click)="rate(star)"
+          [attr.aria-label]="star + ' yıldız ver'"
+          role="radio"
+          [attr.aria-checked]="star <= rating">
+          <i class="fa-regular fa-star" aria-hidden="true"></i>
+        </button>
       }
     </div>
+    @if (isFormSubmitted && rating === 0) {
+      <span class="error-message" role="alert">Lütfen bir puan seçiniz</span>
+    }
+  </div>
 
-    <div class="review-container">
-      <textarea [(ngModel)]="review" name="review" #reviewInput="ngModel" required placeholder="Yorumunuzu buraya yazın..." class="review-input" [class.error]="isFormSubmitted && reviewInput.invalid"></textarea>
-      @if (isFormSubmitted && reviewInput.invalid) {
-        <span class="error-message">Lütfen yorumunuzu yazınız</span>
-      }
-    </div>
+  <div class="review-container">
+    <label for="review" class="sr-only">Yorumunuz</label>
+    <textarea id="review" [(ngModel)]="review" name="review" #reviewInput="ngModel" required placeholder="Yorumunuzu buraya yazın..." class="review-input" [class.error]="isFormSubmitted && reviewInput.invalid" aria-label="Yorum metni"></textarea>
+    @if (isFormSubmitted && reviewInput.invalid) {
+      <span class="error-message" role="alert">Lütfen yorumunuzu yazınız</span>
+    }
+  </div>
 
-    <button type="submit" class="submit-btn">Gönder</button>
-  </form>
-</div>
+  <button type="submit" class="submit-btn">
+    Gönder
+  </button>
+</form>

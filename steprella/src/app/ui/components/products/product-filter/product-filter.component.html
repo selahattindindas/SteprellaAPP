@@ -1,30 +1,47 @@
 <div class="filter-container">
-  <app-filter-group (applyFilters)="handleFilters($event)" (clearFilters)="clearFilters()" />
+  <aside>
+    <app-filter-group 
+      #filterGroup
+      (applyFilters)="handleFilters($event)" 
+      (clearFilters)="clearFilters()" 
+    />
+  </aside>
 
-  <div class="products-grid">
+  <button 
+    class="filter-toggle-button" 
+    (click)="toggleFilters()"
+    aria-label="Toggle filters"
+    type="button"
+  >
+    <i class="material-icons-outlined" aria-hidden="true">filter_alt</i>
+    <span>Filtreler</span>
+  </button>
+
+  <section class="products-grid">
     @if(products().length > 0) {
-
-      <div class="result-toolbar">
+      <header class="result-toolbar">
         <app-result-toolbar [totalCount]="totalCount()" />
-      </div>
+      </header>
 
-      <div class="product-card">
+      <div class="product-grid-container" role="grid">
         @for(product of products(); track product.id){
           @for(variant of product.productVariants; track variant.id){
             <app-card 
-            [data]="product" 
-            [variant]="variant" 
-            [currentPage]="currentPage()" 
-            [pageSize]="pageSize()" 
-            [totalCount]="totalCount()"
-            (onPageChange)="handlePageChange($event)" />
+              [data]="product" 
+              [variant]="variant" 
+              [currentPage]="currentPage()" 
+              [pageSize]="pageSize()" 
+              [totalCount]="totalCount()"
+              (onPageChange)="handlePageChange($event)" 
+              role="gridcell"
+            />
           }
         }
       </div>
     } @else {
-        <div class="not-found">
-          <app-not-found />
-        </div>
-      }
-  </div>
+      <section class="not-found" role="alert">
+        <app-not-found />
+      </section>
+    }
+  </section>
 </div>

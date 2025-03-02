@@ -1,38 +1,41 @@
-<app-slider-header 
-  [title]="'Renk Seç'" 
-  [icon]="'none'"
-  [size]="'xs'"
-  [margin]="'2'"
-  (prev)="prevSlide()" 
-  (next)="nextSlide()">
-</app-slider-header>
+<section class="color-selector">
+  <app-slider-header 
+    [title]="'Renk Seç'" 
+    [icon]="'none'"
+    [size]="'xs'"
+    [margin]="'2'"
+    (prev)="prevSlide()" 
+    (next)="nextSlide()">
+  </app-slider-header>
 
-<div class="slider-container">
-  <app-spacing-slider 
-    #slider
-    [forceUpdate]="forceUpdateTrigger()"
-    [defaultPerView]="4"
-    [defaultSpacing]="24"
-  >
-    @for(variant of product()?.productVariants; track variant.id) {
-      @if(variant.productFiles[0]) {
-        <div class="keen-slider__slide">
-          <div 
-            class="product-variant-card" 
-            [class.selected]="variant.id === selectedVariantId()"
-            [class.inactive]="!variant.active"
-            (click)="variant.active && selectVariant(variant.id)"
-          >
-            <img 
-              ngSrc="{{ variant.productFiles[0].path }}" 
-              width="100" 
-              height="100" 
-              loading="lazy"
-              [alt]="'Ürün varyant - ' + variant.colorName"
+  <div class="slider-container">
+    <app-spacing-slider 
+      #slider
+      [forceUpdate]="forceUpdateTrigger()"
+      [defaultPerView]="4"
+      [defaultSpacing]="24"
+    >
+      @for(variant of product()?.productVariants; track variant.id) {
+        @if(variant.productFiles[0]) {
+          <div class="keen-slider__slide">
+            <button 
+              class="variant-card" 
+              [class.selected]="variant.id === selectedVariantId()"
+              [class.inactive]="!variant.active"
+              (click)="variant.active && selectVariant(variant.id)"
+              [disabled]="!variant.active"
             >
+              <img 
+                ngSrc="{{ variant.productFiles[0].path }}" 
+                width="100" 
+                height="100" 
+                loading="lazy"
+                [alt]="variant.colorName"
+              >
+            </button>
           </div>
-        </div>
+        }
       }
-    }
-  </app-spacing-slider>
-</div>
+    </app-spacing-slider>
+  </div>
+</section>

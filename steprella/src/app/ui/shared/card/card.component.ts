@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, computed, output, inject } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { ListProductVariant } from '../../../core/models/product-variants/list-product-variant';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { ListProduct } from '../../../core/models/products/list-product';
 import { FavoriteService } from '../../../core/services/ui/favorite.service';
 import { CreateFavorite } from '../../../core/models/favorites/create-favorite';
 import { AuthService } from '../../../core/services/common/auth.service';

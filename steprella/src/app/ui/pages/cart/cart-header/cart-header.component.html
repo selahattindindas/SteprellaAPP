@@ -1,6 +1,9 @@
-<div class="cart-header">
-    <h2>Sepetim {{totalCount()}}</h2>
-    <button class="close-btn" (click)="isOpen().set(false)">
-      <i class="fa-solid fa-xmark"></i>
+<header class="cart-header" role="banner">
+    <h2 id="cart-title">Sepetim <span aria-label="Ürün Sayısı">{{totalCount()}}</span></h2>
+    <button 
+        class="close-btn" 
+        (click)="isOpen().set(false)"
+        aria-label="Sepeti Kapat">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
     </button>
-  </div>
+</header>

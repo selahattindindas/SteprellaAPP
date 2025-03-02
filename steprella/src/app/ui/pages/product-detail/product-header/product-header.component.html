@@ -1,16 +1,18 @@
-<h1 class="product-title">
+<header class="product-header">
+  <h1 class="product-title">
     <span class="brand-name">{{ product()?.brandName }}</span>
     <span class="model-name">{{ product()?.shoeModelName }}</span>
   </h1>
+  
   <div class="product-rating">
     <span class="rating-score">{{ product()?.rating ?? 0 }}</span>
     <div class="rating">
       @for(star of [1,2,3,4,5]; track star) {
-        <i [class]="(product()?.rating ?? 0) >= star ? 'fas fa-star' : 'far fa-star'" 
-          class="tw-text-base tw-text-amber-500">
-       </i>
+        <i [class]="(product()?.rating ?? 0) >= star ? 'fas fa-star' : 'far fa-star'" class="star-icon"></i>
       }
       <span class="rating-count">({{product()?.ratingCount ?? 0}} kişi puanladı)</span>
     </div>
   </div>
+  
   <p class="product-description">{{ product()?.description }}</p>
+</header>

@@ -1,27 +1,34 @@
-<div class="cart-footer">
-    <div class="cart-bar">
-        <a>
-            <span class="material-icons-outlined">
+<footer class="cart-footer" role="contentinfo">
+    <nav class="cart-bar" aria-label="Sepet İşlemleri">
+        <a role="button" aria-label="Sipariş Notu Ekle">
+            <i class="material-icons-outlined" aria-hidden="true">
                 event_note
-            </span>
-            Sipariş Notu
+            </i>
+            <span>Sipariş Notu</span>
         </a>
-        <a>
-            <span class="material-icons-outlined">
+        <a role="button" aria-label="Kupon Kodu Ekle">
+            <i class="material-icons-outlined" aria-hidden="true">
                 local_offer
-            </span>
-            Kupon
+            </i>
+            <span>Kupon</span>
         </a>
-    </div>
-    <div class="cart-total">
+    </nav>
+
+    <div class="cart-total" role="status" aria-label="Sepet Toplamı">
         <span>Toplam:</span>
         <span>{{ totalPrice() | currency:'TRY':'symbol-narrow':'1.2-2' }}</span>
     </div>
-    <div class="cart-info">
-        <span>
-            Vergiler ve kargo ücreti, ödeme sırasında hesaplanır.</span>
+
+    <div class="cart-info" role="note">
+        <span>Vergiler ve kargo ücreti, ödeme sırasında hesaplanır.</span>
     </div>
+
     <div class="submit-btn">
-        <button class="checkout-btn">Sepeti Onayla</button>
+        <button 
+            class="checkout-btn" 
+            type="button"
+            aria-label="Sepeti Onayla ve Ödemeye Geç">
+            Sepeti Onayla
+        </button>
     </div>
-</div>
+</footer>

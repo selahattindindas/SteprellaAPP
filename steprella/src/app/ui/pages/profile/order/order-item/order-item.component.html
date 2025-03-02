@@ -2,20 +2,23 @@
   @for (item of orderItem(); track item.id) {
   <div class="item">
     <div class="item-image">
-      @if (item.variant.productImages.length > 0) {
-      <img ngSrc="{{item.variant.productImages[0].path}}" width="128" height="128" loading="lazy">
+      @if (item.product.productImages.length > 0) {
+      <img ngSrc="{{item.product.productImages[0].path}}" width="128" height="128" loading="lazy">
       }
     </div>
 
     <div class="item-details">
       <h3 class="item-name">
-        {{item.variant.brandName}} {{item.variant.shoeModelName}}
+        {{item.product.brandName}} {{item.product.shoeModelName}}
       </h3>
       <p class="item-specs">
-        {{item.variant.colorName}} - Beden: {{item.sizeValue}}
+        Renk: {{item.product.colorName}}
       </p>
       <p class="item-specs">
-        {{item.variant.materialName}} | {{item.variant.usageAreaName}}
+        Beden: {{item.sizeValue}}
+      </p>
+      <p class="item-specs">
+        Kullanım Alanı: {{item.product.usageAreaName}}
       </p>
     </div>
 

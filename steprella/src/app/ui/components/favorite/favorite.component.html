@@ -1,32 +1,33 @@
-<section>
-    <div class="favorite-header">
-        <app-page-banner [title]="'FAVORİLERİM'" />
-    </div>
+<section class="favorites-section" aria-labelledby="favorites-title">
+    <header class="favorite-header">
+        <app-page-banner [title]="'FAVORİLERİM'" id="favorites-title" />
+    </header>
 
     @if(listFavorite().length > 0) {
         <div class="favorite-toolbar">
             <app-result-toolbar [totalCount]="totalCount()"/>
         </div>
 
-        <div class="favorite-container">
+        <div class="favorite-grid-container" role="grid">
             @for(favorite of listFavorite(); track favorite.id ){
                 @for(variant of favorite.product.productVariants ; track variant.id){
                     <app-card 
-                    [data]="favorite" 
-                    [variant]="variant" 
-                    [showHeartIcon]="false" 
-                    (onDelete)="delete(favorite.id)"
-                    [currentPage]="currentPage()" 
-                    [pageSize]="pageSize()" 
-                    [totalCount]="totalCount()"
-                    (onPageChange)="handlePageChange($event)"/>
+                        role="gridcell"
+                        [data]="favorite" 
+                        [variant]="variant" 
+                        [showHeartIcon]="false" 
+                        (onDelete)="delete(favorite.id)"
+                        [currentPage]="currentPage()" 
+                        [pageSize]="pageSize()" 
+                        [totalCount]="totalCount()"
+                        (onPageChange)="handlePageChange($event)"/>
                 }
             }
         </div>
     }
     @else {
-        <div class="empty-favorites">
-            <i class="fa-solid fa-heart-crack empty-icon"></i>
+        <div class="empty-favorites" role="alert">
+            <i class="fa-solid fa-heart-crack empty-icon" aria-hidden="true"></i>
             <h2>Beğendiğiniz ürün bulunmamaktadır</h2>
             <p>Favori ürünlerinizi burada görüntüleyebilirsiniz</p>
         </div>

@@ -29,6 +29,7 @@ module.exports = {
         'max-xl2': {'max': '1599px'},
         'max-custom': {'max': '1300px'},
         'max-xl': {'max': '550px'},
+        'min-xxs': {'min': '450px'},
         'min-xl': {'min': '550px'},
         'max-400': {'max': '400px'},
         'max-450': {'max': '450px'},

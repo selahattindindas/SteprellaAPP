@@ -1,40 +1,41 @@
 .results-header {
-    @apply tw-flex tw-justify-between tw-items-center tw-rounded-full tw-border tw-py-2 tw-border-gray-200 tw-px-3;
+    @apply tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-items-stretch 
+           md:tw-items-center tw-rounded-2xl md:tw-rounded-full tw-border 
+           tw-border-gray-200 tw-px-3 tw-py-2;
+}
 
-    .view-options {
-        @apply tw-flex tw-items-center tw-gap-1;
+.toolbar-section {
+    @apply tw-w-full md:tw-w-auto;
+}
 
-        .view-button {
-            @apply tw-p-1 tw-rounded-lg tw-transition-colors;
+.view-options {
+    @apply tw-flex tw-items-center tw-gap-1 tw-mb-3 md:tw-mb-0;
+}
 
-            svg {
-                @apply tw-w-6 tw-h-6;
-            }
+.view-button {
+    @apply tw-p-1 tw-rounded-lg tw-transition-colors;
 
-            &.active {
-                svg {
-                    path {
-                        @apply tw-stroke-ui-bg;
-                    }
-                }
-            }
-        }
-
-        .results-count {
-            @apply tw-text-ui-black tw-font-medium tw-text-lg tw-ml-3;
-        }
+    svg {
+        @apply tw-w-6 tw-h-6;
     }
 
-    .sort-options {
-        @apply tw-flex tw-items-center tw-gap-4;
-
-        .sort-label {
-            @apply tw-text-ui-black tw-font-medium tw-text-base tw-ml-4;
-        }
-
-        .sort-select,
-        .per-page-select {
-            @apply tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-full tw-text-gray-700 focus:tw-outline-none focus:tw-border-orange-500 tw-bg-white;
-        }
+    &.active svg path {
+        @apply tw-stroke-ui-bg;
     }
+}
+
+.results-count {
+    @apply tw-text-ui-black tw-font-medium tw-text-base md:tw-text-lg tw-ml-3;
+}
+
+.sort-options {
+    @apply tw-flex tw-flex-wrap tw-items-center tw-gap-2 md:tw-gap-4;
+}
+
+.sort-label {
+    @apply tw-text-ui-black tw-font-medium tw-text-sm md:tw-text-base tw-ml-0 md:tw-ml-4;
+}
+
+app-dropdown {
+    @apply tw-flex-grow md:tw-flex-grow-0;
 }

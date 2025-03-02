@@ -1,109 +1,123 @@
-.card {
+$card-border-radius: 1.5rem;
+$image-size: 12rem;
+$icon-size: 2.5rem;
+$transition-duration: 300ms;
+
+
+@mixin flex-center {
+  @apply tw-flex tw-items-center tw-justify-center;
+}
+
+@mixin hover-transition {
+  @apply tw-transition-colors tw-duration-300;
+}
+
+.card-grid {
   @apply tw-grid tw-gap-6 tw-w-full;
   grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+}
 
-  .product-card {
-    @apply tw-overflow-hidden tw-rounded-t-3xl tw-cursor-pointer;
-    width: 100%;
+.product-card {
+  @apply tw-overflow-hidden tw-rounded-t-3xl tw-cursor-pointer;
+  width: 100%;
+}
 
-    .image-container {
-      @apply tw-relative tw-w-full tw-h-64 tw-bg-ui-lightGray tw-flex tw-items-center tw-justify-center;
+.image-container {
+  @apply tw-relative tw-w-full tw-h-64 tw-bg-ui-lightGray;
+  @include flex-center;
 
-      .product-image {
-        @apply tw-object-contain tw-w-48 tw-h-48; 
-      }
+  .product-image {
+    @apply tw-object-contain;
+    width: $image-size;
+    height: $image-size;
+  }
 
-      .favorite-btn {
-        @apply tw-absolute tw-w-10 tw-h-10 tw-top-4 tw-right-4 tw-p-2 tw-rounded-full tw-bg-white tw-transition-colors;
+  .favorite-btn {
+    @apply tw-absolute tw-top-4 tw-right-4 tw-bg-white tw-rounded-full;
+    @include hover-transition;
+    width: $icon-size;
+    height: $icon-size;
 
-        i {
-          @apply tw-transition-colors tw-text-xl;
-          
-          &.favorite-active {
-            @apply tw-text-ui-bg;
-          }
-        }
-
-        &:hover {
-          @apply tw-text-orange-700;
-          
-          i.favorite-active {
-            @apply tw-text-ui-bg;
-          }
-        }
+    i {
+      @include hover-transition;
+      @apply tw-text-xl;
+      
+      &.favorite-active {
+        @apply tw-text-ui-bg;
       }
     }
 
-    .product-info {
-      @apply tw-py-4 tw-bg-white;
-
-      .rating {
-        @apply tw-flex tw-items-center tw-gap-1 tw-text-sm tw-pb-2 tw-text-gray-600;
-
-        i {
-          @apply tw-text-base;
-        }
-        
-        .fa-star {
-          @apply tw-text-amber-500;
-          
-          &.fa-regular {
-            @apply tw-text-gray-300;
-          }
-        }
+    &:hover {
+      @apply tw-text-orange-700;
+      
+      i.favorite-active {
+        @apply tw-text-ui-bg;
       }
+    }
+  }
+}
 
-      .product-name {
-        @apply tw-text-base tw-font-medium tw-text-gray-900;
+.product-info {
+  @apply tw-py-4 tw-bg-white;
+}
+
+.rating {
+  @apply tw-flex tw-items-center tw-gap-1 tw-text-sm tw-pb-2 tw-text-gray-600;
+
+  i {
+    @apply tw-text-base;
+    
+    &.fa-star {
+      @apply tw-text-amber-500;
+      
+      &.fa-regular {
+        @apply tw-text-gray-300;
       }
+    }
+  }
+}
 
-      .product-bottom {
-        @apply tw-flex tw-justify-between tw-items-end;
+.product-name {
+  @apply tw-text-base tw-font-medium tw-text-gray-900;
+}
 
-        .price-container {
-          @apply tw-flex tw-flex-col;
+.product-bottom {
+  @apply tw-flex tw-justify-between tw-items-end;
 
-          .price {
-            @apply tw-text-base tw-font-semibold tw-text-ui-bg;
-          }
-        }
-
-        .cart-btn {
-          @apply tw-w-10 tw-h-10 tw-rounded-full tw-bg-ui-bg tw-flex tw-items-center 
-          tw-justify-center hover:tw-bg-ui-bg tw-transition-colors;
-
-          svg {
-            @apply tw-w-5 tw-h-5 tw-text-white;
-          }
-        }
-      }
+  .price-container {
+    .price {
+      @apply tw-text-base tw-font-semibold tw-text-ui-bg;
     }
   }
 }
 
 .pagination-wrapper {
   @apply tw-w-full tw-flex tw-justify-center;
-  
-  .pagination {
-    @apply tw-flex tw-items-center tw-justify-center tw-gap-2 tw-mt-8 tw-mb-4;
-  
-    .nav-btn {
-      @apply tw-min-w-[40px] tw-h-[40px] tw-flex tw-items-center tw-justify-center 
-             tw-rounded-full tw-border tw-border-gray-300 tw-bg-white 
-             tw-text-gray-700 tw-text-sm tw-font-medium
-             hover:tw-bg-gray-50 hover:tw-border-gray-400
-             disabled:tw-bg-gray-100 disabled:tw-text-gray-400 
+}
+
+.pagination {
+  @apply tw-flex tw-items-center tw-justify-center tw-gap-2 tw-mt-8 tw-mb-4;
+
+  button {
+    @apply tw-min-w-[40px] tw-h-[40px] tw-rounded-full;
+    @include flex-center;
+    @include hover-transition;
+    
+    &:not(.active) {
+      @apply tw-border tw-border-gray-300 tw-bg-white tw-text-gray-700;
+      @apply hover:tw-bg-gray-50 hover:tw-border-gray-400;
+      @apply disabled:tw-bg-gray-100 disabled:tw-text-gray-400 
              disabled:tw-cursor-not-allowed disabled:tw-border-gray-200;
-  
-      &.active {
-        @apply tw-bg-ui-bg tw-text-white tw-border-ui-bg
-               hover:tw-bg-ui-bg hover:tw-border-ui-bg;
-      }
     }
-  
-    .ellipsis {
-      @apply tw-w-[40px] tw-h-[40px] tw-flex tw-items-center tw-justify-center 
-             tw-text-gray-500 tw-font-medium;
+
+    &.active {
+      @apply tw-bg-ui-bg tw-text-white tw-border-ui-bg;
+      @apply hover:tw-bg-ui-bg hover:tw-border-ui-bg;
     }
+  }
+
+  .ellipsis {
+    @apply tw-w-[40px] tw-h-[40px] tw-text-gray-500 tw-font-medium;
+    @include flex-center;
   }
 }

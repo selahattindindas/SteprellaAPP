@@ -1,20 +1,20 @@
-<div class="sidebar" [class.open]="isOpen()">
-  <div class="sidebar-header">
-    <img ngSrc="assets/images/common/logo2.png" alt="Logo" width="120" height="60">
-    <button class="close-btn" (click)="toggleSidebar()">
-      <i class="fa-solid fa-xmark tw-text-sm"></i>
+<div class="sidebar-overlay" [class.open]="isOpen()" role="presentation"></div>
+<aside class="sidebar" [class.open]="isOpen()" role="complementary">
+  <header class="sidebar-header">
+    <img ngSrc="assets/images/common/logo_dark.png" alt="Logo" width="120" height="60" routerLink="/">
+    <button class="close-btn" (click)="toggleSidebar()" aria-label="Menüyü Kapat">
+      <i class="fa-solid fa-xmark tw-text-sm" aria-hidden="true"></i>
     </button>
-  </div>
+  </header>
 
-  <nav class="categories">
+  <nav class="categories" role="navigation" aria-label="Mobil Kategori Menüsü">
     <ul class="main-categories">
       @for (category of categoryList(); track category.id) {
       <li>
-        <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" 
-           [queryParams]="{categoryId: category.id}"
-           (click)="toggleMainCategory(category.id)" 
+        <a (click)="toggleMainCategory(category.id)" 
            class="main-category"
-           [class.active]="selectedMainCategory() === category.id">
+           [class.active]="selectedMainCategory() === category.id"
+           role="button">
           {{ category.name }}
         </a>
       </li>
@@ -25,11 +25,12 @@
     <ul class="subcategories">
       @for (category of categoryList(); track category.id) {
       @if (category.id === selectedMainCategory()) {
-      @if (category.id !== 15) {
+      @if (category.id !== 3) {
       @for (subCategory of category.children; track subCategory.id) {
       <li>
         <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]" [queryParams]="{categoryId: subCategory.id}"
-           class="sub-category">
+           class="sub-category"
+           (click)="isOpen.set(false)">
           {{ subCategory.name }}
         </a>
       </li>
@@ -41,7 +42,7 @@
            class="sub-category">
           {{ subCategory.name }}
           <span class="arrow" [class.expanded]="selectedSubCategory() === subCategory.id">
-            <i class="fa-solid fa-chevron-right"></i>
+            <i class="fa-solid fa-angle-right"></i>
           </span>
         </a>
 
@@ -51,7 +52,8 @@
           <li>
             <a [routerLink]="['/', urlService.toSeoFriendlyUrl(category.name)]"
                [queryParams]="{category: childCategory.name, categoryId: childCategory.id}"
-               class="child-category">
+               class="child-category"
+               (click)="isOpen.set(false)">
               {{ childCategory.name }}
             </a>
           </li>
@@ -66,32 +68,27 @@
     </ul>
     }
   </nav>
-  <div class="bottom-container">
-    <div class="bottom-buttons">
-      <button class="login-btn">Giriş</button>
-      <button class="register-btn">Kayıt Ol</button>
-    </div>
 
+  <footer class="bottom-container">
     <div class="footer-links">
-      <a class="footer-link">
-        <i class="icon-cart"></i>
-        Sepet
+      <a class="footer-link" routerLink="/search" (click)="isOpen.set(false)">
+        <i class="icon-search" aria-hidden="true"></i>
+        Ara
       </a>
       <a class="footer-link">
-        <i class="icon-shopping"></i>
+        <i class="icon-shopping" aria-hidden="true"></i>
         Sipariş
       </a>
       <a class="footer-link">
-        <i class="icon-compass"></i>
+        <i class="icon-compass" aria-hidden="true"></i>
         Yardım
       </a>
     </div>
     <div class="footer-secondary">
-      <a class="">
-        <i class="fa-brands fa-whatsapp"></i>
-        Whatsapp destek hattı.
+      <a>
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        Whatsapp destek hattı
       </a>
     </div>
-  </div>
-
-</div>
+  </footer>
+</aside>

@@ -2,16 +2,20 @@
     @apply tw-w-full tw-mx-auto;
 
     .search-toolbar {
-        @apply tw-container tw-mx-auto tw-px-4 tw-py-8 
+        @apply  tw-gap-20 tw-pb-8 
         tw-grid tw-grid-cols-1 
-        md:tw-grid-cols-3 tw-gap-8;
+        md:tw-grid-cols-3;
+
+        @media (max-width: 1024px) {
+            @apply tw-flex tw-flex-col tw-gap-6;
+        }
     }
       
     .search-input-container {
-        @apply tw-relative tw-flex tw-items-center tw-flex-1 tw-w-full md:tw-col-span-1 tw-h-fit;;
+        @apply tw-relative tw-flex tw-items-center tw-flex-1 tw-w-full;
 
         .search-input {
-            @apply tw-flex-1 tw-text-xl tw-text-ui-customGray tw-px-8 tw-py-3 tw-border tw-rounded-full tw-border-gray-200 focus:tw-outline-none  tw-pr-16;
+            @apply tw-flex-1 tw-text-xl tw-text-ui-customGray tw-min-w-44 tw-px-8 tw-py-3 tw-border tw-rounded-full tw-border-gray-200 focus:tw-outline-none ;
         }
 
         .search-button {
@@ -23,8 +27,12 @@
         }
     }
 
-    .toolbar{
+    .toolbar {
         @apply md:tw-col-span-2 tw-h-fit tw-flex tw-flex-col;
+
+        @media (max-width: 1024px) {
+            @apply tw-mt-4;
+        }
     }
 
     .search-results-title {
@@ -43,8 +51,19 @@
         }
     }
 
-    .product-grid{
-        @apply tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4 
-        tw-gap-6;
+    .product-grid {
+        @apply tw-grid tw-grid-cols-1 tw-gap-6;
+        
+        @screen min-xxs {
+            @apply tw-grid-cols-2;
+        }
+        
+        @screen lg {
+            @apply tw-grid-cols-3;
+        }
+        
+        @screen xl {
+            @apply tw-grid-cols-4;
+        }
     }
 }

@@ -1,7 +1,13 @@
-<div #sliderRef class="keen-slider">
+<div class="keen-slider" 
+     #sliderRef 
+     role="region" 
+     aria-label="Ana Slider">
   <ng-content select="[slider]"></ng-content>
 </div>
-<div #thumbnailRef class="keen-slider thumbnail">
+<div class="keen-slider thumbnail" 
+     #thumbnailRef 
+     role="region" 
+     aria-label="Küçük Resim Slider">
   <ng-content select="[thumbnailSlider]"></ng-content>
 </div>
   

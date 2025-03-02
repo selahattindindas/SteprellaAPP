@@ -1,32 +1,38 @@
-<div class="cart-sidebar" [class]="isOpen() ? 'active' : ''">
+<aside class="cart-sidebar" 
+    [class]="isOpen() ? 'active' : ''"
+    role="complementary" 
+    aria-label="Alışveriş Sepeti">
 
-     <app-cart-header [isOpen]="isOpen" [totalCount]="listCart()?.totalItems"/>
+    <app-cart-header [isOpen]="isOpen" [totalCount]="listCart()?.totalItems"/>
 
-     @if (!isAuthenticated()) {
-       <div class="auth-warning">
-         <p>Sepeti görüntüleyebilmek için lütfen giriş yapın.</p>
-         <button class="login-btn" routerLink="/auth">Giriş Yap</button>
-       </div>
-     } @else {
-       @for (item of listCart()?.cartItems; track item.id) {
-        <app-cart-item 
-        [data]="item" 
-        [selectedItems]="selectedItemIds()"
-        (updateQuantity)="updateQuantity(item.id, $event.change)"
-        (removeItem)="remove(item.id)"/>
-       }
-       @empty {
-        <div class="empty-cart">
-            <p>Sepetiniz Boş</p>
+    @if (!isAuthenticated()) {
+        <div class="auth-warning" role="alert">
+            <p>Sepeti görüntüleyebilmek için lütfen giriş yapın.</p>
+            <a class="login-btn" routerLink="/auth">Giriş Yap</a>
         </div>
-        }
+    } @else {
+        <div class="cart-items" role="list">
+            @for (item of listCart()?.cartItems; track item.id) {
+                <app-cart-item 
+                    role="listitem"
+                    [data]="item" 
+                    [selectedItems]="selectedItemIds()"
+                    (updateQuantity)="updateQuantity(item.id, $event.change)"
+                    (removeItem)="remove(item.id)"/>
+            }
+            @empty {
+                <div class="empty-cart" role="status">
+                    <p>Sepetiniz Boş</p>
+                </div>
+            }
+        </div>
 
-       <app-cart-footer [totalPrice]="listCart()?.totalPrice"/>
-     }
-
-</div>
+        <app-cart-footer [totalPrice]="listCart()?.totalPrice"/>
+    }
+</aside>
 
 <div class="cart-overlay" 
      [class]="isOpen() ? 'active' : ''" 
-     (click)="isOpen.set(false)">
+     (click)="isOpen.set(false)"
+     role="presentation">
 </div>

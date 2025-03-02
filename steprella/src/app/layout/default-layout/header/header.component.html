@@ -1,42 +1,41 @@
 <div class="header-container">
   <div class="logo-section">
-    <a class="tw-cursor-pointer">
-      <img ngSrc="assets/images/common/logo_dark.png" routerLink="/" fill>
+    <a class="tw-cursor-pointer" routerLink="/" aria-label="Ana Sayfa">
+      <img ngSrc="assets/images/common/logo_dark.png" alt="Site Logo" fill>
     </a>
   </div>
 
-  <nav class="max-md:tw-hidden">
+  <nav class="max-md:tw-hidden" aria-label="Ana Menü">
     <app-main-nav />
   </nav>
 
   <div class="actions-section">
-
-    <ul class="action-menu">
-      <li class="action-menu__item">
-        <a routerLink="/search">
-          <i class="icon-search"></i>
+    <ul class="action-menu" role="list">
+      <li class="action-menu__item max-md:!tw-hidden">
+        <a routerLink="/search" aria-label="Arama">
+          <i class="icon-search" aria-hidden="true"></i>
         </a>
       </li>
-      <li class="action-menu__item max-md:!tw-hidden">
-        <a>
+      <li class="action-menu__item">
+        <a aria-label="Kullanıcı Menüsü">
           <app-user-dropdown />
         </a>
       </li>
       <li class="action-menu__item">
-        <a routerLink="/favorites">
-          <i class="icon-heart"></i>
+        <a routerLink="/favorites" aria-label="Favoriler">
+          <i class="icon-heart" aria-hidden="true"></i>
         </a>
       </li>
       <li class="action-menu__item">
-        <a (click)="toggleCart()">
-          <i class="icon-cart"></i>
-          <span class="cart-count">{{ totalCount }}</span>
+        <a (click)="toggleCart()" aria-label="Sepet">
+          <i class="icon-cart" aria-hidden="true"></i>
+          <span class="cart-count" role="status" aria-live="polite">{{ totalCount }}</span>
         </a>
       </li>
       <li class="action-menu__item md:!tw-hidden">
-        <a (click)="toggleMobileSidebar()">
-        <i class="icon-bars"></i>
-      </a>
+        <a (click)="toggleMobileSidebar()" aria-label="Mobil Menü">
+          <i class="icon-bars" aria-hidden="true"></i>
+        </a>
       </li>
     </ul>
   </div>

@@ -1,20 +1,23 @@
-<section class="technology">
+<section class="technology" aria-labelledby="technology-title">
     <div class="technology-content">
+        <header class="section-header">
+            <span class="subtitle" aria-label="Bölüm Kategorisi">TEKNOLOJİ</span>
+            <h2 id="technology-title" class="title">Spor Ayakkabı Zirveye Ulaşıyor</h2>
+        </header>
 
-        <div class="section-header">
-            <span class="subtitle">TEKNOLOJİ</span>
-            <h2 class="title">Spor Ayakkabı Zirveye Ulaşıyor</h2>
-        </div>
-
-        <div class="features-grid">
+        <div class="features-grid" role="list">
             @for(feature of features; track feature) {
-                <div class="feature-card">
+                <article class="feature-card" role="listitem">
                     <div class="feature-content">
-                        <div class="feature-image">
-                            <img ngSrc="{{feature.image}}" [alt]="feature.altText" fill>
-                        </div>
+                        <figure class="feature-image">
+                            <img 
+                                ngSrc="{{feature.image}}" 
+                                [alt]="feature.altText" 
+                                fill
+                                loading="lazy">
+                        </figure>
                     </div>
-                </div>
+                </article>
             }
         </div>
     </div>

@@ -1,21 +1,30 @@
-<app-slider-header 
-    [title]="'Alışverişe Başla'"
-    (prev)="prevSlide()"
-    (next)="nextSlide()">
-</app-slider-header>
+<section class="brand-slider" aria-label="Marka Slider">
+    <app-slider-header 
+        [title]="'Alışverişe Başla'"
+        (prev)="prevSlide()"
+        (next)="nextSlide()"
+        role="navigation"
+        aria-label="Slider Kontrolleri">
+    </app-slider-header>
 
-<app-spacing-slider 
-    #slider 
-    [breakpoints]="sliderBreakpoints()"
-    [defaultPerView]="4"
-    [defaultSpacing]="24"
-    [forceUpdate]="forceUpdateTrigger()">
-  @for(brand of brandList(); track brand) {
-    <div class="keen-slider__slide">
-      <div class="brand-card" (click)="navigateToBrand(brand)">
-        <i [ngClass]="brand.logo" class="brand-logo"></i>
-      </div>
+    <div role="region" aria-label="Marka Listesi">
+        <app-spacing-slider 
+            #slider 
+            [breakpoints]="sliderBreakpoints()"
+            [defaultPerView]="4"
+            [defaultSpacing]="24"
+            [forceUpdate]="forceUpdateTrigger()">
+            @for(brand of brandList(); track brand) {
+                <div class="keen-slider__slide" role="group">
+                    <button 
+                        class="brand-card" 
+                        (click)="navigateToBrand(brand)"
+                        [attr.aria-label]="brand.name + ' markasına git'">
+                        <i [ngClass]="brand.logo" class="brand-logo" aria-hidden="true"></i>
+                    </button>
+                </div>
+            }
+        </app-spacing-slider>
     </div>
-  }
-</app-spacing-slider>
+</section>
 

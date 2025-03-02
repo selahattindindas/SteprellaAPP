@@ -41,7 +41,8 @@
         button {
           @apply tw-flex-1 tw-flex tw-items-center tw-justify-center 
                  tw-text-gray-600 hover:tw-bg-gray-50 
-                 tw-transition-colors;
+                 tw-transition-colors disabled:tw-opacity-50 
+                 disabled:tw-cursor-not-allowed;
         }
   
         .quantity-display {
@@ -52,6 +53,7 @@
     }
   
     .remove-btn {
-      @apply tw-text-ui-bg tw-text-lg;
+      @apply tw-text-ui-bg tw-text-lg tw-p-2 tw-rounded-full 
+             hover:tw-bg-red-50 tw-transition-colors;
     }
   }

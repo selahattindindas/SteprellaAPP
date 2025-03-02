@@ -1,43 +1,51 @@
 .filter-section {
     @apply tw-border-b tw-border-gray-200 tw-py-3;
+}
 
-    .section-header {
-      @apply tw-w-full tw-flex tw-justify-between tw-items-center tw-cursor-pointer tw-py-2  tw-rounded-lg tw-pr-2 tw-transition-colors tw-duration-200;
+.section-header {
+    @apply tw-w-full tw-flex tw-justify-between tw-items-center 
+           tw-cursor-pointer tw-py-2 tw-rounded-lg tw-pr-2 
+           tw-transition-colors tw-duration-200;
+}
 
-      .header-title{
-        @apply tw-font-medium tw-text-ui-black;
-      }
+.header-title {
+    @apply tw-font-medium tw-text-ui-black;
+}
 
-      .arrow {
-        @apply tw-w-2.5 tw-h-2.5 tw-border-t-2 tw-border-r-2 tw-border-gray-400 tw-transform tw-rotate-45 tw-transition-transform tw-duration-200;
+.arrow {
+    @apply tw-w-2.5 tw-h-2.5 tw-border-t-2 tw-border-r-2 
+           tw-border-gray-400 tw-transform tw-rotate-45 
+           tw-transition-transform tw-duration-200;
 
-        &.expanded {
-          @apply tw-rotate-[135deg] tw-translate-y-[-2px];
-        }
-      }
+    &.expanded {
+        @apply tw-rotate-[135deg] tw-translate-y-[-2px];
     }
+}
 
-    .section-content {
-      @apply tw-mt-2 tw-space-y-1;
-    }
-  }
+.section-content {
+    @apply tw-mt-2 tw-space-y-1;
+}
 
 .price-inputs {
     @apply tw-flex tw-items-center tw-gap-2 tw-mb-4 tw-w-full;
+}
 
-    .price-input-wrapper {
-      @apply tw-flex-1 tw-relative;
+.price-input-wrapper {
+    @apply tw-flex-1 tw-relative;
+}
 
-      .price-input {
-        @apply tw-w-full tw-p-2 tw-border tw-border-gray-200 tw-rounded-lg tw-text-sm focus:tw-border-ui-bg focus:tw-ring-1 focus:tw-ring-ui-bg focus:tw-outline-none tw-transition-all;
-      }
+.price-input {
+    @apply tw-w-full tw-p-2 tw-border tw-border-gray-200 
+           tw-rounded-lg tw-text-sm focus:tw-border-ui-bg 
+           focus:tw-ring-1 focus:tw-ring-ui-bg 
+           focus:tw-outline-none tw-transition-all;
+}
 
-      .currency {
-        @apply tw-absolute tw-right-2 tw-top-1/2 tw-transform tw--translate-y-1/2 tw-text-gray-500;
-      }
-    }
+.currency {
+    @apply tw-absolute tw-right-2 tw-top-1/2 
+           tw-transform tw--translate-y-1/2 tw-text-gray-500;
+}
 
-    .separator {
-      @apply tw-text-gray-400;
-    }
-  }
+.separator {
+    @apply tw-text-gray-400;
+}

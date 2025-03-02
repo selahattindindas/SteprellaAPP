@@ -4,9 +4,21 @@
 }
 
 
-.favorite-container {
-    @apply tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-grid-cols-3 xl:tw-grid-cols-4 tw-gap-6;
-}
+.favorite-grid-container {
+    @apply tw-grid tw-grid-cols-1 tw-gap-6;
+
+    @screen min-xxs {
+      @apply tw-grid-cols-2;
+    }
+
+    @screen lg {
+      @apply tw-grid-cols-3;
+    }
+
+    @screen xl {
+      @apply tw-grid-cols-4;
+    }
+  }
 
 .empty-favorites {
     @apply tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-4 tw-py-16;

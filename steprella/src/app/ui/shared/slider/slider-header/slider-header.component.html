@@ -1,16 +1,20 @@
-<div class="slider-header" [class]="marginClass">
+<header class="slider-header" [class]="marginClass">
   <div class="title-section" [class]="size()">
     @if (icon() !== 'none') {
-    <i class="fa-solid {{ icon() }} icon"></i>
+    <i class="fa-solid {{ icon() }} icon" aria-hidden="true"></i>
     }
     <h2 class="slider-title">{{ title() }}</h2>
   </div>
-  <div class="nav-buttons">
-    <button class="nav-button prev" (click)="prev.emit()">
-      <i class="fa-solid fa-chevron-left"></i>
+  <div class="nav-buttons" role="group" aria-label="Slider Navigasyon">
+    <button class="nav-button prev" 
+            (click)="prev.emit()"
+            aria-label="Önceki">
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
     </button>
-    <button class="nav-button next" (click)="next.emit()">
-      <i class="fa-solid fa-chevron-right"></i>
+    <button class="nav-button next" 
+            (click)="next.emit()"
+            aria-label="Sonraki">
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
     </button>
   </div>
-</div>
+</header>
