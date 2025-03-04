@@ -1,11 +1,11 @@
 .profile-main-page {
-  @apply tw-flex tw-w-full tw-pt-6;
+  @apply tw-flex tw-flex-col lg:tw-flex-row tw-w-full tw-pt-6 tw-gap-6;
 }
 
 .profile-sidebar {
-  @apply tw-w-64 tw-flex-shrink-0 tw-border-gray-200;
+  @apply tw-w-full lg:tw-w-64 tw-flex-shrink-0;
 }
 
 .profile-outlet {
-  @apply tw-flex tw-flex-col tw-flex-grow;
+  @apply tw-flex tw-flex-col tw-flex-grow ;
 }

@@ -1,7 +1,5 @@
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-container">
-  <!-- Grid Container -->
   <div class="grid-container">
-    <!-- Kategori -->
     <div class="form-group">
       <mat-label class="form-label">Kategori</mat-label>
       <mat-form-field appearance="outline" class="form-field !tw-mb-0">
@@ -81,7 +79,15 @@
     </div>
   </div>
 
-  <!-- Açıklama -->
+  <div class="feature-container">
+    <mat-label class="form-label tw-flex">Ek Özellikler</mat-label>
+    <mat-selection-list formControlName="featuresId" multiple>
+      @for(feature of listFeature$ | async; track feature) {
+        <mat-list-option [value]="feature.id">{{feature.name}}</mat-list-option>
+      }
+    </mat-selection-list>
+  </div>
+  
   <div class="description-container">
     <mat-label class="form-label">Açıklama</mat-label>
     <mat-form-field appearance="outline" class="description-field !tw-mb-0">
@@ -89,7 +95,6 @@
     </mat-form-field>
   </div>
 
-  <!-- Submit Button -->
   <div class="submit-container">
     <button type="submit" 
             [disabled]="!productForm.valid"

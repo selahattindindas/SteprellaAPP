@@ -1,9 +1,10 @@
 .sidebar-container {
-    @apply tw-w-56;
+    @apply tw-w-full lg:tw-w-56 tw-mx-auto lg:tw-mx-0;
   }
   
   .email-section, .nav-section {
-    @apply tw-mb-6 tw-border tw-border-gray-300 tw-rounded-xl tw-px-3 tw-py-3;
+    @apply tw-mb-6 tw-border tw-border-gray-300 tw-rounded-xl tw-px-3 tw-py-3 
+           tw-max-w-xl tw-mx-auto lg:tw-mx-0;
   }
   
   .email-text {

@@ -25,6 +25,7 @@ export class OrderComponent implements OnInit {
   loadOrder() {
     this.orderService.getOrders(0, 5).subscribe({
       next: (response) => {
+        console.log(response.data);
         this.listOrder.set(response.data);
       },
     });

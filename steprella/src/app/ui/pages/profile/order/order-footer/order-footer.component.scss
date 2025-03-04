@@ -1,5 +1,5 @@
 .order-footer {
-    @apply tw-py-4 tw-relative;
+    @apply tw-pt-6 tw-relative;
 
     .shipping-info {
       @apply tw-flex tw-items-center;
@@ -9,19 +9,7 @@
       }
 
       .shipping-address {
-        @apply tw-text-sm tw-text-gray-600 ;
-      }
-    }
-
-    .total-info {
-      @apply tw-flex tw-justify-between tw-items-center;
-
-      .total-label {
         @apply tw-text-sm tw-text-gray-600;
-      }
-
-      .total-price {
-        @apply tw-text-lg tw-font-medium tw-text-gray-800;
       }
     }
   }

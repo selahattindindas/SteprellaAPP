@@ -1,34 +1,42 @@
-<div class="order-items">
+<section class="order-items">
   @for (item of orderItem(); track item.id) {
-  <div class="item">
-    <div class="item-image">
-      @if (item.product.productImages.length > 0) {
-      <img ngSrc="{{item.product.productImages[0].path}}" width="128" height="128" loading="lazy">
-      }
+  <article class="item">
+    <div class="item-image-details-wrapper">
+      <figure class="item-image">
+        @if (item.product.productImages.length > 0) {
+        <img ngSrc="{{item.product.productImages[0].path}}" width="128" height="128" loading="lazy" alt="{{item.product.shoeModelName}}">
+        }
+      </figure>
+
+      <div class="item-details">
+        <h3 class="item-name">
+          {{item.product.brandName}} {{item.product.shoeModelName}}
+        </h3>
+        <dl class="item-specs-list">
+          <div class="item-specs">
+            <dt>Renk:</dt>
+            <dd>{{item.product.colorName}}</dd>
+          </div>
+          <div class="item-specs">
+            <dt>Beden:</dt>
+            <dd>{{item.sizeValue}}</dd>
+          </div>
+          <div class="item-specs">
+            <dt>Kullanım Alanı:</dt>
+            <dd>{{item.product.usageAreaName}}</dd>
+          </div>
+        </dl>
+      </div>
     </div>
 
-    <div class="item-details">
-      <h3 class="item-name">
-        {{item.product.brandName}} {{item.product.shoeModelName}}
-      </h3>
-      <p class="item-specs">
-        Renk: {{item.product.colorName}}
-      </p>
-      <p class="item-specs">
-        Beden: {{item.sizeValue}}
-      </p>
-      <p class="item-specs">
-        Kullanım Alanı: {{item.product.usageAreaName}}
-      </p>
+    <div class="item-price-quantity-wrapper">
+      <span class="item-quantity">
+        {{item.quantity}} Adet
+      </span>
+      <div class="item-price">
+        {{item.totalPrice | currency:'TRY':'symbol-narrow':'1.2-2'}}
+      </div>
     </div>
-
-    <span class="item-quantity">
-      {{item.quantity}} Adet
-    </span>
-
-    <div class="item-price">
-      {{item.totalPrice | currency:'TRY':'symbol-narrow':'1.2-2'}}
-    </div>
-  </div>
+  </article>
   }
-</div>
+</section>

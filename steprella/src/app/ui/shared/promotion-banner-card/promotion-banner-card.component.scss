@@ -1,25 +1,25 @@
 .promotion-banner {
-    @apply tw-bg-[#ffe7d9] tw-rounded-lg tw-py-3 tw-px-4 md:tw-px-10;
+    @apply tw-bg-[#ffe7d9] tw-rounded-lg tw-py-4 tw-px-4 md:tw-px-8 lg:tw-px-10;
 }
 
 .banner-content {
-    @apply tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-justify-between;
+    @apply tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-gap-6 md:tw-gap-8 tw-justify-between;
 }
 
-.banner-image, .banner-button {
-    @apply tw-w-[120px] md:tw-w-[150px] tw-flex-shrink-0;
+.banner-image {
+    @apply md:tw-w-[150px] tw-flex-shrink-0 tw-mx-auto md:tw-mx-0;
 }
 
 .banner-middle {
-    @apply tw-flex tw-flex-col tw-gap-2 tw-flex-grow tw-mx-6;
+    @apply tw-flex tw-flex-col tw-gap-4 tw-flex-grow;
 }
 
 .banner-title {
-    @apply tw-text-base md:tw-text-lg tw-font-bold tw-text-ui-black;
+    @apply tw-text-base md:tw-text-lg tw-font-bold tw-text-ui-black tw-text-center md:tw-text-left;
 }
 
 .banner-features {
-    @apply tw-flex tw-flex-row tw-flex-wrap tw-gap-x-4 tw-gap-y-2;
+    @apply tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 tw-gap-3;
 }
 
 .feature-item {
@@ -28,7 +28,8 @@
 
 .feature-icon {
     @apply tw-w-4 tw-h-4 tw-bg-ui-bg tw-rounded-full 
-           tw-flex tw-items-center tw-justify-center;
+           tw-flex tw-items-center tw-justify-center 
+           tw-flex-shrink-0;
 
     i {
         @apply tw-text-white tw-text-[10px];
@@ -43,7 +44,16 @@
     @apply tw-text-ui-bg tw-font-medium;
 }
 
+.banner-button {
+    @apply tw-flex tw-justify-center md:tw-justify-end tw-mt-4 md:tw-mt-0;
+}
+
 .details-button {
-    @apply tw-bg-ui-bg tw-text-white tw-px-6 tw-py-2 tw-rounded-md tw-w-36 
-           tw-font-medium tw-text-sm hover:tw-bg-orange-700 tw-transition-colors;
+    @apply tw-bg-ui-bg tw-text-white tw-px-6 tw-py-2.5 
+           tw-rounded-md tw-w-full md:tw-w-36 
+           tw-font-medium tw-text-sm 
+           hover:tw-bg-orange-700 
+           tw-transition-colors 
+           focus:tw-ring-2 focus:tw-ring-orange-500 focus:tw-ring-offset-2 
+           active:tw-bg-orange-800;
 }

@@ -1,52 +1,71 @@
 .order-header {
-    @apply tw-flex tw-justify-between tw-items-center tw-py-4;
+    @apply tw-flex tw-flex-col tw-gap-4 tw-pb-6;
+
+    @screen sm {
+        @apply tw-flex-row tw-justify-between tw-items-center tw-gap-0;
+    }
 
     .order-info-group {
-      @apply tw-flex tw-justify-between tw-items-center tw-flex-1;
+        @apply tw-grid tw-grid-cols-2 tw-gap-4;
 
-      .info-item {
-        @apply tw-flex-1 tw-flex tw-flex-col;
-
-        .info-label {
-          @apply tw-text-gray-600 tw-text-sm tw-font-semibold tw-mb-1;
+        @screen sm {
+            @apply tw-flex tw-justify-between tw-items-center tw-flex-1 tw-gap-3;
         }
 
-        .info-value {
-          @apply tw-text-ui-black tw-text-sm;
+        .info-item {
+            @apply tw-flex tw-flex-col;
 
-          &.total-price-value {
-            @apply tw-text-ui-bg;
-          }
+            @screen sm {
+                @apply tw-flex-1;
+            }
+
+            .info-label {
+                @apply tw-text-gray-600 tw-text-sm tw-font-semibold tw-mb-1;
+            }
+
+            .info-value {
+                @apply tw-text-ui-black tw-text-sm;
+
+                &.total-price-value {
+                    @apply tw-text-ui-bg;
+                }
+            }
         }
-      }
     }
 
-    .order-status {
-      @apply tw-text-sm tw-px-3 tw-py-1 tw-rounded-full tw-font-semibold;
+    .status {
+        @apply tw-flex tw-justify-start;
 
-      &.completed {
-        @apply tw-text-green-600 tw-bg-green-50;
-      }
+        @screen sm {
+            @apply tw-w-28 tw-justify-end;
+        }
 
-      &.pending {
-        @apply tw-text-blue-600 tw-bg-blue-50;
-      }
+        .order-status {
+            @apply tw-text-sm tw-px-3 tw-py-1 tw-rounded-full tw-font-semibold;
 
-      &.processing {
-        @apply tw-text-orange-600 tw-bg-orange-50;
-      }
+            &.completed {
+                @apply tw-text-green-600 tw-bg-green-50;
+            }
+
+            &.pending {
+                @apply tw-text-blue-600 tw-bg-blue-50;
+            }
+
+            &.processing {
+                @apply tw-text-orange-600 tw-bg-orange-50;
+            }
+        }
     }
 
-    
     .total-info {
-      @apply tw-flex tw-justify-between tw-items-center;
+        @apply tw-flex tw-justify-between tw-items-center;
 
-      .total-label {
-        @apply tw-text-sm tw-text-gray-600;
-      }
+        .total-label {
+            @apply tw-text-sm tw-text-gray-600;
+        }
 
-      .total-price {
-        @apply tw-text-lg tw-font-medium tw-text-gray-800;
-      }
+        .total-price {
+            @apply tw-text-lg tw-font-medium tw-text-gray-800;
+        }
     }
 }

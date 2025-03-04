@@ -17,6 +17,9 @@ import { MaterialService } from '../../../core/services/ui/material.service';
 import { FeatureService } from '../../../core/services/ui/feature.service';
 import { ListUsageArea } from '../../../core/models/usage-areas/list-usage-area';
 import { ListMaterial } from '../../../core/models/materials/list-material';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatListModule, MatSelectionList } from '@angular/material/list';
+import { ListFeature } from '../../../core/models/features/list-feature';
 
 @Component({
   selector: 'app-product-form',
@@ -25,7 +28,10 @@ import { ListMaterial } from '../../../core/models/materials/list-material';
     ReactiveFormsModule, 
     MatFormFieldModule, 
     MatSelectModule, 
-    MatInputModule
+    MatInputModule,
+    MatRadioModule,
+    MatListModule,
+    MatSelectionList
   ],
   standalone: true,
   templateUrl: './product-form.component.html',
@@ -48,7 +54,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
   readonly listCategory$ = this.categoryService.getAll();
   readonly listMaterial$ = this.materialService.getAll().pipe(map(response => response.data));
   readonly listUsageArea$ = this.usageAreaService.getAll().pipe(map(response => response.data));
-  readonly listFeature$ = this.featureService.getAll();
+  readonly listFeature$ = this.featureService.getAll().pipe(map(response => response.data));
   readonly listBrand$ = this.brandService.getAll().pipe(map(response => response.data));
   listShoeModel$ = new Observable<ListShoeModel[]>();
 
@@ -60,7 +66,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
     shoeModelId: [0, Validators.required],
     materialId: [0, Validators.required],
     usageAreaId: [0, Validators.required],
-    // featuresId: [0, Validators.required], 
+    featuresId: [[0], Validators.required],
     price: [0, Validators.required],
     description: ['', Validators.required]
   });
@@ -100,21 +106,23 @@ export class ProductFormComponent implements OnInit, OnChanges {
     combineLatest([
       this.listBrand$,
       this.listMaterial$,
+      this.listFeature$,
       this.listUsageArea$,
       this.listCategory$
-    ]).pipe(take(1)).subscribe(([brands, materials, usageAreas, categories]) => {
+    ]).pipe(take(1)).subscribe(([brands, materials, features, usageAreas, categories]) => {
       const category = this.findCategory(product, categories);
       const brand = brands.find(b => b.name === product.brandName) || null;
+      const feature = product.features || [];
       const material = materials.find(m => m.name === product.materialName) || null;
       const usageArea = usageAreas.find(u => u.name === product.usageAreaName) || null;
   
       if (brand) {
         this.shoeModelService.getByBrandId(brand.id).pipe(take(1)).subscribe(({ data }) => {
           const shoeModel = data.find(sm => sm.name === product.shoeModelName) || null;
-          this.updateForm(category, brand, usageArea, material, shoeModel, product);
+          this.updateForm(category, brand, usageArea, material, feature, shoeModel, product);
         });
       } else {
-        this.updateForm(category, null, usageArea, material, null, product);
+        this.updateForm(category, null, usageArea, material, feature, null, product);
       }
     });
   }
@@ -124,6 +132,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
     brand: ListBrand | null, 
     usageArea: ListUsageArea | null, 
     material: ListMaterial | null, 
+    features: ListFeature[] | [],
     shoeModel: ListShoeModel | null, 
     product: ListProduct
   ): void {
@@ -134,7 +143,8 @@ export class ProductFormComponent implements OnInit, OnChanges {
       materialId: material?.id || null,
       shoeModelId: shoeModel?.id || null,
       price: product.price || null,
-      description: product.description || ''
+      description: product.description || '',
+      featuresId: features?.map(f => f.id) || [],
     });
   }
 
@@ -152,19 +162,15 @@ export class ProductFormComponent implements OnInit, OnChanges {
     if (!this.productForm.valid) return;
   
     const formData = this.productForm.value;
-    const formDataWithFeatures = {
-      ...formData,
-      featuresId: [1, 2]
-    };
     
     if (this.isEditMode()) {
       this.listProduct$()?.pipe(take(1)).subscribe(product => {
         if (product) {
-          this.itemSubmit.emit({ ...formDataWithFeatures, id: product.id });
+          this.itemSubmit.emit({ ...formData, id: product.id });
         }
       });
     } else {
-      this.itemSubmit.emit(formDataWithFeatures);
+      this.itemSubmit.emit(formData);
     }
   }
 }

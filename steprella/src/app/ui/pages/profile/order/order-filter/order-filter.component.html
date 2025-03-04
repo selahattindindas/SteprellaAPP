@@ -1,17 +1,20 @@
-<div class="order-header">
-    <h2 class="title">Siparişlerim</h2>
+<header class="order-header">
+  <h1 class="title">Siparişlerim</h1>
+  <div class="controls-container">
     <div class="search-container">
-        <input class="search-input" placeholder="Ürün ismi veya Marka ara">
-        <i class="search-icon fa-solid fa-magnifying-glass"></i>
+      <label for="searchInput" class="tw-sr-only">Ürün veya Marka Ara</label>
+      <input id="searchInput" class="search-input" placeholder="Ürün ismi veya Marka ara">
+      <i class="search-icon fa-solid fa-magnifying-glass" aria-hidden="true"></i>
     </div>
     <div class="filter-dropdown">
-        <app-dropdown
+      <app-dropdown
         [options]="filterOptions"
         headerBgColor="tw-bg-white"
         headerBorderWidth="tw-border"
         fontWeight="tw-font-semibold"
         headerRadius="tw-rounded-lg"
         headerBorderColor="tw-border-gray-200">
-    </app-dropdown>
+      </app-dropdown>
     </div>
-</div>
+  </div>
+</header>

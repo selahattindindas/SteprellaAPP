@@ -18,9 +18,10 @@
   @apply tw-w-full;
 }
 
-.description-container {
+.description-container, .feature-container {
   @apply tw-space-y-1 tw-mt-4;
 }
+
 
 .description-field {
   @apply tw-w-full;
